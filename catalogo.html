@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+    <meta charset="UTF-8">
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZS2BQC8L2H"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-ZS2BQC8L2H');
+</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Catálogo floral exclusivo en Bogotá - Floristería Gi Garden en Plaza de Paloquemao. Rosas, girasoles, gerberas, bouquets, cajas, orquídeas y arreglos premium. Domicilios en toda la ciudad.">
+    <meta name="keywords" content="floristeria bogota, catalogo flores, arreglos florales bogota, rosas, girasoles, gerberas, bouquets, canastas florales, orquideas, flores a domicilio bogota, Gi Garden, Plaza de Paloquemao">
+    <title>Catálogo Floral - Floristería Gi Garden | Flores en Bogotá</title>
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Catálogo Floral - Floristería Gi Garden Bogotá">
+    <meta property="og:description" content="Explora nuestra colección exclusiva de bouquets, cajas, jarrones y orquídeas en Bogotá. Entrega a domicilio desde Plaza de Paloquemao.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="http://bogotafloristeria.dondeseria.com/catalogo.html">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/catalog.css">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/logo.webp">
+    <style>
+        /* Opciones de precios en cards */
+        .price-options {
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px dashed rgba(201, 168, 106, 0.4);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+        .price-option {
+            background: #faf8f3;
+            color: #0a0a0a;
+            border: 1px solid rgba(201, 168, 106, 0.45);
+            padding: 0.35rem 0.7rem;
+            border-radius: 50px;
+            font-size: 0.78rem;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+        .price-option strong { color: #8C6F3A; margin-left: 0.2rem; }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <div id="navbar-container"></div>
+
+    <!-- Hero Section -->
+    <section class="catalog-hero">
+        <div class="container">
+            <h1>Catálogo Gi Garden</h1>
+            <p>Descubre nuestra colección exclusiva de ramos, jarrones y arreglos florales creados para celebrar cada momento en Bogotá</p>
+        </div>
+    </section>
+
+    <!-- Filters -->
+    <section class="catalog-filters">
+        <div class="container">
+            <!-- Search Bar -->
+            <div class="search-container">
+                <input type="text" class="search-input" id="search-input" placeholder="Buscar bouquets, rosas, girasoles, orquídeas...">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"/>
+                    <path d="m21 21-4.35-4.35"/>
+                </svg>
+                <button class="search-clear" id="search-clear">&times;</button>
+            </div>
+            <div class="filters-container">
+                <span class="filter-label">Filtrar por:</span>
+                <button class="filter-btn active" data-filter="todos">Todos los Productos</button>
+                <button class="filter-btn" data-filter="rosas">Rosas</button>
+                <button class="filter-btn" data-filter="girasoles">Girasoles</button>
+                <button class="filter-btn" data-filter="gerberas">Gerberas</button>
+                <button class="filter-btn" data-filter="bouquets">Bouquets Mixtos</button>
+                <button class="filter-btn" data-filter="cajas">Cajas y Bases</button>
+                <button class="filter-btn" data-filter="jarrones">Jarrones</button>
+                <button class="filter-btn" data-filter="orquideas">Orquídeas</button>
+                <button class="filter-btn" data-filter="chocolates">Con Chocolates</button>
+                <button class="filter-btn" data-filter="premium">Premium</button>
+                <button class="filter-btn" data-filter="precio-bajo">Hasta $100.000</button>
+                <button class="filter-btn" data-filter="precio-medio">$100.000 - $200.000</button>
+                <button class="filter-btn" data-filter="precio-alto">Más de $200.000</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Counter -->
+    <div class="results-counter">
+        <div class="container">
+            Mostrando <strong id="results-count">35</strong> creaciones
+        </div>
+    </div>
+
+    <!-- Products Grid -->
+    <section class="catalog-section">
+        <div class="container">
+            <div class="products-grid" id="products-grid">
+                <!-- Los productos se generarán aquí -->
+            </div>
+
+            <!-- Empty State -->
+            <div class="empty-state" id="empty-state">
+                <h3>No se encontraron creaciones</h3>
+                <p>Prueba con un filtro diferente para descubrir más opciones</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <button class="lightbox-close" id="lightbox-close">×</button>
+            <img src="" alt="" class="lightbox-image" id="lightbox-image">
+            <div class="lightbox-info">
+                <h3 id="lightbox-title"></h3>
+                <p id="lightbox-price"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scroll to Top -->
+    <button class="scroll-top" id="scroll-top">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="18 15 12 9 6 15"></polyline>
+        </svg>
+    </button>
+
+    <!-- Footer -->
+    <div id="footer-container"></div>
+
+    <!-- WhatsApp Button -->
+    <div id="whatsapp-button-container"></div>
+
+    <!-- JavaScript -->
+    <script src="js/script.js"></script>
+    <script>
+        // Catálogo Gi Garden - 35 productos exclusivos
+        const products = [
+            {
+                id: 1,
+                name: "Ternura Rosada",
+                price: 93750,
+                image: "assets/foto38.webp",
+                description: "Encantador ramo de rosas rosadas con gypsophila y envoltura delicada. Detalle tierno y accesible para cualquier momento.",
+                categories: ["rosas", "bouquets", "precio-bajo"]
+            },
+            {
+                id: 2,
+                name: "Suspiro Rosado",
+                price: 118750,
+                image: "assets/foto30.webp",
+                description: "Tierno ramo de rosas rosadas rematado con una mariposa decorativa. Delicadeza encantadora a un precio accesible.",
+                categories: ["rosas", "bouquets", "precio-medio"]
+            },
+            {
+                id: 3,
+                name: "Girasol Imperial",
+                price: 118750,
+                image: "assets/foto50.webp",
+                description: "Imponente girasol único enmarcado en envoltura negra y dorada. Minimalismo elegante a precio accesible.",
+                categories: ["girasoles", "bouquets", "precio-medio"]
+            },
+            {
+                id: 4,
+                name: "Encanto de Hortensias",
+                price: 137500,
+                image: "assets/foto36.webp",
+                description: "Romántico ramo de hortensias blancas y claveles en tonos suaves. Elegancia natural para ocasiones especiales.",
+                categories: ["bouquets", "precio-medio"]
+            },
+            {
+                id: 5,
+                name: "Orgullo del Graduado",
+                price: 143750,
+                image: "assets/foto21.webp",
+                description: "Ramo de rosas en tonos suaves acompañado de un birrete de graduación. El reconocimiento perfecto para celebrar un logro.",
+                categories: ["rosas", "bouquets", "precio-medio"]
+            },
+            {
+                id: 6,
+                name: "Caja Rubor",
+                price: 143750,
+                image: "assets/foto24.webp",
+                description: "Caja compacta rebosante de rosas rosadas en tono rubor. Detalle dulce y delicado para enamorar.",
+                categories: ["cajas", "rosas", "precio-medio"]
+            },
+            {
+                id: 7,
+                name: "Caja Pasión Roja",
+                price: 147500,
+                image: "assets/foto4.webp",
+                description: "Elegante caja negra colmada de rosas rojas con gypsophila, lazo a juego y espacio para tu tarjeta. Un clásico atemporal del amor.",
+                categories: ["rosas", "cajas", "precio-medio"]
+            },
+            {
+                id: 8,
+                name: "Abrazo Floral",
+                price: 156250,
+                image: "assets/foto34.webp",
+                description: "Ramo generoso de rosas rosadas y moradas con gypsophila. Un abrazo de color para expresar cariño.",
+                categories: ["rosas", "bouquets", "precio-medio"]
+            },
+            {
+                id: 9,
+                name: "Claveles del Corazón",
+                price: 156250,
+                image: "assets/foto40.webp",
+                description: "Cálido ramo de claveles rojos y rosados con follaje fino. Clásico lleno de afecto y color.",
+                categories: ["bouquets", "precio-medio"]
+            },
+            {
+                id: 10,
+                name: "Tulipanes Primavera",
+                price: 156250,
+                image: "assets/foto41.webp",
+                description: "Fresco ramo de tulipanes rosados y blancos que evoca la primavera. Delicadeza y elegancia en cada tallo.",
+                categories: ["bouquets", "precio-medio"]
+            },
+            {
+                id: 11,
+                name: "Girasoles de Gala",
+                price: 156250,
+                image: "assets/foto56.webp",
+                description: "Elegante ramo cuadrado de girasoles con envoltura morada y dorada. Diseño contemporáneo lleno de carácter.",
+                categories: ["girasoles", "bouquets", "precio-medio"]
+            },
+            {
+                id: 12,
+                name: "Alegría Campestre",
+                price: 156250,
+                image: "assets/foto57.webp",
+                description: "Ramo mixto de girasoles, gerberas y flores variadas. Frescura y color para alegrar cualquier día.",
+                categories: ["girasoles", "gerberas", "precio-medio"]
+            },
+            {
+                id: 13,
+                name: "Fiesta de Gerberas",
+                price: 168750,
+                image: "assets/foto3.webp",
+                description: "Composición vibrante de gerberas multicolor y flores de temporada rematada con un detalle dorado. Alegría pura para sorprender en cualquier ocasión.",
+                categories: ["gerberas", "bouquets", "precio-medio"]
+            },
+            {
+                id: 14,
+                name: "Te Amo Encanto",
+                price: 168750,
+                image: "assets/foto6.webp",
+                description: "Arreglo romántico con rosas fucsia y un globo metálico en forma de corazón con mensaje de amor. Perfecto para declarar lo que sientes.",
+                categories: ["rosas", "bouquets", "precio-medio"]
+            },
+            {
+                id: 15,
+                name: "Graduación Elegante",
+                price: 168750,
+                image: "assets/foto22.webp",
+                description: "Ramo de rosas rojas con envoltura negra y banda conmemorativa. Sobrio y elegante para honrar a la persona graduada.",
+                categories: ["rosas", "bouquets", "precio-medio"]
+            },
+            {
+                id: 16,
+                name: "Misterio Azul",
+                price: 168750,
+                image: "assets/foto28.webp",
+                description: "Original ramo de rosas azules con envoltura a tono. Detalle único y sorprendente para quien busca algo diferente.",
+                categories: ["rosas", "bouquets", "precio-medio"]
+            },
+            {
+                id: 17,
+                name: "Clásico Rojo Pasión",
+                price: 168750,
+                image: "assets/foto42.webp",
+                description: "Compacto ramo redondo de rosas rojas con envoltura traslúcida. El símbolo eterno del amor.",
+                categories: ["rosas", "bouquets", "precio-medio"]
+            },
+            {
+                id: 18,
+                name: "Esplendor de Girasoles",
+                price: 172500,
+                image: "assets/foto1.webp",
+                description: "Imponente arreglo vertical que combina girasoles radiantes con rosas rojas y follaje tropical sobre base alta. Una pieza llena de energía y calidez ideal para celebraciones memorables.",
+                categories: ["girasoles", "rosas", "bouquets", "precio-medio"]
+            },
+            {
+                id: 19,
+                name: "Caja Contraste",
+                price: 181250,
+                image: "assets/foto9.webp",
+                description: "Refinada caja que enfrenta tulipanes blancos con rosas rojas en armonía perfecta. Elegancia y contraste en cada detalle.",
+                categories: ["cajas", "rosas", "precio-medio"]
+            },
+            {
+                id: 20,
+                name: "Bouquet Pastel Premium",
+                price: 181250,
+                image: "assets/foto26.webp",
+                description: "Voluminoso ramo en tonos pastel con rosas blancas y moradas y follaje variado. Sofisticación romántica en gran formato.",
+                categories: ["bouquets", "rosas", "precio-medio"]
+            },
+            {
+                id: 21,
+                name: "Pureza Blanca",
+                price: 181250,
+                image: "assets/foto33.webp",
+                description: "Ramo sereno de flores blancas con eucalipto fresco. Sencillez elegante que transmite paz y armonía.",
+                categories: ["bouquets", "precio-medio"]
+            },
+            {
+                id: 22,
+                name: "Cosecha de Color",
+                price: 193750,
+                image: "assets/foto47.webp",
+                description: "Arreglo campestre de claveles naranja y lirios rosados sobre base de madera. Frescura natural con encanto rústico.",
+                categories: ["bouquets", "precio-medio"]
+            },
+            {
+                id: 23,
+                name: "Campo Vibrante",
+                price: 193750,
+                image: "assets/foto49.webp",
+                description: "Colorido arreglo de girasoles, rosas y flores moradas. Un pedazo de campo lleno de vitalidad.",
+                categories: ["girasoles", "bouquets", "precio-medio"]
+            },
+            {
+                id: 24,
+                name: "Sol y Lirios",
+                price: 193750,
+                image: "assets/foto53.webp",
+                description: "Radiante arreglo de girasoles y lirios amarillos con verdor fresco. Luz y alegría en cada flor.",
+                categories: ["girasoles", "bouquets", "precio-medio"]
+            },
+            {
+                id: 25,
+                name: "Sonrisa de Girasoles",
+                price: 193750,
+                image: "assets/foto58.webp",
+                description: "Ramo redondo de girasoles acompañado de un tierno peluche. Pura alegría para sacar sonrisas.",
+                categories: ["girasoles", "bouquets", "precio-medio"]
+            },
+            {
+                id: 26,
+                name: "Dulzura Pastel",
+                price: 206250,
+                image: "assets/foto16.webp",
+                description: "Delicado arreglo en tonos pastel con claveles y rosas dispuestos en una caja rosa. Ternura y suavidad en estado puro.",
+                categories: ["bouquets", "cajas", "precio-alto"]
+            },
+            {
+                id: 27,
+                name: "Lirios al Sol",
+                price: 206250,
+                image: "assets/foto39.webp",
+                description: "Luminoso ramo de lirios amarillos y naranjas de pétalos abiertos. Frescura radiante que ilumina el día.",
+                categories: ["bouquets", "precio-alto"]
+            },
+            {
+                id: 28,
+                name: "Caja Romántica con Chocolates",
+                price: 206250,
+                image: "assets/foto45.webp",
+                description: "Caja alargada con rosas rojas y finos chocolates. La combinación perfecta de amor y dulzura.",
+                categories: ["cajas", "rosas", "chocolates", "precio-alto"]
+            },
+            {
+                id: 29,
+                name: "Cascada Fucsia",
+                price: 218750,
+                image: "assets/foto2.webp",
+                description: "Espectacular torre escalonada de rosas fucsia coronada con un clavel central y verdor exuberante. Diseño de gran formato que impone presencia y romanticismo.",
+                categories: ["rosas", "premium", "precio-alto"]
+            },
+            {
+                id: 30,
+                name: "Caja Sorpresa Roja",
+                price: 218750,
+                image: "assets/foto25.webp",
+                description: "Caja con rosas rojas coronada por un globo decorativo. Sorpresa vibrante que celebra el amor con estilo.",
+                categories: ["cajas", "rosas", "precio-alto"]
+            },
+            {
+                id: 31,
+                name: "Atardecer en Jarrón",
+                price: 218750,
+                image: "assets/foto31.webp",
+                description: "Cálido arreglo de rosas naranja dispuesto en elegante jarrón de vidrio. Listo para iluminar cualquier rincón.",
+                categories: ["rosas", "jarrones", "precio-alto"]
+            },
+            {
+                id: 32,
+                name: "Elegancia Marfil",
+                price: 218750,
+                image: "assets/foto37.webp",
+                description: "Sobrio arreglo de rosas blancas en jarrón de vidrio con follaje verde. La distinción de lo clásico.",
+                categories: ["rosas", "jarrones", "precio-alto"]
+            },
+            {
+                id: 33,
+                name: "Elegancia de Calas",
+                price: 218750,
+                image: "assets/foto46.webp",
+                description: "Sofisticado ramo de calas blancas y rosas rojas con envoltura negra. Distinción y drama en un mismo diseño.",
+                categories: ["bouquets", "rosas", "precio-alto"]
+            },
+            {
+                id: 34,
+                name: "Llama Eterna",
+                price: 231250,
+                image: "assets/foto7.webp",
+                description: "Arreglo vertical de rosas rojas y gladiolos encendidos sobre follaje frondoso. Una declaración de pasión imposible de ignorar.",
+                categories: ["rosas", "bouquets", "precio-alto"]
+            },
+            {
+                id: 35,
+                name: "Torre Frutal Durazno",
+                price: 231250,
+                image: "assets/foto15.webp",
+                description: "Elegante torre de rosas en tono durazno combinada con frutas frescas en canasta. Lujo y sabor en una misma creación.",
+                categories: ["rosas", "premium", "precio-alto"]
+            },
+            {
+                id: 36,
+                name: "Jardín Silvestre",
+                price: 231250,
+                image: "assets/foto23.webp",
+                description: "Ramo fresco de astromelias y flores mixtas con aire campestre. Naturalidad y color para alegrar cualquier espacio.",
+                categories: ["bouquets", "precio-alto"]
+            },
+            {
+                id: 37,
+                name: "Tulipanes Encantados",
+                price: 231250,
+                image: "assets/foto44.webp",
+                description: "Elegante ramo de tulipanes rosados realzado con gypsophila. Suavidad y encanto en perfecta armonía.",
+                categories: ["bouquets", "precio-alto"]
+            },
+            {
+                id: 38,
+                name: "Brindis Dorado",
+                price: 231250,
+                image: "assets/foto51.webp",
+                description: "Festivo arreglo con globo dorado, frutas y flores de temporada. Celebra con estilo y abundancia.",
+                categories: ["bouquets", "premium", "precio-alto"]
+            },
+            {
+                id: 39,
+                name: "Canasta Solar Frutal",
+                price: 243750,
+                image: "assets/foto5.webp",
+                description: "Generosa canasta que reúne girasoles, frutas frescas y un globo decorativo. Detalle completo que combina dulzura, color y abundancia.",
+                categories: ["girasoles", "premium", "precio-alto"]
+            },
+            {
+                id: 40,
+                name: "Torre Solar",
+                price: 243750,
+                image: "assets/foto8.webp",
+                description: "Llamativa torre de girasoles culminada con tulipanes en su cúspide. Estructura escultural que irradia optimismo y frescura.",
+                categories: ["girasoles", "premium", "precio-alto"]
+            },
+            {
+                id: 41,
+                name: "Ramo Algodón de Colores",
+                price: 243750,
+                image: "assets/foto19.webp",
+                description: "Vistoso ramo de gypsophila multicolor envuelto con lazo. Detalle ligero y encantador que arranca sonrisas.",
+                categories: ["bouquets", "precio-alto"]
+            },
+            {
+                id: 42,
+                name: "Romance Clásico",
+                price: 256250,
+                image: "assets/foto10.webp",
+                description: "Arreglo señorial de rosas rojas y blancas con lirios y verdor sobre base elegante. La esencia del romance tradicional.",
+                categories: ["rosas", "bouquets", "precio-alto"]
+            },
+            {
+                id: 43,
+                name: "Canasta Querida Hija",
+                price: 256250,
+                image: "assets/foto52.webp",
+                description: "Tierna canasta con peluche, globo personalizado y flores en tonos suaves. Un regalo cargado de afecto.",
+                categories: ["bouquets", "premium", "precio-alto"]
+            },
+            {
+                id: 44,
+                name: "Torre de Amor",
+                price: 268750,
+                image: "assets/foto13.webp",
+                description: "Torre de rosas rojas acompañada de globos y un tierno peluche. Detalle completo para conquistar y celebrar el amor.",
+                categories: ["rosas", "premium", "precio-alto"]
+            },
+            {
+                id: 45,
+                name: "Tropical Gourmet",
+                price: 268750,
+                image: "assets/foto27.webp",
+                description: "Arreglo exótico con aves del paraíso, rosas naranja y frutas frescas. Lujo tropical que combina belleza y sabor.",
+                categories: ["bouquets", "premium", "precio-alto"]
+            },
+            {
+                id: 46,
+                name: "Festín Solar",
+                price: 268750,
+                image: "assets/foto35.webp",
+                description: "Arreglo abundante de girasoles, rosas rojas y frutas frescas. Combinación festiva llena de vida y sabor.",
+                categories: ["girasoles", "premium", "precio-alto"]
+            },
+            {
+                id: 47,
+                name: "Corona Homenaje Dorado",
+                price: 275000,
+                image: "assets/foto17.webp",
+                description: "Solemne corona fúnebre en tonos dorados y blancos con acabado clásico. Un homenaje digno y respetuoso de despedida.",
+                categories: ["premium", "precio-alto"]
+            },
+            {
+                id: 48,
+                name: "Elegancia Tropical",
+                price: 281250,
+                image: "assets/foto32.webp",
+                description: "Refinado arreglo de rosas rosadas realzado con aves del paraíso. Elegancia exótica de gran presencia.",
+                categories: ["rosas", "premium", "precio-alto"]
+            },
+            {
+                id: 49,
+                name: "Caja Solar Sorpresa",
+                price: 281250,
+                image: "assets/foto48.webp",
+                description: "Completa caja sorpresa con girasoles, peluche y chocolates. Regalo integral que combina alegría y dulzura.",
+                categories: ["cajas", "girasoles", "chocolates", "precio-alto"]
+            },
+            {
+                id: 50,
+                name: "Abrazo de Peluche",
+                price: 293750,
+                image: "assets/foto43.webp",
+                description: "Ramo de rosas en tonos suaves acompañado de un peluche y envoltura morada. Ternura completa para regalar.",
+                categories: ["rosas", "bouquets", "precio-alto"]
+            },
+            {
+                id: 51,
+                name: "Nube Multicolor",
+                price: 306250,
+                image: "assets/foto12.webp",
+                description: "Esfera espectacular de gypsophila teñida en todos los colores del arcoíris. Diseño moderno y festivo que enamora a primera vista.",
+                categories: ["bouquets", "premium", "precio-alto"]
+            },
+            {
+                id: 52,
+                name: "Corona Paz Blanca",
+                price: 306250,
+                image: "assets/foto18.webp",
+                description: "Corona fúnebre de lirios y flores blancas que transmite serenidad y respeto. Acompaña con elegancia los momentos de duelo.",
+                categories: ["premium", "precio-alto"]
+            },
+            {
+                id: 53,
+                name: "Gran Bouquet Fucsia",
+                price: 312500,
+                image: "assets/foto54.webp",
+                description: "Exuberante ramo de gran tamaño con rosas fucsia y blancas. Volumen y color para una impresión inolvidable.",
+                categories: ["rosas", "premium", "precio-alto"]
+            },
+            {
+                id: 54,
+                name: "Celebración Cumpleañera",
+                price: 331250,
+                image: "assets/foto14.webp",
+                description: "Festivo arreglo con globo de feliz cumpleaños, peluche y flores en tonos cálidos. La sorpresa perfecta para un día especial.",
+                categories: ["bouquets", "premium", "precio-alto"]
+            },
+            {
+                id: 55,
+                name: "Pirámide de Tulipanes",
+                price: 343750,
+                image: "assets/foto29.webp",
+                description: "Escultural pirámide de tulipanes multicolor con lirios y verdor. Pieza premium de diseño espectacular.",
+                categories: ["bouquets", "premium", "precio-alto"]
+            },
+            {
+                id: 56,
+                name: "Cascada Arcoíris",
+                price: 347500,
+                image: "assets/foto11.webp",
+                description: "Monumental cascada de rosas en degradado de colores acompañada de globos decorativos. Pieza premium para momentos inolvidables.",
+                categories: ["rosas", "premium", "precio-alto"]
+            },
+            {
+                id: 57,
+                name: "Gran Torre Imperial",
+                price: 437500,
+                image: "assets/foto20.webp",
+                description: "Imponente torre de rosas rojas y lirios de gran formato. Pieza majestuosa para impresionar en las ocasiones más importantes.",
+                categories: ["rosas", "premium", "precio-alto"]
+            },
+            {
+                id: 58,
+                name: "Majestad Tropical",
+                price: 812500,
+                image: "assets/foto55.webp",
+                description: "Arreglo monumental con aves del paraíso, lirios y flores exóticas en canasta de lujo. La máxima expresión de grandeza floral.",
+                categories: ["premium", "bouquets", "precio-alto"]
+            }
+        ];
+
+        // Generar código de producto a partir del id
+        function getProductCode(id) {
+            return 'GG-' + String(id).padStart(3, '0');
+        }
+
+        // Normalizar texto (quitar tildes y minúsculas)
+        function normalize(str) {
+            return str.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+        }
+
+        // Estado global de búsqueda y filtro
+        let currentFilter = 'todos';
+        let currentSearch = '';
+
+        // Renderizar productos
+        function renderProducts(filter, search) {
+            if (filter !== undefined) currentFilter = filter;
+            if (search !== undefined) currentSearch = search;
+
+            const grid = document.getElementById('products-grid');
+            const emptyState = document.getElementById('empty-state');
+            const resultsCount = document.getElementById('results-count');
+
+            let filteredProducts = products.filter(p => !p.hidden);
+
+            if (currentFilter !== 'todos') {
+                filteredProducts = filteredProducts.filter(product =>
+                    product.categories.includes(currentFilter)
+                );
+            }
+
+            if (currentSearch.trim() !== '') {
+                const searchNorm = normalize(currentSearch.trim());
+                const searchWords = searchNorm.split(/\s+/);
+                filteredProducts = filteredProducts.filter(product => {
+                    const code = getProductCode(product.id);
+                    const text = normalize(product.name + ' ' + product.description + ' ' + product.categories.join(' ') + ' ' + code);
+                    return searchWords.every(word => text.includes(word));
+                });
+            }
+
+            if (filteredProducts.length === 0) {
+                grid.style.display = 'none';
+                emptyState.classList.add('active');
+                resultsCount.textContent = '0';
+                return;
+            }
+
+            grid.style.display = 'grid';
+            emptyState.classList.remove('active');
+            resultsCount.textContent = filteredProducts.length;
+
+                const customCard = `
+                <div class="product-card custom-card">
+                    <div class="product-image-container custom-rotator" onclick="document.getElementById('btn-cotiza-top').click()">
+                        <img src="assets/foto54.webp" alt="Arreglo personalizado" class="product-image rot-img" style="animation-delay:0s" loading="lazy">
+                        <img src="assets/foto12.webp" alt="Arreglo personalizado" class="product-image rot-img" style="animation-delay:-5s" loading="lazy">
+                        <img src="assets/foto29.webp" alt="Arreglo personalizado" class="product-image rot-img" style="animation-delay:-10s" loading="lazy">
+                        <img src="assets/foto5.webp" alt="Arreglo personalizado" class="product-image rot-img" style="animation-delay:-15s" loading="lazy">
+                        <img src="assets/foto55.webp" alt="Arreglo personalizado" class="product-image rot-img" style="animation-delay:-20s" loading="lazy">
+                        <span class="product-code-badge">A tu gusto</span>
+                        <div class="custom-overlay"><span class="custom-overlay-text">Diseño a tu medida</span></div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Pide tu arreglo personalizado</h3>
+                        <div class="product-description">¿Tienes una idea en mente? Creamos el arreglo de tus sueños con las flores, los colores y el presupuesto que prefieras. Cuéntanos qué imaginas y lo hacemos realidad.</div>
+                        <div class="product-footer">
+                            <div>
+                                <span class="price-label">Diseño</span>
+                                <div class="product-price product-price--custom">A tu medida</div>
+                            </div>
+                            <a id="btn-cotiza-top" href="https://wa.me/573145957395?text=${encodeURIComponent('Hola Gi Garden, quiero cotizar un arreglo personalizado. Esta es mi idea:')}"
+                               class="btn-order btn-cotiza"
+                               target="_blank">
+                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                                Cotiza tu arreglo
+                            </a>
+                        </div>
+                    </div>
+                </div>`;
+                
+                            grid.innerHTML = customCard + filteredProducts.map(product => {
+                const code = getProductCode(product.id);
+                const hasOptions = Array.isArray(product.priceOptions) && product.priceOptions.length > 0;
+                const priceLabel = hasOptions ? 'Desde' : 'Precio';
+                const optionsHtml = hasOptions ? `
+                    <div class="price-options">
+                        ${product.priceOptions.map(o => `<span class="price-option">${o.label} <strong>${formatPrice(o.price)}</strong></span>`).join('')}
+                    </div>
+                ` : '';
+                const waMsg = hasOptions
+                    ? `Hola Gi Garden, me interesa: ${code} - ${product.name} (desde ${formatPrice(product.price)}). Quiero ver opciones.`
+                    : `Hola Gi Garden, me interesa: ${code} - ${product.name} - ${formatPrice(product.price)}.`;
+                return `
+                <div class="product-card" data-categories="${product.categories.join(' ')}">
+                    <div class="product-image-container" onclick="openLightbox('${product.image}', '${product.name}', '${formatPrice(product.price)}')">
+                        <span class="product-code-badge">${code}</span>
+                        <img src="${product.image}" alt="${product.name}" class="product-image" loading="lazy">
+                        <div class="zoom-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="11" cy="11" r="8"/>
+                                <path d="m21 21-4.35-4.35"/>
+                                <line x1="11" y1="8" x2="11" y2="14"/>
+                                <line x1="8" y1="11" x2="14" y2="11"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">${product.name}</h3>
+                        <div class="product-description">${product.description}</div>
+                        ${optionsHtml}
+                        <div class="product-footer">
+                            <div>
+                                <span class="price-label">${priceLabel}</span>
+                                <div class="product-price">${formatPrice(product.price)}</div>
+                            </div>
+                            <a href="https://wa.me/573145957395?text=${encodeURIComponent(waMsg + '\nFoto: https://bogotafloristeria.dondeseria.com/' + product.image)}"
+                               class="btn-order"
+                               target="_blank">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                                </svg>
+                                Pedir Ahora
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `}).join('');
+        }
+
+        function formatPrice(price) {
+            return '$' + price.toLocaleString('es-CO');
+        }
+
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                renderProducts(this.dataset.filter);
+                window.scrollTo({ top: 400, behavior: 'smooth' });
+            });
+        });
+
+        const searchInput = document.getElementById('search-input');
+        const searchClear = document.getElementById('search-clear');
+        let searchTimeout;
+
+        searchInput.addEventListener('input', function() {
+            clearTimeout(searchTimeout);
+            const val = this.value;
+            searchClear.classList.toggle('visible', val.length > 0);
+            searchTimeout = setTimeout(() => {
+                renderProducts(undefined, val);
+            }, 250);
+        });
+
+        searchClear.addEventListener('click', function() {
+            searchInput.value = '';
+            searchClear.classList.remove('visible');
+            renderProducts(undefined, '');
+            searchInput.focus();
+        });
+
+        function openLightbox(image, name, price) {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImage = document.getElementById('lightbox-image');
+            const lightboxTitle = document.getElementById('lightbox-title');
+            const lightboxPrice = document.getElementById('lightbox-price');
+
+            lightboxImage.src = image;
+            lightboxImage.alt = name;
+            lightboxTitle.textContent = name;
+            lightboxPrice.textContent = price;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+        document.getElementById('lightbox').addEventListener('click', function(e) {
+            if (e.target === this) closeLightbox();
+        });
+
+        const scrollTop = document.getElementById('scroll-top');
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 500) {
+                scrollTop.classList.add('visible');
+            } else {
+                scrollTop.classList.remove('visible');
+            }
+        });
+
+        scrollTop.addEventListener('click', function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Inicializar
+        renderProducts();
+    </script>
+</body>
+</html>

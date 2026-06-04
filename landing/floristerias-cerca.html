@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Gi Garden - Floristería cerca de ti en Bogotá. Flores frescas 24 horas. Entrega a domicilio en Centro, El Salado, Jordán, Ambala y más. Ordena por WhatsApp ahora.">
+    <meta name="keywords" content="florerias cerca de mi, floristerias cerca de mi, floristería cerca de mi ubicación, comprar flores cerca de mi, floristería 24 horas, floristería near me, florería cerca de mi, floristeria cerca a mi, floreria cerca de mi ubicación, floreria 24 horas cerca de mi">
+    <meta name="language" content="es-CO">
+    <meta name="author" content="Gi Garden">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="business.business">
+    <meta property="og:title" content="Gi Garden - Floristería 24 Horas Cerca de Ti en Bogotá">
+    <meta property="og:description" content="Flores frescas entregadas a domicilio en Bogotá. Ordena ahora por WhatsApp.">
+    <meta property="og:url" content="https://bogotafloristeria.dondeseria.com/landing/floristerias-cerca">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1487530811176-3780de880c2d?w=1200&q=80">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://bogotafloristeria.dondeseria.com/landing/floristerias-cerca">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/landing.css">
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VDPKGDQKXZ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-VDPKGDQKXZ');
+    </script>
+
+    <!-- Google Ads Conversion Tracking -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18191445167"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'AW-18191445167');
+    </script>
+
+    <title>Gi Garden - Floristería 24 Horas Cerca de Ti en Bogotá, Cundinamarca</title>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <img src="../assets/logo.webp" alt="Gi Garden - Floristería Bogotá">
+            </div>
+            <h1 class="header-title">Gi Garden</h1>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" style="background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1487530811176-3780de880c2d?w=1920&q=80');">
+        <div class="hero-content">
+            <h2 class="hero-title">Tu Floristería Cerca de Ti en Bogotá</h2>
+            <p class="hero-subtitle">Flores frescas las 24 horas - Llevamos hasta tu puerta - Pide por WhatsApp</p>
+            <button class="cta-button" onclick="contactWA(); return false;">
+                <span class="whatsapp-icon">📱</span> Contactar por WhatsApp
+            </button>
+        </div>
+    </section>
+
+
+    <!-- Catálogo Completo -->
+    <section class="catalog-filters" id="productos">
+        <div class="container">
+            <!-- Barra de búsqueda -->
+            <div class="search-container">
+                <input type="text" class="search-input" id="search-input" placeholder="Buscar ramos, rosas, girasoles, gerberas...">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"/>
+                    <path d="m21 21-4.35-4.35"/>
+                </svg>
+                <button class="search-clear" id="search-clear">&times;</button>
+            </div>
+            <!-- Filtros -->
+            <div class="filters-container">
+                <span class="filter-label">Filtrar:</span>
+                <button class="filter-btn active" data-filter="todos">Todos</button>
+                <button class="filter-btn filter-btn-madres" data-filter="dia-madres">Día de las Madres</button>
+                <button class="filter-btn" data-filter="girasoles">Girasoles</button>
+                <button class="filter-btn" data-filter="gerberas">Gerberas</button>
+                <button class="filter-btn" data-filter="bouquets">Bouquets</button>
+                <button class="filter-btn" data-filter="canastas">Canastas</button>
+                <button class="filter-btn" data-filter="cajas">Cajas</button>
+                <button class="filter-btn" data-filter="chocolates">Con Chocolates</button>
+                <button class="filter-btn" data-filter="novia">Novia</button>
+                <button class="filter-btn" data-filter="pompones">Pompones</button>
+                <button class="filter-btn" data-filter="rosas-eternas">Rosas Eternas</button>
+                <button class="filter-btn" data-filter="coreano">Estilo Coreano</button>
+                <button class="filter-btn" data-filter="premium">Premium</button>
+                <button class="filter-btn" data-filter="precio-bajo">Menos de $150.000</button>
+                <button class="filter-btn" data-filter="precio-medio">$150.000 - $250.000</button>
+                <button class="filter-btn" data-filter="precio-alto">Más de $250.000</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contador de resultados -->
+    <div class="results-counter">
+        <div class="container">
+            Mostrando <strong id="results-count">0</strong> creaciones
+        </div>
+    </div>
+
+    <!-- Grid de Productos -->
+    <section class="products-section">
+        <div class="container">
+            <div class="products-container"></div>
+            <div class="empty-state" id="empty-state">
+                <h3>No se encontraron creaciones</h3>
+                <p>Prueba ajustando el filtro o cambiando tu palabra de búsqueda</p>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- CTA Final -->
+    <section class="final-cta">
+        <div class="container">
+            <h2>Sorprende Hoy, Sonríen Mañana</h2>
+            <p>Solicita ya mismo tus flores con entrega a domicilio. Despachamos en Bogotá todos los días del año.</p>
+            <button class="cta-button-large" onclick="orderWA(); return false;">
+                📞 WhatsApp: +57 314 595 7395
+            </button>
+            <p class="cta-subtitle">Atención las 24 horas - Te contestamos al instante</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-info">
+                <p><strong>Gi Garden</strong> - Tu florería en Bogotá, Cundinamarca, Colombia</p>
+                <p>Escríbenos por WhatsApp: <a href="https://wa.me/573145957395">+57 314 595 7395</a></p>
+                <p>Llevamos tus flores a domicilio en toda la ciudad</p>
+            </div>
+            <p class="footer-copyright">&copy; 2024 Gi Garden. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "Gi Garden",
+        "image": "https://bogotafloristeria.dondeseria.com/assets/logo.webp",
+        "description": "Floristería 24 horas en Bogotá. Flores frescas con entrega a domicilio.",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Bogotá",
+            "addressLocality": "Bogotá",
+            "addressRegion": "Cundinamarca",
+            "postalCode": "",
+            "addressCountry": "CO"
+        },
+        "telephone": "+573145957395",
+        "url": "https://bogotafloristeria.dondeseria.com",
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": "4.4389",
+            "longitude": "-75.2322"
+        },
+        "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+            "opens": "00:00",
+            "closes": "23:59"
+        },
+        "sameAs": [
+            "https://wa.me/573145957395"
+        ]
+    }
+    </script>
+
+    <!-- JS -->
+    <script src="../js/landing.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function(){
+        LANDING_PRIORITY_TAG = 'bouquets';
+        initCatalog();
+    })

@@ -1,0 +1,406 @@
+/* =====================================================
+   CATEGORY TEMPLATE CSS — LUCCI BENE (Negro / Blanco / Dorado)
+   Template reutilizable para páginas de categorías secundarias
+   ===================================================== */
+
+/* ===================================
+   HERO SECTION CON BACKGROUND
+   =================================== */
+.category-hero {
+    position: relative;
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin-top: 80px;
+}
+
+.category-hero-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 0;
+}
+
+.category-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg,
+        rgba(10, 10, 10, 0.92) 0%,
+        rgba(26, 26, 26, 0.85) 40%,
+        rgba(140, 111, 58, 0.55) 100%
+    );
+    z-index: 1;
+}
+
+.category-hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 3rem 1rem;
+}
+
+.category-hero-content .breadcrumb {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.9);
+    letter-spacing: 0.5px;
+}
+
+.category-hero-content .breadcrumb a {
+    color: #C9A86A;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.category-hero-content .breadcrumb a:hover {
+    color: #E8D7A8;
+}
+
+.category-hero-content .breadcrumb .separator {
+    color: rgba(201, 168, 106, 0.5);
+}
+
+.category-hero-content .breadcrumb .current {
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.category-hero-content h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+    text-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+    letter-spacing: -0.5px;
+}
+
+.category-hero-content h1::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #C9A86A, transparent);
+    margin: 1.25rem auto 0;
+}
+
+.hero-intro {
+    font-size: 1.125rem;
+    color: rgba(255, 255, 255, 0.92);
+    line-height: 1.85;
+    font-weight: 300;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* ===================================
+   SERVICES SECTION
+   =================================== */
+.services-section {
+    padding: 100px 0;
+    background: linear-gradient(135deg, #faf8f3 0%, #ffffff 100%);
+}
+
+.section-header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 60px;
+}
+
+.section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    color: #0a0a0a;
+    margin-bottom: 1rem;
+    letter-spacing: -0.4px;
+}
+
+.section-subtitle {
+    font-size: 1.125rem;
+    color: #5c5c5c;
+    font-weight: 300;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    gap: 3rem;
+}
+
+.service-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 3rem;
+    box-shadow: 0 4px 22px rgba(0, 0, 0, 0.08);
+    transition: all 0.35s cubic-bezier(.2,.7,.3,1);
+    border: 1px solid rgba(201, 168, 106, 0.18);
+    border-left: 3px solid #C9A86A;
+}
+
+.service-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 14px 36px rgba(0, 0, 0, 0.16);
+    border-left-color: #8C6F3A;
+    border-color: #C9A86A;
+}
+
+.service-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+    border: 1px solid #C9A86A;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.service-icon svg {
+    color: #C9A86A;
+}
+
+.service-content h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: #0a0a0a;
+    margin-bottom: 1.5rem;
+}
+
+.service-content p {
+    color: #5c5c5c;
+    line-height: 1.85;
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+}
+
+.service-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+}
+
+.feature-tag {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background: rgba(201, 168, 106, 0.12);
+    color: #8C6F3A;
+    border: 1px solid rgba(201, 168, 106, 0.3);
+    border-radius: 50px;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.btn-service {
+    display: inline-flex;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: #0a0a0a;
+    color: #C9A86A;
+    border: 1.5px solid #C9A86A;
+    border-radius: 50px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+}
+
+.btn-service:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 22px rgba(201, 168, 106, 0.45);
+    background: #C9A86A;
+    color: #0a0a0a;
+}
+
+/* ===================================
+   CTA SECTION
+   =================================== */
+.category-cta {
+    padding: 100px 0;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1f1f1f 100%);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.category-cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 20% 50%, rgba(201, 168, 106, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 50%, rgba(232, 215, 168, 0.08) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.category-cta .cta-content {
+    position: relative;
+    z-index: 1;
+}
+
+.category-cta .cta-content h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    color: #ffffff;
+    margin-bottom: 1rem;
+}
+
+.category-cta .cta-content p {
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.82);
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+}
+
+.category-cta .btn-primary {
+    background: #C9A86A;
+    color: #0a0a0a;
+    border: 1.5px solid #C9A86A;
+}
+
+.category-cta .btn-primary:hover {
+    background: #ffffff;
+    color: #0a0a0a;
+    border-color: #ffffff;
+}
+
+/* ===================================
+   RESPONSIVE DESIGN
+   =================================== */
+@media (max-width: 1024px) {
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .category-hero-content h1 {
+        font-size: 2.75rem;
+    }
+
+    .section-title {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .category-hero {
+        min-height: 50vh;
+        margin-top: 70px;
+    }
+
+    .category-hero-content {
+        padding: 2rem 1rem;
+    }
+
+    .category-hero-content h1 {
+        font-size: 2.25rem;
+    }
+
+    .hero-intro {
+        font-size: 1rem;
+    }
+
+    .services-section {
+        padding: 60px 0;
+    }
+
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .service-card {
+        padding: 2rem;
+    }
+
+    .service-content h2 {
+        font-size: 1.5rem;
+    }
+
+    .category-cta {
+        padding: 60px 0;
+    }
+
+    .category-cta .cta-content h2 {
+        font-size: 2rem;
+    }
+
+    .category-cta .cta-content p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .category-hero-content h1 {
+        font-size: 1.875rem;
+    }
+
+    .service-features {
+        flex-direction: column;
+    }
+
+    .feature-tag {
+        text-align: center;
+    }
+
+    .btn-service {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* ===================================
+   ANIMACIONES
+   =================================== */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.service-card {
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+.service-card:nth-child(1) { animation-delay: 0.1s; }
+.service-card:nth-child(2) { animation-delay: 0.2s; }
+.service-card:nth-child(3) { animation-delay: 0.3s; }
+.service-card:nth-child(4) { animation-delay: 0.4s; }
+
+/* ===================================
+   UTILIDADES ESPECÍFICAS
+   =================================== */
+.text-highlight {
+    color: #8C6F3A;
+    font-weight: 600;
+}
+
+.text-accent {
+    color: #C9A86A;
+    font-weight: 600;
+}
+
+#service-areas-container,
+#contact-info-container {
+    margin-top: 0;
+}
+
+#footer-container {
+    margin-top: 0;
+}
