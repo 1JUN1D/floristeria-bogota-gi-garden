@@ -698,7 +698,10 @@
                     </div>
                 </div>`;
                 
-                            grid.innerHTML = customCard + filteredProducts.map(product => {
+                            // Orden estricto de menor a mayor precio: todos los productos, sin omitir ninguno
+            filteredProducts.sort((a, b) => a.price - b.price);
+
+            grid.innerHTML = customCard + filteredProducts.map(product => {
                 const code = getProductCode(product.id);
                 const hasOptions = Array.isArray(product.priceOptions) && product.priceOptions.length > 0;
                 const priceLabel = hasOptions ? 'Desde' : 'Precio';
