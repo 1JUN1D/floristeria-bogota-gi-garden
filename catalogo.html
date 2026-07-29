@@ -83,6 +83,7 @@
             <div class="filters-container">
                 <span class="filter-label">Filtrar por:</span>
                 <button class="filter-btn active" data-filter="todos">Todos los Productos</button>
+                <button class="filter-btn filter-btn-novia" data-filter="novia">💗 Día de la Novia</button>
                 <button class="filter-btn" data-filter="rosas">Rosas</button>
                 <button class="filter-btn" data-filter="girasoles">Girasoles</button>
                 <button class="filter-btn" data-filter="gerberas">Gerberas</button>
@@ -148,6 +149,7 @@
 
     <!-- JavaScript -->
     <script src="js/script.js"></script>
+    <script src="js/promo-novia.js"></script>
     <script>
         // Catálogo Gi Garden - 35 productos exclusivos
         const products = [
@@ -157,7 +159,7 @@
                 price: 93750,
                 image: "assets/foto38.webp",
                 description: "Encantador ramo de rosas rosadas con gypsophila y envoltura delicada. Detalle tierno y accesible para cualquier momento.",
-                categories: ["rosas", "bouquets", "precio-bajo"]
+                categories: ["rosas", "bouquets", "novia", "precio-bajo"]
             },
             {
                 id: 2,
@@ -165,7 +167,7 @@
                 price: 118750,
                 image: "assets/foto30.webp",
                 description: "Tierno ramo de rosas rosadas rematado con una mariposa decorativa. Delicadeza encantadora a un precio accesible.",
-                categories: ["rosas", "bouquets", "precio-medio"]
+                categories: ["rosas", "bouquets", "novia", "precio-medio"]
             },
             {
                 id: 3,
@@ -237,7 +239,7 @@
                 price: 156250,
                 image: "assets/foto56.webp",
                 description: "Elegante ramo cuadrado de girasoles; el color de la envoltura se personaliza a tu gusto. Diseño contemporáneo lleno de carácter.",
-                categories: ["girasoles", "bouquets", "precio-medio"]
+                categories: ["girasoles", "bouquets", "novia", "precio-medio"]
             },
             {
                 id: 12,
@@ -614,6 +616,38 @@
                 image: "assets/foto55.webp",
                 description: "Arreglo monumental con aves del paraíso, lirios y flores exóticas en canasta de lujo. La máxima expresión de grandeza floral.",
                 categories: ["premium", "bouquets", "precio-alto"]
+            },
+            {
+                id: 59,
+                name: "Sol de tu Sonrisa",
+                price: 125000,
+                image: "assets/foto59.webp",
+                description: "Girasoles radiantes abrazados por rosas rosadas, mini claveles y pompones blancos sobre envoltura rosa palo. Alegría y amor en el mismo ramo, sin tener que elegir.",
+                categories: ["girasoles", "rosas", "bouquets", "novia", "precio-medio"]
+            },
+            {
+                id: 60,
+                name: "Latido Fucsia",
+                price: 125000,
+                image: "assets/foto60.webp",
+                description: "Rosas fucsia encendidas con gypsophila, eucalipto, hilo de perlas y un corazón que corona el ramo. Romántico, directo e imposible de malinterpretar.",
+                categories: ["rosas", "bouquets", "novia", "precio-medio"]
+            },
+            {
+                id: 61,
+                name: "Susurro de Lirios",
+                price: 181250,
+                image: "assets/foto61.webp",
+                description: "Lirios rosados de pétalos abiertos con delphinium azul y eucalipto fresco. Perfuma la casa entera y sigue abriendo flores durante días.",
+                categories: ["bouquets", "novia", "premium", "precio-medio"]
+            },
+            {
+                id: 62,
+                name: "Alas de Amor",
+                price: 212500,
+                image: "assets/foto62.webp",
+                description: "Ramo XL de rosas rosadas en varios tonos, nube de gypsophila, mariposas doradas y tarjeta dedicada. La declaración más grande que puedes enviar sin decir una palabra.",
+                categories: ["rosas", "bouquets", "novia", "premium", "precio-alto"]
             }
         ];
 
@@ -701,8 +735,23 @@
                             // Orden estricto de menor a mayor precio: todos los productos, sin omitir ninguno
             filteredProducts.sort((a, b) => a.price - b.price);
 
-            grid.innerHTML = customCard + filteredProducts.map(product => {
+            // PROMO DÍA DE LA NOVIA: los 7 destacados suben al tope
+            const PN = window.PROMO_NOVIA;
+            let promoCount = 0;
+            if (PN && PN.active()) {
+                PN.sortToTop(filteredProducts);
+                promoCount = filteredProducts.filter(p => PN.find(p.image)).length;
+            }
+            let firstPromoMarked = false;
+
+            const cards = filteredProducts.map(product => {
                 const code = getProductCode(product.id);
+                const promo = PN ? PN.find(product.image) : null;
+                const promoClass = promo ? ' pn-card' : '';
+                const promoRibbon = promo ? PN.ribbon(promo) : '';
+                const promoBefore = promo ? PN.priceBefore(promo) : '';
+                let anchor = '';
+                if (promo && !firstPromoMarked) { anchor = ' id="promo-novia-primero"'; firstPromoMarked = true; }
                 const hasOptions = Array.isArray(product.priceOptions) && product.priceOptions.length > 0;
                 const priceLabel = hasOptions ? 'Desde' : 'Precio';
                 const optionsHtml = hasOptions ? `
@@ -714,10 +763,11 @@
                     ? `Hola Gi Garden, me interesa: ${code} - ${product.name} (desde ${formatPrice(product.price)}). Quiero ver opciones.`
                     : `Hola Gi Garden, me interesa: ${code} - ${product.name} - ${formatPrice(product.price)}.`;
                 return `
-                <div class="product-card" data-categories="${product.categories.join(' ')}">
+                <div class="product-card${promoClass}"${anchor} data-categories="${product.categories.join(' ')}">
                     <div class="product-image-container" onclick="openLightbox('${product.image}', '${product.name}', '${formatPrice(product.price)}')">
+                        ${promoRibbon}
                         <span class="product-code-badge">${code}</span>
-                        <img src="${product.image}" alt="${product.name}" class="product-image" loading="lazy">
+                        <img src="${product.image}" alt="${product.name}" class="product-image" loading="lazy" decoding="async">
                         <div class="zoom-icon">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <circle cx="11" cy="11" r="8"/>
@@ -733,7 +783,8 @@
                         ${optionsHtml}
                         <div class="product-footer">
                             <div>
-                                <span class="price-label">${priceLabel}</span>
+                                <span class="price-label">${promo ? 'Precio promo' : priceLabel}</span>
+                                ${promoBefore}
                                 <div class="product-price">${formatPrice(product.price)}</div>
                             </div>
                             <a href="https://wa.me/573145957395?text=${encodeURIComponent(waMsg + '\nFoto: https://bogotafloristeria.dondeseria.com/' + product.image)}"
@@ -747,7 +798,11 @@
                         </div>
                     </div>
                 </div>
-            `}).join('');
+            `});
+
+            // Los 7 de la promo van de primeros, luego la tarjeta de arreglo
+            // personalizado y después el resto del catálogo.
+            grid.innerHTML = cards.slice(0, promoCount).join('') + customCard + cards.slice(promoCount).join('');
         }
 
         function formatPrice(price) {
