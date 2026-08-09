@@ -151,7 +151,7 @@
     <script src="js/script.js"></script>
     <script src="js/promo-novia.js"></script>
     <script>
-        // Catálogo Gi Garden - 35 productos exclusivos
+        // Catálogo Gi Garden
         const products = [
             {
                 id: 1,
@@ -172,7 +172,7 @@
             {
                 id: 3,
                 name: "Girasol Imperial",
-                price: 118750,
+                price: 143750,
                 image: "assets/foto50.webp",
                 description: "Imponente girasol único enmarcado en envoltura negra y dorada. Minimalismo elegante a precio accesible.",
                 categories: ["girasoles", "bouquets", "precio-medio"]
@@ -190,13 +190,13 @@
                 name: "Orgullo del Graduado",
                 price: 143750,
                 image: "assets/foto21.webp",
-                description: "Ramo de rosas en tonos suaves acompañado de un birrete de graduación. El reconocimiento perfecto para celebrar un logro.",
+                description: "Ramo de rosas en tonos suaves acompañado de un birrete de graduación. Va con rosa grande y rosa pequeña. El reconocimiento perfecto para celebrar un logro.",
                 categories: ["rosas", "bouquets", "precio-medio"]
             },
             {
                 id: 6,
                 name: "Caja Rubor",
-                price: 143750,
+                price: 156250,
                 image: "assets/foto24.webp",
                 description: "Caja compacta rebosante de rosas rosadas en tono rubor. Detalle dulce y delicado para enamorar.",
                 categories: ["cajas", "rosas", "precio-medio"]
@@ -204,7 +204,7 @@
             {
                 id: 7,
                 name: "Caja Pasión Roja",
-                price: 147500,
+                price: 156250,
                 image: "assets/foto4.webp",
                 description: "Elegante caja negra colmada de rosas rojas con gypsophila, lazo a juego y espacio para tu tarjeta. Un clásico atemporal del amor.",
                 categories: ["rosas", "cajas", "precio-medio"]
@@ -212,10 +212,10 @@
             {
                 id: 8,
                 name: "Abrazo Floral",
-                price: 156250,
+                price: 262500,
                 image: "assets/foto34.webp",
                 description: "Ramo generoso de rosas rosadas y moradas con gypsophila. Un abrazo de color para expresar cariño.",
-                categories: ["rosas", "bouquets", "precio-medio"]
+                categories: ["rosas", "bouquets", "precio-alto"]
             },
             {
                 id: 9,
@@ -244,7 +244,7 @@
             {
                 id: 12,
                 name: "Alegría Campestre",
-                price: 156250,
+                price: 137500,
                 image: "assets/foto57.webp",
                 description: "Ramo alegre de mini girasoles acompañados de flores variadas. Frescura y color para alegrar cualquier día.",
                 categories: ["girasoles", "bouquets", "precio-medio"]
@@ -252,7 +252,7 @@
             {
                 id: 13,
                 name: "Fiesta de Gerberas",
-                price: 168750,
+                price: 187500,
                 image: "assets/foto3.webp",
                 description: "Composición vibrante de gerberas multicolor y flores de temporada rematada con un detalle dorado. Alegría pura para sorprender en cualquier ocasión.",
                 categories: ["gerberas", "bouquets", "precio-medio"]
@@ -263,15 +263,16 @@
                 price: 168750,
                 image: "assets/foto6.webp",
                 description: "Arreglo romántico con rosas rosadas y un globo metálico en forma de corazón con mensaje de amor. Perfecto para declarar lo que sientes.",
-                categories: ["rosas", "bouquets", "precio-medio"]
+                categories: ["rosas", "bouquets", "precio-medio"],
+                lowPriority: true
             },
             {
                 id: 15,
                 name: "Graduación Elegante",
-                price: 168750,
+                price: 228750,
                 image: "assets/foto22.webp",
                 description: "Ramo de rosas rojas con envoltura negra y banda conmemorativa. Sobrio y elegante para honrar a la persona graduada.",
-                categories: ["rosas", "bouquets", "precio-medio"]
+                categories: ["rosas", "bouquets", "precio-alto"]
             },
             {
                 id: 16,
@@ -279,20 +280,21 @@
                 price: 168750,
                 image: "assets/foto28.webp",
                 description: "Original ramo de rosas azules con envoltura a tono. Detalle único y sorprendente para quien busca algo diferente.",
-                categories: ["rosas", "bouquets", "precio-medio"]
+                categories: ["rosas", "bouquets", "precio-medio"],
+                lowPriority: true
             },
             {
                 id: 17,
                 name: "Clásico Rojo Pasión",
-                price: 168750,
+                price: 227500,
                 image: "assets/foto42.webp",
                 description: "Compacto ramo redondo de rosas rojas con envoltura traslúcida. El símbolo eterno del amor.",
-                categories: ["rosas", "bouquets", "precio-medio"]
+                categories: ["rosas", "bouquets", "precio-alto"]
             },
             {
                 id: 18,
                 name: "Esplendor de Girasoles",
-                price: 172500,
+                price: 193750,
                 image: "assets/foto1.webp",
                 description: "Imponente arreglo vertical que combina girasoles radiantes con rosas rojas y follaje tropical sobre base alta. Una pieza llena de energía y calidez ideal para celebraciones memorables.",
                 categories: ["girasoles", "rosas", "bouquets", "precio-medio"]
@@ -300,7 +302,7 @@
             {
                 id: 19,
                 name: "Caja Contraste",
-                price: 181250,
+                price: 187500,
                 image: "assets/foto9.webp",
                 description: "Refinada caja que combina lirios blancos con rosas rojas en armonía perfecta. Elegancia y contraste en cada detalle.",
                 categories: ["cajas", "rosas", "precio-medio"]
@@ -308,7 +310,7 @@
             {
                 id: 20,
                 name: "Bouquet Pastel Premium",
-                price: 181250,
+                price: 196250,
                 image: "assets/foto26.webp",
                 description: "Voluminoso ramo en tonos pastel con rosas blancas y moradas y follaje variado. Sofisticación romántica en gran formato.",
                 categories: ["bouquets", "rosas", "precio-medio"]
@@ -319,20 +321,21 @@
                 price: 181250,
                 image: "assets/foto33.webp",
                 description: "Ramo sereno de flores blancas con eucalipto fresco. Sencillez elegante que transmite paz y armonía.",
-                categories: ["bouquets", "precio-medio"]
+                categories: ["bouquets", "precio-medio"],
+                lowPriority: true
             },
             {
                 id: 22,
                 name: "Cosecha de Color",
-                price: 193750,
+                price: 203750,
                 image: "assets/foto47.webp",
                 description: "Arreglo campestre de rosas naranja y lirios rosados sobre base de madera. Frescura natural con encanto rústico.",
-                categories: ["rosas", "bouquets", "precio-medio"]
+                categories: ["rosas", "bouquets", "precio-alto"]
             },
             {
                 id: 23,
                 name: "Campo Vibrante",
-                price: 193750,
+                price: 137500,
                 image: "assets/foto49.webp",
                 description: "Colorido arreglo de girasoles, rosas y flores moradas. Un pedazo de campo lleno de vitalidad.",
                 categories: ["girasoles", "bouquets", "precio-medio"]
@@ -383,7 +386,8 @@
                 price: 218750,
                 image: "assets/foto2.webp",
                 description: "Espectacular torre escalonada de rosas fucsia coronada con una hortensia central y verdor exuberante. Diseño de gran formato que impone presencia y romanticismo.",
-                categories: ["rosas", "premium", "precio-alto"]
+                categories: ["rosas", "premium", "precio-alto"],
+                lowPriority: true
             },
             {
                 id: 30,
@@ -412,7 +416,7 @@
             {
                 id: 33,
                 name: "Elegancia de Calas",
-                price: 218750,
+                price: 225000,
                 image: "assets/foto46.webp",
                 description: "Sofisticado ramo de calas blancas y rosas rojas con envoltura negra. Distinción y drama en un mismo diseño.",
                 categories: ["bouquets", "rosas", "precio-alto"]
@@ -439,7 +443,8 @@
                 price: 231250,
                 image: "assets/foto23.webp",
                 description: "Elegante ramo compuesto únicamente de lirios y follaje fresco. Naturalidad y distinción para alegrar cualquier espacio.",
-                categories: ["bouquets", "precio-alto"]
+                categories: ["bouquets", "precio-alto"],
+                lowPriority: true
             },
             {
                 id: 37,
@@ -476,10 +481,11 @@
             {
                 id: 41,
                 name: "Ramo Algodón de Colores",
-                price: 243750,
+                price: 216250,
                 image: "assets/foto19.webp",
                 description: "Vistoso ramo de gypsophila multicolor envuelto con lazo. Detalle ligero y encantador que arranca sonrisas.",
-                categories: ["bouquets", "precio-alto"]
+                categories: ["bouquets", "precio-alto"],
+                lowPriority: true
             },
             {
                 id: 42,
@@ -511,7 +517,8 @@
                 price: 268750,
                 image: "assets/foto27.webp",
                 description: "Arreglo exótico con aves del paraíso, rosas naranja y frutas frescas. Lujo tropical que combina belleza y sabor.",
-                categories: ["bouquets", "premium", "precio-alto"]
+                categories: ["bouquets", "premium", "precio-alto"],
+                lowPriority: true
             },
             {
                 id: 46,
@@ -527,7 +534,9 @@
                 price: 275000,
                 image: "assets/foto17.webp",
                 description: "Solemne corona fúnebre en tonos dorados y blancos con acabado clásico. Un homenaje digno y respetuoso de despedida.",
-                categories: ["premium", "precio-alto"]
+                categories: ["premium", "precio-alto"],
+                lowPriority: true,
+                hidden: true
             },
             {
                 id: 48,
@@ -556,7 +565,7 @@
             {
                 id: 51,
                 name: "Nube Multicolor",
-                price: 306250,
+                price: 231250,
                 image: "assets/foto12.webp",
                 description: "Esfera espectacular de gypsophila teñida en todos los colores del arcoíris; una flor muy duradera que se conserva por bastante tiempo. Diseño moderno y festivo que enamora a primera vista.",
                 categories: ["bouquets", "premium", "precio-alto"]
@@ -567,12 +576,14 @@
                 price: 306250,
                 image: "assets/foto18.webp",
                 description: "Corona fúnebre de lirios y flores blancas que transmite serenidad y respeto. Acompaña con elegancia los momentos de duelo.",
-                categories: ["premium", "precio-alto"]
+                categories: ["premium", "precio-alto"],
+                lowPriority: true,
+                hidden: true
             },
             {
                 id: 53,
                 name: "Gran Bouquet Fucsia",
-                price: 312500,
+                price: 337500,
                 image: "assets/foto54.webp",
                 description: "Exuberante ramo de gran tamaño con rosas fucsia y blancas. Volumen y color para una impresión inolvidable.",
                 categories: ["rosas", "premium", "precio-alto"]
@@ -644,10 +655,58 @@
             {
                 id: 62,
                 name: "Alas de Amor",
-                price: 212500,
+                price: 228750,
                 image: "assets/foto62.webp",
                 description: "Ramo XL de rosas rosadas en varios tonos, nube de gypsophila, mariposas doradas y tarjeta dedicada. La declaración más grande que puedes enviar sin decir una palabra.",
                 categories: ["rosas", "bouquets", "novia", "premium", "precio-alto"]
+            },
+            {
+                id: 63,
+                name: "Rosas con tu Inicial",
+                price: 230000,
+                image: "assets/foto63.webp",
+                description: "Ramo de rosas rojas con la inicial de esa persona especial tejida en flores blancas, follaje fresco y tarjeta dedicada. Un detalle personalizado que nadie más va a tener.",
+                categories: ["rosas", "bouquets", "premium", "precio-alto"]
+            },
+            {
+                id: 64,
+                name: "Canasta Jardín Pastel",
+                price: 368750,
+                image: "assets/foto64.webp",
+                description: "Canasta desbordante de rosas, crisantemos, hortensias, astromelias y margaritas azules en degradado pastel con eucalipto fresco. Gran formato para sorprender de verdad.",
+                categories: ["bouquets", "premium", "precio-alto"]
+            },
+            {
+                id: 65,
+                name: "Osito y Rosas Blancas",
+                price: 256250,
+                image: "assets/foto65.webp",
+                description: "Rosas blancas con gypsophila en caja rosa con lazo de perlas, acompañadas de un tierno osito de peluche. Dulzura y elegancia en un mismo detalle.",
+                categories: ["cajas", "rosas", "premium", "precio-alto"]
+            },
+            {
+                id: 66,
+                name: "Ramo Gatito Consentido",
+                price: 293750,
+                image: "assets/foto66.webp",
+                description: "Ramo de lirios amarillos, rosas rojas y pompones blancos con un peluche travieso en el centro. Alegre, divertido y perfecto para arrancar una sonrisa.",
+                categories: ["bouquets", "premium", "precio-alto"]
+            },
+            {
+                id: 67,
+                name: "Bendición de Guadalupe",
+                price: 177500,
+                image: "assets/foto67.webp",
+                description: "Caja blanca con claveles, rosas y flores en tonos rosados presidida por una imagen de la Virgen de Guadalupe. Un detalle de fe para bautizos, primeras comuniones y fechas especiales.",
+                categories: ["cajas", "bouquets", "precio-medio"]
+            },
+            {
+                id: 68,
+                name: "Fe y Rosas Rojas",
+                price: 193750,
+                image: "assets/foto68.webp",
+                description: "Caja de madera con rosas rojas, gypsophila, chocolates finos y una imagen de la Virgen de Guadalupe. Fe y amor reunidos en un mismo regalo.",
+                categories: ["cajas", "rosas", "chocolates", "precio-medio"]
             }
         ];
 
@@ -733,7 +792,7 @@
                 </div>`;
                 
                             // Orden estricto de menor a mayor precio: todos los productos, sin omitir ninguno
-            filteredProducts.sort((a, b) => a.price - b.price);
+            filteredProducts.sort((a, b) => (a.lowPriority ? 1 : 0) - (b.lowPriority ? 1 : 0) || a.price - b.price);
 
             // PROMO DÍA DE LA NOVIA: los 7 destacados suben al tope
             const PN = window.PROMO_NOVIA;
