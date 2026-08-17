@@ -83,7 +83,7 @@
             <div class="filters-container">
                 <span class="filter-label">Filtrar por:</span>
                 <button class="filter-btn active" data-filter="todos">Todos los Productos</button>
-                <button class="filter-btn filter-btn-novia" data-filter="novia">💗 Día de la Novia</button>
+                <button class="filter-btn filter-btn-semana" data-filter="semana">🏷️ Ofertas de la Semana</button>
                 <button class="filter-btn" data-filter="rosas">Rosas</button>
                 <button class="filter-btn" data-filter="girasoles">Girasoles</button>
                 <button class="filter-btn" data-filter="gerberas">Gerberas</button>
@@ -149,7 +149,7 @@
 
     <!-- JavaScript -->
     <script src="js/script.js"></script>
-    <script src="js/promo-novia.js"></script>
+    <script src="js/promo-semana.js"></script>
     <script>
         // Catálogo Gi Garden
         const products = [
@@ -159,7 +159,7 @@
                 price: 93750,
                 image: "assets/foto38.webp",
                 description: "Encantador ramo de rosas rosadas con gypsophila y envoltura delicada. Detalle tierno y accesible para cualquier momento.",
-                categories: ["rosas", "bouquets", "novia", "precio-bajo"]
+                categories: ["rosas", "bouquets", "semana", "precio-bajo"]
             },
             {
                 id: 2,
@@ -167,7 +167,7 @@
                 price: 118750,
                 image: "assets/foto30.webp",
                 description: "Tierno ramo de rosas rosadas rematado con una mariposa decorativa. Delicadeza encantadora a un precio accesible.",
-                categories: ["rosas", "bouquets", "novia", "precio-medio"]
+                categories: ["rosas", "bouquets", "semana", "precio-medio"]
             },
             {
                 id: 3,
@@ -239,7 +239,7 @@
                 price: 156250,
                 image: "assets/foto56.webp",
                 description: "Elegante ramo cuadrado de girasoles; el color de la envoltura se personaliza a tu gusto. Diseño contemporáneo lleno de carácter.",
-                categories: ["girasoles", "bouquets", "novia", "precio-medio"]
+                categories: ["girasoles", "bouquets", "semana", "precio-medio"]
             },
             {
                 id: 12,
@@ -634,7 +634,7 @@
                 price: 125000,
                 image: "assets/foto59.webp",
                 description: "Girasoles radiantes abrazados por rosas rosadas, mini claveles y pompones blancos sobre envoltura rosa palo. Alegría y amor en el mismo ramo, sin tener que elegir.",
-                categories: ["girasoles", "rosas", "bouquets", "novia", "precio-medio"]
+                categories: ["girasoles", "rosas", "bouquets", "semana", "precio-medio"]
             },
             {
                 id: 60,
@@ -642,7 +642,7 @@
                 price: 125000,
                 image: "assets/foto60.webp",
                 description: "Rosas fucsia encendidas con gypsophila, eucalipto, hilo de perlas y un corazón que corona el ramo. Romántico, directo e imposible de malinterpretar.",
-                categories: ["rosas", "bouquets", "novia", "precio-medio"]
+                categories: ["rosas", "bouquets", "semana", "precio-medio"]
             },
             {
                 id: 61,
@@ -650,7 +650,7 @@
                 price: 181250,
                 image: "assets/foto61.webp",
                 description: "Lirios rosados de pétalos abiertos con delphinium azul y eucalipto fresco. Perfuma la casa entera y sigue abriendo flores durante días.",
-                categories: ["bouquets", "novia", "premium", "precio-medio"]
+                categories: ["bouquets", "semana", "premium", "precio-medio"]
             },
             {
                 id: 62,
@@ -658,7 +658,7 @@
                 price: 228750,
                 image: "assets/foto62.webp",
                 description: "Ramo XL de rosas rosadas en varios tonos, nube de gypsophila, mariposas doradas y tarjeta dedicada. La declaración más grande que puedes enviar sin decir una palabra.",
-                categories: ["rosas", "bouquets", "novia", "premium", "precio-alto"]
+                categories: ["rosas", "bouquets", "semana", "premium", "precio-alto"]
             },
             {
                 id: 63,
@@ -794,8 +794,8 @@
                             // Orden estricto de menor a mayor precio: todos los productos, sin omitir ninguno
             filteredProducts.sort((a, b) => (a.lowPriority ? 1 : 0) - (b.lowPriority ? 1 : 0) || a.price - b.price);
 
-            // PROMO DÍA DE LA NOVIA: los 7 destacados suben al tope
-            const PN = window.PROMO_NOVIA;
+            // OFERTAS DE LA SEMANA: los 7 destacados suben al tope
+            const PN = window.PROMO_SEMANA;
             let promoCount = 0;
             if (PN && PN.active()) {
                 PN.sortToTop(filteredProducts);
@@ -810,7 +810,7 @@
                 const promoRibbon = promo ? PN.ribbon(promo) : '';
                 const promoBefore = promo ? PN.priceBefore(promo) : '';
                 let anchor = '';
-                if (promo && !firstPromoMarked) { anchor = ' id="promo-novia-primero"'; firstPromoMarked = true; }
+                if (promo && !firstPromoMarked) { anchor = ' id="promo-semana-primero"'; firstPromoMarked = true; }
                 const hasOptions = Array.isArray(product.priceOptions) && product.priceOptions.length > 0;
                 const priceLabel = hasOptions ? 'Desde' : 'Precio';
                 const optionsHtml = hasOptions ? `

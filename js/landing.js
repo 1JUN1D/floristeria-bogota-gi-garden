@@ -5,8 +5,8 @@
 
 // --- DATOS DEL CATÁLOGO COMPLETO ---
 const products = [
-    { id: 1, name: "Ternura Rosada", price: 93750, image: "../assets/foto38.webp", description: "Encantador ramo de rosas rosadas con gypsophila y envoltura delicada. Detalle tierno y accesible para cualquier momento.", categories: ["rosas", "bouquets", "novia", "precio-bajo"] },
-    { id: 2, name: "Suspiro Rosado", price: 118750, image: "../assets/foto30.webp", description: "Tierno ramo de rosas rosadas rematado con una mariposa decorativa. Delicadeza encantadora a un precio accesible.", categories: ["rosas", "bouquets", "novia", "precio-medio"] },
+    { id: 1, name: "Ternura Rosada", price: 93750, image: "../assets/foto38.webp", description: "Encantador ramo de rosas rosadas con gypsophila y envoltura delicada. Detalle tierno y accesible para cualquier momento.", categories: ["rosas", "bouquets", "semana", "precio-bajo"] },
+    { id: 2, name: "Suspiro Rosado", price: 118750, image: "../assets/foto30.webp", description: "Tierno ramo de rosas rosadas rematado con una mariposa decorativa. Delicadeza encantadora a un precio accesible.", categories: ["rosas", "bouquets", "semana", "precio-medio"] },
     { id: 3, name: "Girasol Imperial", price: 143750, image: "../assets/foto50.webp", description: "Imponente girasol único enmarcado en envoltura negra y dorada. Minimalismo elegante a precio accesible.", categories: ["girasoles", "bouquets", "precio-medio"] },
     { id: 4, name: "Encanto de Hortensias", price: 137500, image: "../assets/foto36.webp", description: "Romántico ramo de hortensias blancas y siempreviva en tonos suaves. Elegancia natural para ocasiones especiales.", categories: ["bouquets", "precio-medio"] },
     { id: 5, name: "Orgullo del Graduado", price: 143750, image: "../assets/foto21.webp", description: "Ramo de rosas en tonos suaves acompañado de un birrete de graduación. Va con rosa grande y rosa pequeña. El reconocimiento perfecto para celebrar un logro.", categories: ["rosas", "bouquets", "precio-medio"] },
@@ -15,7 +15,7 @@ const products = [
     { id: 8, name: "Abrazo Floral", price: 262500, image: "../assets/foto34.webp", description: "Ramo generoso de rosas rosadas y moradas con gypsophila. Un abrazo de color para expresar cariño.", categories: ["rosas", "bouquets", "precio-alto"] },
     { id: 9, name: "Claveles del Corazón", price: 156250, image: "../assets/foto40.webp", description: "Cálido ramo de claveles rojos y rosados con follaje fino. Clásico lleno de afecto y color.", categories: ["bouquets", "precio-medio"] },
     { id: 10, name: "Rosas de Primavera", price: 156250, image: "../assets/foto41.webp", description: "Fresco ramo de rosas rosadas y blancas que evoca la primavera. Delicadeza y elegancia en cada tallo.", categories: ["rosas", "bouquets", "precio-medio"] },
-    { id: 11, name: "Girasoles de Gala", price: 156250, image: "../assets/foto56.webp", description: "Elegante ramo cuadrado de girasoles; el color de la envoltura se personaliza a tu gusto. Diseño contemporáneo lleno de carácter.", categories: ["girasoles", "bouquets", "novia", "precio-medio"] },
+    { id: 11, name: "Girasoles de Gala", price: 156250, image: "../assets/foto56.webp", description: "Elegante ramo cuadrado de girasoles; el color de la envoltura se personaliza a tu gusto. Diseño contemporáneo lleno de carácter.", categories: ["girasoles", "bouquets", "semana", "precio-medio"] },
     { id: 12, name: "Alegría Campestre", price: 137500, image: "../assets/foto57.webp", description: "Ramo alegre de mini girasoles acompañados de flores variadas. Frescura y color para alegrar cualquier día.", categories: ["girasoles", "bouquets", "precio-medio"] },
     { id: 13, name: "Fiesta de Gerberas", price: 187500, image: "../assets/foto3.webp", description: "Composición vibrante de gerberas multicolor y flores de temporada rematada con un detalle dorado. Alegría pura para sorprender en cualquier ocasión.", categories: ["gerberas", "bouquets", "precio-medio"] },
     { id: 14, name: "Te Amo Encanto", price: 168750, image: "../assets/foto6.webp", description: "Arreglo romántico con rosas rosadas y un globo metálico en forma de corazón con mensaje de amor. Perfecto para declarar lo que sientes.", categories: ["rosas", "bouquets", "precio-medio"], lowPriority: true },
@@ -63,10 +63,10 @@ const products = [
     { id: 56, name: "Cascada Arcoíris", price: 347500, image: "../assets/foto11.webp", description: "Monumental cascada de rosas en degradado de colores acompañada de globos decorativos. Pieza premium para momentos inolvidables.", categories: ["rosas", "premium", "precio-alto"] },
     { id: 57, name: "Gran Torre Imperial", price: 437500, image: "../assets/foto20.webp", description: "Imponente torre de rosas rojas y lirios de gran formato. Pieza majestuosa para impresionar en las ocasiones más importantes.", categories: ["rosas", "premium", "precio-alto"] },
     { id: 58, name: "Majestad Tropical", price: 812500, image: "../assets/foto55.webp", description: "Arreglo monumental con aves del paraíso, lirios y flores exóticas en canasta de lujo. La máxima expresión de grandeza floral.", categories: ["premium", "bouquets", "precio-alto"] },
-    { id: 59, name: "Sol de tu Sonrisa", price: 125000, image: "../assets/foto59.webp", description: "Girasoles radiantes abrazados por rosas rosadas, mini claveles y pompones blancos sobre envoltura rosa palo. Alegría y amor en el mismo ramo, sin tener que elegir.", categories: ["girasoles", "rosas", "bouquets", "novia", "precio-medio"] },
-    { id: 60, name: "Latido Fucsia", price: 125000, image: "../assets/foto60.webp", description: "Rosas fucsia encendidas con gypsophila, eucalipto, hilo de perlas y un corazón que corona el ramo. Romántico, directo e imposible de malinterpretar.", categories: ["rosas", "bouquets", "novia", "precio-medio"] },
-    { id: 61, name: "Susurro de Lirios", price: 181250, image: "../assets/foto61.webp", description: "Lirios rosados de pétalos abiertos con delphinium azul y eucalipto fresco. Perfuma la casa entera y sigue abriendo flores durante días.", categories: ["bouquets", "novia", "premium", "precio-medio"] },
-    { id: 62, name: "Alas de Amor", price: 228750, image: "../assets/foto62.webp", description: "Ramo XL de rosas rosadas en varios tonos, nube de gypsophila, mariposas doradas y tarjeta dedicada. La declaración más grande que puedes enviar sin decir una palabra.", categories: ["rosas", "bouquets", "novia", "premium", "precio-alto"] },
+    { id: 59, name: "Sol de tu Sonrisa", price: 125000, image: "../assets/foto59.webp", description: "Girasoles radiantes abrazados por rosas rosadas, mini claveles y pompones blancos sobre envoltura rosa palo. Alegría y amor en el mismo ramo, sin tener que elegir.", categories: ["girasoles", "rosas", "bouquets", "semana", "precio-medio"] },
+    { id: 60, name: "Latido Fucsia", price: 125000, image: "../assets/foto60.webp", description: "Rosas fucsia encendidas con gypsophila, eucalipto, hilo de perlas y un corazón que corona el ramo. Romántico, directo e imposible de malinterpretar.", categories: ["rosas", "bouquets", "semana", "precio-medio"] },
+    { id: 61, name: "Susurro de Lirios", price: 181250, image: "../assets/foto61.webp", description: "Lirios rosados de pétalos abiertos con delphinium azul y eucalipto fresco. Perfuma la casa entera y sigue abriendo flores durante días.", categories: ["bouquets", "semana", "premium", "precio-medio"] },
+    { id: 62, name: "Alas de Amor", price: 228750, image: "../assets/foto62.webp", description: "Ramo XL de rosas rosadas en varios tonos, nube de gypsophila, mariposas doradas y tarjeta dedicada. La declaración más grande que puedes enviar sin decir una palabra.", categories: ["rosas", "bouquets", "semana", "premium", "precio-alto"] },
     { id: 63, name: "Rosas con tu Inicial", price: 230000, image: "../assets/foto63.webp", description: "Ramo de rosas rojas con la inicial de esa persona especial tejida en flores blancas, follaje fresco y tarjeta dedicada. Un detalle personalizado que nadie más va a tener.", categories: ["rosas", "bouquets", "premium", "precio-alto"] },
     { id: 64, name: "Canasta Jardín Pastel", price: 368750, image: "../assets/foto64.webp", description: "Canasta desbordante de rosas, crisantemos, hortensias, astromelias y margaritas azules en degradado pastel con eucalipto fresco. Gran formato para sorprender de verdad.", categories: ["bouquets", "premium", "precio-alto"] },
     { id: 65, name: "Osito y Rosas Blancas", price: 256250, image: "../assets/foto65.webp", description: "Rosas blancas con gypsophila en caja rosa con lazo de perlas, acompañadas de un tierno osito de peluche. Dulzura y elegancia en un mismo detalle.", categories: ["cajas", "rosas", "premium", "precio-alto"] },
@@ -154,9 +154,9 @@ function renderProducts(filters = [], limit = null) {
     // Orden estricto de menor a mayor precio: TODOS los productos, sin omitir ninguno
     productsToDisplay.sort((a, b) => (a.lowPriority ? 1 : 0) - (b.lowPriority ? 1 : 0) || a.price - b.price);
 
-    // PROMO DÍA DE LA NOVIA: los 7 destacados suben al tope conservando el orden por precio
-    if (window.PROMO_NOVIA && window.PROMO_NOVIA.active()) {
-        window.PROMO_NOVIA.sortToTop(productsToDisplay);
+    // OFERTAS DE LA SEMANA: los 7 destacados suben al tope conservando el orden por precio
+    if (window.PROMO_SEMANA && window.PROMO_SEMANA.active()) {
+        window.PROMO_SEMANA.sortToTop(productsToDisplay);
     }
 
     if (limit) {
@@ -170,20 +170,20 @@ function renderProducts(filters = [], limit = null) {
 
     // Se construye todo el HTML de una sola vez (mucho más rápido que ir
     // concatenando innerHTML dentro del bucle)
-    const PN = window.PROMO_NOVIA;
+    const PN = window.PROMO_SEMANA;
     let firstPromoMarked = false;
 
     container.innerHTML = productsToDisplay.map(product => {
         const escapedName = product.name.replace(/'/g, "\\'");
         const code = getProductCode(product.id);
 
-        // ¿Está este producto en la promo del Día de la Novia?
+        // ¿Está este producto en las Ofertas de la Semana?
         const promo = PN ? PN.find(product.image) : null;
         const promoClass = promo ? ' pn-card' : '';
         const promoRibbon = promo ? PN.ribbon(promo) : '';
         const promoBefore = promo ? PN.priceBefore(promo) : '';
         let anchor = '';
-        if (promo && !firstPromoMarked) { anchor = ' id="promo-novia-primero"'; firstPromoMarked = true; }
+        if (promo && !firstPromoMarked) { anchor = ' id="promo-semana-primero"'; firstPromoMarked = true; }
 
         return `
             <div class="product-item${promoClass}"${anchor}>
