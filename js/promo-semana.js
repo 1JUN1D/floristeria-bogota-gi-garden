@@ -70,7 +70,10 @@
           desc: 'Lirios rosados de pétalos abiertos con delphinium azul y eucalipto fresco. Elegancia en gran formato.' },
         { key: 'foto45', name: 'Caja Romántica de Chocolates', price: 218750,
           hook: 'Rosas rojas y chocolates: el combo más pedido en Amor y Amistad.',
-          desc: 'Caja alargada con rosas rojas y finos chocolates. La combinación perfecta de amor y dulzura.' }
+          desc: 'Caja alargada con rosas rojas y finos chocolates. La combinación perfecta de amor y dulzura.' },
+        { key: 'foto44', name: 'Tulipanes Encantados', price: 231250, before: 300000,
+          hook: 'Tulipanes con descuento real: antes $300.000, ahora $231.250.',
+          desc: 'Elegante ramo de tulipanes rosados realzado con gypsophila. Flor de importación, temporada corta: solo mientras dure la oferta.' }
     ];
 
     var YELLOW_ITEMS = [
@@ -89,6 +92,10 @@
     ];
 
     function fmt(n) { return '$' + Number(n).toLocaleString('es-CO'); }
+    function offPct(it) {
+        if (!it || !it.before || it.before <= it.price) return 0;
+        return Math.round((1 - it.price / it.before) * 100);
+    }
 
     var CAMPAIGNS = {
         amor: {
@@ -96,7 +103,7 @@
             tab: '💝 Amor y Amistad',
             kicker: 'Hasta el sábado 19 de septiembre',
             title: 'Oferta de Amor y Amistad',
-            desc: 'Ocho arreglos escogidos para celebrar con tu pareja, tus amigos o esa persona que te alegra los días. '
+            desc: 'Nueve arreglos escogidos para celebrar con tu pareja, tus amigos o esa persona que te alegra los días. '
                 + 'La oferta termina el <strong>19 de septiembre a medianoche</strong>.',
             cta: 'Lo quiero para Amor y Amistad',
             tag: '💝 Amor y Amistad', ribbon: 'Oferta', label: 'Amor y Amistad',
@@ -153,6 +160,7 @@
 
     function waLink(it) {
         var msg = it.camp.waIntro + '\n' + it.name + ' — ' + fmt(it.price)
+            + (it.before ? ' (antes ' + fmt(it.before) + ')' : '')
             + '\nFoto: ' + SITE + 'assets/' + it.key + '.webp';
         return 'https://wa.me/' + WA_PHONE + '?text=' + encodeURIComponent(msg);
     }
@@ -175,7 +183,9 @@
             return '<span class="pn-ribbon' + y + '">' + it.camp.ribbon + '</span>'
                 + '<span class="pn-tag' + y + '">' + it.camp.tag + '</span>';
         },
-        priceBefore: function () { return ''; },
+        priceBefore: function (it) {
+            return (it && it.before) ? '<span class="pn-old">' + fmt(it.before) + '</span> ' : '';
+        },
         cardClass: function (it) { return it ? (it.camp.id === 'yellow' ? ' pn-card pn-card-y' : ' pn-card') : ''; }
     };
 
@@ -296,6 +306,8 @@
         '.pn-desc{font-size:.82rem;color:#5c5c5c;line-height:1.55}',
         '.pn-prices{display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap;margin-top:.15rem}',
         '.pn-new{font-size:1.65rem;font-weight:700;color:#B3255A;font-family:"Playfair Display",Georgia,serif}',
+        '.pn-old{color:#9b9b9b;text-decoration:line-through;font-weight:600;font-size:.95rem;margin-right:.35rem}',
+        '.pn-save{background:#E0457B;color:#fff;font-weight:700;font-size:.75rem;padding:.2rem .55rem;border-radius:50px;letter-spacing:.3px}',
         '.pn-box.y .pn-new{color:#B77800}',
         '.pn-cta{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;background:#25D366;color:#fff;',
         'font-weight:600;font-size:.9rem;padding:.7rem 1.1rem;border-radius:50px;margin-top:.3rem;align-self:flex-start;',
@@ -438,10 +450,10 @@
             + '<div class="pn-strip-txt">'
             + '<div class="pn-strip-kicker">Hasta el sábado 19 de septiembre</div>'
             + '<div class="pn-strip-title">💝 Oferta de Amor y Amistad</div>'
-            + '<div class="pn-strip-sub">8 arreglos escogidos para celebrar el amor y la amistad — la oferta se cierra el 19 a medianoche</div>'
+            + '<div class="pn-strip-sub">9 arreglos escogidos para celebrar el amor y la amistad — la oferta se cierra el 19 a medianoche</div>'
             + '</div>'
             + '<div class="pn-clock">' + clockHTML('pns') + '</div>'
-            + '<button type="button" class="pn-strip-btn" id="pn-strip-btn">Ver los 8 arreglos</button>'
+            + '<button type="button" class="pn-strip-btn" id="pn-strip-btn">Ver los 9 arreglos</button>'
             + '</div>';
         insertAfterHero(strip);
         registerClock('pns', function () { return AMOR_END; });
@@ -550,7 +562,7 @@
             document.getElementById('pn-kicker').textContent = c.kicker;
             document.getElementById('pn-title').textContent = c.title;
             document.getElementById('pn-desc').innerHTML = c.desc;
-            document.getElementById('pn-all').textContent = c.id === 'yellow' ? 'Ver flores amarillas' : 'Ver los 8 en el catálogo';
+            document.getElementById('pn-all').textContent = c.id === 'yellow' ? 'Ver flores amarillas' : 'Ver los 9 en el catálogo';
             track.style.transition = 'none';
             track.style.transform = 'translate3d(0,0,0)';
             track.innerHTML = c.items.map(function (it, i) {
@@ -562,7 +574,11 @@
                     + '<div class="pn-name">' + it.name + '</div>'
                     + '<div class="pn-hook">' + it.hook + '</div>'
                     + '<div class="pn-desc">' + it.desc + '</div>'
-                    + '<div class="pn-prices"><span class="pn-new">' + fmt(it.price) + '</span></div>'
+                    + '<div class="pn-prices">'
+                    + (it.before ? '<span class="pn-old">' + fmt(it.before) + '</span>' : '')
+                    + '<span class="pn-new">' + fmt(it.price) + '</span>'
+                    + (offPct(it) ? '<span class="pn-save">-' + offPct(it) + '%</span>' : '')
+                    + '</div>'
                     + '<a class="pn-cta" href="' + waLink(it) + '" target="_blank" rel="noopener">' + WA_SVG + c.cta + '</a>'
                     + '</div></div>';
             }).join('');
