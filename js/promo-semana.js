@@ -1,25 +1,26 @@
 /* =====================================================================
-   TEMPORADA DE SEPTIEMBRE — Gi Garden Bogotá
+   PROMOCIONES DE OCTUBRE — Gi Garden Bogotá
    ---------------------------------------------------------------------
    (El archivo conserva el nombre promo-semana.js para no tener que tocar
    las etiquetas <script> de las páginas.)
 
-   Dos campañas con fecha de cierre automática (hora de Bogotá):
-     1. 💝 OFERTA DE AMOR Y AMISTAD  → hasta el sábado 19 de septiembre, 11:59 p.m.
-     2. 🌻 FLORES AMARILLAS          → hasta el lunes 21 de septiembre, 11:59 p.m.
-        (Amor y Amistad + el 21 de septiembre, día de regalar flores amarillas)
+   Dos campañas que cierran solas en PROMO_END (hora de Bogotá):
 
-   Incluye:
-     · Flyer flotante con carrusel y pestañas (Amor y Amistad / Flores Amarillas)
-     · Banner con contador regresivo hasta el 19 de septiembre
-     · Vitrina "Flores Amarillas" con los arreglos amarillos destacados
-     · Cintas y bordes de destaque en las tarjetas del catálogo
-   Cuando pasa cada fecha, esa campaña se apaga sola (cintas, banner,
-   flyer y botón de filtro) y los productos quedan como normales.
+     1. ⭐ ARREGLO DE LA SEMANA → Ternura Rosada en 3 tamaños
+        12 rosas $85.000 · 18 rosas $110.000 · 24 rosas $135.000
+        - Flyer flotante (aparece una vez por visita) + botón flotante
+          "Arreglo de la semana" abajo a la izquierda para volver a abrirlo.
+
+     2. 🌸 FRENESÍ ROSA → 6 arreglos de rosas rosadas con precio rebajado
+        (el precio "antes" es el precio actual + 20 %)
+        - Vitrina animada con pétalos cayendo, contador y tarjetas.
+        - Cintas y borde animado en las tarjetas del catálogo/landings.
+        - Estos arreglos se muestran primero, en el orden de ROSA_ITEMS.
+
    ---------------------------------------------------------------------
-   CÓMO CAMBIAR LOS ARREGLOS: editar AMOR_ITEMS o YELLOW_ITEMS (sección 2).
-   CÓMO CAMBIAR LAS FECHAS:  editar AMOR_END / YELLOW_END (sección 1).
-   Los PRECIOS se toman del catálogo (catalogo.html y js/landing.js).
+   CÓMO CAMBIAR LA FECHA DE CIERRE: editar PROMO_END y END_TXT (sección 1).
+   CÓMO CAMBIAR LOS ARREGLOS / PRECIOS: editar WEEK y ROSA_ITEMS (sección 2).
+   Si cambias un precio aquí, cámbialo también en catalogo.html y js/landing.js.
    ===================================================================== */
 (function () {
     'use strict';
@@ -30,11 +31,10 @@
     var WA_PHONE = '573145957395';
     var SITE = 'https://bogotafloristeria.dondeseria.com/';
 
-    // Bogotá es UTC-5 todo el año. Fechas en UTC equivalentes a 11:59:59 p.m. Bogotá.
-    var AMOR_END   = Date.UTC(2026, 8, 20, 4, 59, 59);  // sáb 19 sep 2026, 11:59 p.m. Bogotá
-    var YELLOW_END = Date.UTC(2026, 8, 22, 4, 59, 59);  // lun 21 sep 2026, 11:59 p.m. Bogotá
+    // Bogotá es UTC-5 todo el año. Fecha en UTC equivalente a 11:59:59 p.m. Bogotá.
+    var PROMO_END = Date.UTC(2026, 9, 19, 4, 59, 59);   // domingo 18 de octubre 2026, 11:59 p.m. Bogotá
+    var END_TXT = 'domingo 18 de octubre';
 
-    // Base de rutas (funciona igual en la raíz y dentro de /landing/)
     var thisScript = document.currentScript;
     var BASE = (function () {
         if (thisScript && thisScript.src) {
@@ -44,319 +44,320 @@
     })();
 
     // ---------------------------------------------------------------
-    // 2. ARREGLOS DE CADA CAMPAÑA
+    // 2. ARREGLOS
     // ---------------------------------------------------------------
-    var AMOR_ITEMS = [
-        { key: 'foto38', name: 'Ternura Rosada', price: 112500,
-          hook: 'El detalle perfecto para esa amistad que siempre está.',
-          desc: 'Rosas rosadas con nube de gypsophila y envoltura delicada. Pequeño en tamaño, enorme en intención.' },
-        { key: 'foto30', name: 'Suspiro Rosado', price: 131250,
-          hook: 'Rosas que llegan con mariposa incluida. El mensaje se entiende solo.',
-          desc: 'Ramo de rosas rosadas rematado con una mariposa decorativa. Delicadeza que se roba la mirada apenas abre la puerta.' },
-        { key: 'foto59', name: 'Sol de tu Sonrisa', price: 143750,
-          hook: 'Girasoles y rosas en el mismo ramo: amor y amistad sin tener que elegir.',
-          desc: 'Girasoles radiantes abrazados por rosas rosadas, mini claveles y pompones blancos sobre envoltura rosa palo.' },
-        { key: 'foto60', name: 'Latido Fucsia', price: 143750,
-          hook: 'Rosas fucsia, perlas y un corazón arriba. Imposible de malinterpretar.',
-          desc: 'Rosas fucsia encendidas con gypsophila, eucalipto, hilo de perlas y un corazón que corona el ramo.' },
-        { key: 'foto50', name: 'Girasol Imperial', price: 162500,
-          hook: 'Un solo girasol, todo el protagonismo. Elegante y diferente.',
-          desc: 'Imponente girasol enmarcado en envoltura negra y dorada. Minimalismo con carácter para sorprender.' },
-        { key: 'foto41', name: 'Rosas de Primavera', price: 175000,
-          hook: 'Rosas rosadas y blancas: el clásico que nunca falla en septiembre.',
-          desc: 'Fresco ramo de rosas rosadas y blancas que evoca la primavera. Delicadeza y elegancia en cada tallo.' },
-        { key: 'foto61', name: 'Susurro de Lirios', price: 193750,
-          hook: 'Perfuma la casa entera y sigue abriendo flores durante días.',
-          desc: 'Lirios rosados de pétalos abiertos con delphinium azul y eucalipto fresco. Elegancia en gran formato.' },
-        { key: 'foto45', name: 'Caja Romántica de Chocolates', price: 218750,
-          hook: 'Rosas rojas y chocolates: el combo más pedido en Amor y Amistad.',
-          desc: 'Caja alargada con rosas rojas y finos chocolates. La combinación perfecta de amor y dulzura.' },
-        { key: 'foto44', name: 'Tulipanes Encantados', price: 231250, before: 300000,
-          hook: 'Tulipanes con descuento real: antes $300.000, ahora $231.250.',
-          desc: 'Elegante ramo de tulipanes rosados realzado con gypsophila. Flor de importación, temporada corta: solo mientras dure la oferta.' }
-    ];
-
-    var YELLOW_ITEMS = [
-        { key: 'foto69', name: 'Perlas de Sol', price: 125000,
-          hook: 'Rosas amarillas con encaje de perlas: luz pura en un ramo.',
-          desc: 'Rosas amarillas con nube de gypsophila, encaje de perlas y envoltura con borde amarillo.' },
-        { key: 'foto70', name: 'Abrazo de Sol', price: 137500,
-          hook: 'Un girasol al centro y un día soleado alrededor.',
-          desc: 'Girasol rodeado de rosas amarillas, crisantemos amarillos y margaritas blancas con follaje fresco.' },
-        { key: 'foto71', name: 'Jardín Dorado', price: 168750,
-          hook: 'Más volumen, más color y un toque silvestre que enamora.',
-          desc: 'Girasol central con rosas amarillas, margaritas blancas, solidago y eucalipto sobre envoltura amarilla.' },
-        { key: 'foto56', name: 'Girasoles de Gala', price: 193750,
-          hook: 'El ramo de girasoles más elegante. Tú eliges el color de la envoltura.',
-          desc: 'Ramo cuadrado de girasoles con envoltura personalizable. Diseño contemporáneo, lleno de carácter y de luz.' }
-    ];
-
-    function fmt(n) { return '$' + Number(n).toLocaleString('es-CO'); }
-    function offPct(it) {
-        if (!it || !it.before || it.before <= it.price) return 0;
-        return Math.round((1 - it.price / it.before) * 100);
-    }
-
-    var CAMPAIGNS = {
-        amor: {
-            id: 'amor', end: AMOR_END, items: AMOR_ITEMS,
-            tab: '💝 Amor y Amistad',
-            kicker: 'Hasta el sábado 19 de septiembre',
-            title: 'Oferta de Amor y Amistad',
-            desc: 'Nueve arreglos escogidos para celebrar con tu pareja, tus amigos o esa persona que te alegra los días. '
-                + 'La oferta termina el <strong>19 de septiembre a medianoche</strong>.',
-            cta: 'Lo quiero para Amor y Amistad',
-            tag: '💝 Amor y Amistad', ribbon: 'Oferta', label: 'Amor y Amistad',
-            waIntro: 'Hola Gi Garden, quiero aprovechar la Oferta de Amor y Amistad:'
-        },
-        yellow: {
-            id: 'yellow', end: YELLOW_END, items: YELLOW_ITEMS,
-            tab: '🌻 Flores Amarillas',
-            kicker: 'Amor y Amistad · 21 de septiembre',
-            title: 'Flores Amarillas',
-            desc: 'Los mejores arreglos amarillos para esta temporada: rosas, girasoles y margaritas que dicen '
-                + '“me alegras la vida”. Ideales para Amor y Amistad y para el <strong>21 de septiembre</strong>.',
-            cta: 'Quiero flores amarillas',
-            tag: '🌻 Flores Amarillas', ribbon: '🌻', label: 'Flores Amarillas',
-            waIntro: 'Hola Gi Garden, quiero estas flores amarillas:'
-        }
+    // Arreglo de la semana: Ternura Rosada en 3 tamaños (fotos 38, 38_1, 38_2)
+    var WEEK = {
+        camp: 'week',
+        key: 'foto38',
+        name: 'Ternura Rosada',
+        hook: 'Rosas rosadas, mariposa brillante y nube de gypsophila. Tú decides qué tan fuerte lo quieres decir.',
+        variants: [
+            { label: '12 rosas', note: 'Para alegrarle el día', price: 85000, before: 112500, img: 'foto38' },
+            { label: '18 rosas', note: 'Para que lo cuente a todo el mundo', price: 110000, before: 145000, img: 'foto38_1' },
+            { label: '24 rosas', note: 'Para dejarla sin palabras', price: 135000, before: 178000, img: 'foto38_2', badge: 'Mejor valor' }
+        ]
     };
 
-    Object.keys(CAMPAIGNS).forEach(function (k) {
-        CAMPAIGNS[k].items.forEach(function (it) {
-            it.camp = CAMPAIGNS[k];
-            it.img = BASE + 'assets/' + it.key + '.webp';
-            it.label = CAMPAIGNS[k].label;
-        });
+    // Frenesí Rosa: en este orden aparecen de primeros en el catálogo y las landings
+    var ROSA_UP = 1.20; // el precio de antes era 20 % más alto
+    var ROSA_ITEMS = [
+        { key: 'foto24', name: 'Caja Rubor', price: 156250,
+          hook: 'Abre la tapa y se le escapa la sonrisa: rosas rubor con perlas en caja blanca.' },
+        { key: 'foto30', name: 'Suspiro Rosado', price: 131250,
+          hook: 'Rosas rosadas con mariposa y carta: el mensaje se entiende antes de leerlo.' },
+        { key: 'foto34', name: 'Abrazo Floral', price: 262500,
+          hook: 'Rosas rosadas y lilas en nube de gypsophila. Un abrazo que se puede tocar.' },
+        { key: 'foto32', name: 'Elegancia Tropical', price: 281250,
+          hook: 'Rosas rosadas con aves del paraíso: presencia de gala que nadie olvida.' },
+        { key: 'foto31', name: 'Atardecer en Jarrón', price: 218750,
+          hook: 'Llega listo para lucir en su jarrón de vidrio. Solo hay que escogerle el mejor lugar.' },
+        { key: 'foto62', name: 'Alas de Amor', price: 228750,
+          hook: 'El ramo XL de rosas rosadas con mariposas doradas. La declaración más grande, sin decir una palabra.' }
+    ];
+
+    ROSA_ITEMS.forEach(function (it, i) {
+        it.camp = 'rosa';
+        it.rank = i + 1;
+        it.before = Math.round(it.price * ROSA_UP);
+        it.img = BASE + 'assets/' + it.key + '.webp';
+        it.label = 'Frenesí Rosa';
     });
+    WEEK.rank = ROSA_ITEMS.length + 1;
+    WEEK.label = 'Arreglo de la semana';
+    WEEK.variants.forEach(function (v) { v.src = BASE + 'assets/' + v.img + '.webp'; });
 
-    function isLive(c) { return Date.now() < c.end; }
-    function liveCampaigns() {
-        return ['amor', 'yellow'].map(function (k) { return CAMPAIGNS[k]; }).filter(isLive);
+    function fmt(n) { return '$' + Number(n).toLocaleString('es-CO'); }
+    function pct(price, before) { return before > price ? Math.round((1 - price / before) * 100) : 0; }
+    function isLive() { return Date.now() < PROMO_END; }
+
+    function keyOf(path) {
+        var m = String(path || '').match(/(foto\d+(?:_\d+)?)\.webp/);
+        return m ? m[1] : null;
     }
-
-    // Índice por foto (Amor y Amistad tiene prioridad si una foto está en ambas)
-    function lookup(key) {
-        if (isLive(CAMPAIGNS.amor)) {
-            for (var i = 0; i < AMOR_ITEMS.length; i++) if (AMOR_ITEMS[i].key === key) return AMOR_ITEMS[i];
-        }
-        if (isLive(CAMPAIGNS.yellow)) {
-            for (var j = 0; j < YELLOW_ITEMS.length; j++) if (YELLOW_ITEMS[j].key === key) return YELLOW_ITEMS[j];
-        }
+    function weekVariant(key) {
+        for (var i = 0; i < WEEK.variants.length; i++) if (WEEK.variants[i].img === key) return WEEK.variants[i];
         return null;
     }
-
     function find(imagePath) {
-        if (!imagePath) return null;
-        var m = String(imagePath).match(/(foto\d+)\.webp/);
-        return m ? lookup(m[1]) : null;
+        if (!isLive()) return null;
+        var k = keyOf(imagePath);
+        if (!k) return null;
+        if (weekVariant(k)) return WEEK;
+        for (var i = 0; i < ROSA_ITEMS.length; i++) if (ROSA_ITEMS[i].key === k) return ROSA_ITEMS[i];
+        return null;
     }
-
+    // Precio "antes" de una foto concreta (sirve para las 3 versiones de Ternura)
+    function beforeOf(imagePath) {
+        var it = find(imagePath);
+        if (!it) return 0;
+        if (it === WEEK) { var v = weekVariant(keyOf(imagePath)); return v ? v.before : 0; }
+        return it.before;
+    }
     function rankOf(product) {
         var it = find(product && product.image);
-        if (!it) return 0;
-        return it.camp.id === 'amor' ? 2 : 1;
+        return it ? it.rank : 0;
     }
 
-    function waLink(it) {
-        var msg = it.camp.waIntro + '\n' + it.name + ' — ' + fmt(it.price)
-            + (it.before ? ' (antes ' + fmt(it.before) + ')' : '')
+    var WEEK_MIN = WEEK.variants[0];
+    var WEEK_OFF = pct(WEEK_MIN.price, WEEK_MIN.before);
+
+    function waWeek(v) {
+        var msg = 'Hola Gi Garden, quiero el Arreglo de la Semana 🌸\n'
+            + WEEK.name + ' — ' + v.label + ' — ' + fmt(v.price) + ' (antes ' + fmt(v.before) + ')'
+            + '\nFoto: ' + SITE + 'assets/' + v.img + '.webp';
+        return 'https://wa.me/' + WA_PHONE + '?text=' + encodeURIComponent(msg);
+    }
+    function waRosa(it) {
+        var msg = 'Hola Gi Garden, quiero aprovechar el Frenesí Rosa 🌸\n'
+            + it.name + ' — ' + fmt(it.price) + ' (antes ' + fmt(it.before) + ')'
             + '\nFoto: ' + SITE + 'assets/' + it.key + '.webp';
         return 'https://wa.me/' + WA_PHONE + '?text=' + encodeURIComponent(msg);
     }
 
-    // API pública usada por catalogo.html y landing.js
+    // API pública usada por catalogo.html y js/landing.js
     window.PROMO_SEMANA = {
-        campaigns: CAMPAIGNS,
+        week: WEEK,
+        rosa: ROSA_ITEMS,
         find: find,
+        beforeOf: beforeOf,
         format: fmt,
-        active: function () { return liveCampaigns().length > 0; },
+        active: isLive,
         rank: rankOf,
-        // Sube al tope: primero Amor y Amistad, luego Flores Amarillas (conserva el orden por precio)
+        // Sube al tope los de la promo en el orden definido; el resto conserva su orden
         sortToTop: function (list) {
-            if (!liveCampaigns().length) return list;
-            return list.sort(function (a, b) { return rankOf(b) - rankOf(a); });
+            if (!isLive()) return list;
+            var tagged = list.map(function (p, i) { return { p: p, i: i, r: rankOf(p) }; });
+            tagged.sort(function (a, b) {
+                if (a.r && b.r) return a.r - b.r;
+                if (a.r) return -1;
+                if (b.r) return 1;
+                return a.i - b.i;
+            });
+            for (var i = 0; i < list.length; i++) list[i] = tagged[i].p;
+            return list;
         },
-        ribbon: function (it) {
+        ribbon: function (it, imagePath) {
             if (!it) return '';
-            var y = it.camp.id === 'yellow' ? ' pn-y' : '';
-            return '<span class="pn-ribbon' + y + '">' + it.camp.ribbon + '</span>'
-                + '<span class="pn-tag' + y + '">' + it.camp.tag + '</span>';
+            if (it === WEEK) {
+                return '<span class="pn-ribbon pn-wk">⭐ Arreglo de la semana</span>'
+                    + '<span class="pn-tag pn-wk">-' + WEEK_OFF + '% · desde ' + fmt(WEEK_MIN.price) + '</span>';
+            }
+            return '<span class="pn-ribbon">🌸 Frenesí Rosa</span>'
+                + '<span class="pn-tag">Ahorras ' + fmt(it.before - it.price) + '</span>';
         },
-        priceBefore: function (it) {
-            return (it && it.before) ? '<span class="pn-old">' + fmt(it.before) + '</span> ' : '';
+        priceBefore: function (it, imagePath) {
+            var b = it ? (imagePath ? beforeOf(imagePath) : (it === WEEK ? WEEK_MIN.before : it.before)) : 0;
+            return b ? '<span class="pn-old">' + fmt(b) + '</span> ' : '';
         },
-        cardClass: function (it) { return it ? (it.camp.id === 'yellow' ? ' pn-card pn-card-y' : ' pn-card') : ''; }
+        cardClass: function (it) { return it ? (it === WEEK ? ' pn-card pn-card-wk' : ' pn-card') : ''; },
+        openWeek: function () { openFlyer(true); }
     };
-
 
     // ---------------------------------------------------------------
     // 3. ESTILOS
     // ---------------------------------------------------------------
     var CSS = [
-        /* ---------- Destaque de tarjetas ---------- */
-        '.pn-card{position:relative;border:2px solid transparent!important;',
-        'background-image:linear-gradient(#fff,#fff),linear-gradient(120deg,#E0457B,#C9A86A,#FF8FB8,#E0457B);',
-        'background-origin:border-box;background-clip:padding-box,border-box;',
-        'box-shadow:0 10px 30px rgba(224,69,123,.18);border-radius:16px;overflow:hidden}',
-        '.pn-card-y{background-image:linear-gradient(#fff,#fff),linear-gradient(120deg,#F5B700,#FFE27A,#E89B00,#F5B700);',
-        'box-shadow:0 10px 30px rgba(232,155,0,.2)}',
-        '.pn-ribbon{position:absolute;top:0;right:0;z-index:4;background:linear-gradient(135deg,#E0457B,#B3255A);',
-        'color:#fff;font-family:Poppins,sans-serif;font-weight:700;font-size:.85rem;letter-spacing:.5px;',
-        'padding:.45rem .8rem;border-bottom-left-radius:14px;box-shadow:0 4px 12px rgba(0,0,0,.22)}',
-        '.pn-ribbon.pn-y{background:linear-gradient(135deg,#FFD23F,#E89B00);font-size:1rem;padding:.35rem .7rem}',
-        '.pn-tag{position:absolute;bottom:.7rem;left:.7rem;z-index:4;background:rgba(255,255,255,.94);',
-        'color:#B3255A;font-family:Poppins,sans-serif;font-weight:600;font-size:.72rem;letter-spacing:.3px;',
+        /* ---------- Tarjetas destacadas (borde animado + brillo) ---------- */
+        '.pn-card{position:relative;border:2px solid transparent!important;border-radius:16px;overflow:hidden;',
+        'background-image:linear-gradient(#fff,#fff),linear-gradient(120deg,#FF4F9A,#FFC2DA,#E0457B,#FF8FC0,#FF4F9A);',
+        'background-size:100% 100%,300% 300%;background-origin:border-box;background-clip:padding-box,border-box;',
+        'animation:pnBorder 5s linear infinite;box-shadow:0 10px 30px rgba(224,69,123,.22)}',
+        '.pn-card-wk{background-image:linear-gradient(#fff,#fff),linear-gradient(120deg,#C9A86A,#FFE3A3,#FF4F9A,#C9A86A,#FFE3A3);',
+        'box-shadow:0 12px 34px rgba(201,168,106,.35)}',
+        '@keyframes pnBorder{0%{background-position:0 0,0% 50%}100%{background-position:0 0,300% 50%}}',
+        '.pn-card .product-image-container::after,.pn-card .product-image::after{content:"";position:absolute;top:0;left:-75%;width:50%;height:100%;z-index:3;pointer-events:none;',
+        'background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-20deg);animation:pnShine 4.5s ease-in-out infinite}',
+        '@keyframes pnShine{0%,62%{left:-75%}100%{left:130%}}',
+        '.pn-ribbon{position:absolute;top:0;right:0;z-index:4;background:linear-gradient(135deg,#FF4F9A,#C2185B);',
+        'color:#fff;font-family:Poppins,sans-serif;font-weight:700;font-size:.8rem;letter-spacing:.4px;',
+        'padding:.45rem .8rem;border-bottom-left-radius:14px;box-shadow:0 4px 12px rgba(0,0,0,.22);animation:pnPulse 2.4s ease-in-out infinite}',
+        '.pn-ribbon.pn-wk{background:linear-gradient(135deg,#2a0716,#8E1450 60%,#C9A86A);}',
+        '@keyframes pnPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}',
+        '.pn-tag{position:absolute;bottom:.7rem;left:.7rem;z-index:4;background:rgba(255,255,255,.95);',
+        'color:#C2185B;font-family:Poppins,sans-serif;font-weight:700;font-size:.72rem;letter-spacing:.3px;',
         'padding:.3rem .65rem;border-radius:50px;box-shadow:0 2px 8px rgba(0,0,0,.15);white-space:nowrap}',
-        '.pn-tag.pn-y{color:#8a5a00}',
-        '.filter-btn-amor,.filter-btn[data-filter="amoramistad"]{background:linear-gradient(135deg,#E0457B,#B3255A)!important;',
-        'color:#fff!important;border-color:#B3255A!important;font-weight:600}',
-        '.filter-btn-amarillas,.filter-btn[data-filter="amarillas"]{background:linear-gradient(135deg,#FFD23F,#E89B00)!important;',
-        'color:#3b2600!important;border-color:#E89B00!important;font-weight:600}',
-        '.filter-btn-amor:hover,.filter-btn-amarillas:hover{filter:brightness(1.06)}',
+        '.pn-tag.pn-wk{color:#8E1450}',
+        '.pn-old{color:#9b9b9b;text-decoration:line-through;font-weight:600;font-size:.9rem;margin-right:.35rem}',
+        '.filter-btn[data-filter="frenesirosa"]{background:linear-gradient(135deg,#FF4F9A,#C2185B)!important;',
+        'color:#fff!important;border-color:#C2185B!important;font-weight:600;background-size:200% 200%!important;animation:pnBtn 3s ease infinite}',
+        '@keyframes pnBtn{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}',
 
-        /* ---------- Banner Amor y Amistad con contador ---------- */
-        '.pn-strip{position:relative;overflow:hidden;background:linear-gradient(115deg,#2a0716 0%,#6d1338 45%,#B3255A 100%);',
-        'color:#fff;padding:1.1rem 1rem;text-align:center;font-family:Poppins,sans-serif}',
-        '.pn-strip::before{content:"";position:absolute;inset:-40%;background:radial-gradient(circle at 20% 30%,rgba(255,143,184,.35),transparent 45%),radial-gradient(circle at 80% 70%,rgba(201,168,106,.28),transparent 45%);',
-        'animation:pnFloat 9s ease-in-out infinite alternate;pointer-events:none}',
-        '@keyframes pnFloat{from{transform:translate3d(-2%,0,0)}to{transform:translate3d(2%,0,0)}}',
-        '.pn-strip-in{position:relative;z-index:1;max-width:1100px;margin:0 auto;display:flex;flex-wrap:wrap;',
-        'align-items:center;justify-content:center;gap:.65rem 1.4rem}',
-        '.pn-strip-txt{text-align:left}',
-        '.pn-strip-kicker{font-size:.72rem;letter-spacing:2.5px;text-transform:uppercase;color:#FFC9DD;font-weight:600}',
-        '.pn-strip-title{font-family:"Playfair Display",Georgia,serif;font-size:1.45rem;font-weight:700;line-height:1.2}',
-        '.pn-strip-sub{font-size:.82rem;opacity:.88}',
+        /* ---------- Selector de tamaños (Ternura Rosada) ---------- */
+        '.variant-chips{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.75rem;padding-top:.7rem;border-top:1px dashed rgba(224,69,123,.35)}',
+        '.variant-chip{font-family:Poppins,sans-serif;cursor:pointer;background:#fff5f9;color:#8E1450;border:1px solid #f4bcd3;',
+        'padding:.35rem .7rem;border-radius:50px;font-size:.76rem;font-weight:600;line-height:1.2;transition:all .2s ease}',
+        '.variant-chip strong{margin-left:.25rem}',
+        '.variant-chip:hover{border-color:#E0457B}',
+        '.variant-chip.on{background:linear-gradient(135deg,#FF4F9A,#C2185B);color:#fff;border-color:transparent;box-shadow:0 4px 12px rgba(224,69,123,.35)}',
+
+        /* ---------- Vitrina FRENESÍ ROSA ---------- */
+        '.fr-show{position:relative;overflow:hidden;color:#fff;font-family:Poppins,sans-serif;padding:2.4rem 1rem 2.6rem;',
+        'background:linear-gradient(125deg,#3b0a22,#8E1450,#C2185B,#E0457B,#8E1450);background-size:300% 300%;animation:frBg 14s ease infinite}',
+        '@keyframes frBg{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}',
+        '.fr-petals{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0}',
+        '.fr-petal{position:absolute;top:-30px;width:14px;height:18px;border-radius:70% 0 70% 0;opacity:.85;',
+        'background:linear-gradient(135deg,#FFD6E7,#FF8FC0);animation:frFall linear infinite}',
+        '@keyframes frFall{0%{transform:translate3d(0,-30px,0) rotate(0)}100%{transform:translate3d(60px,640px,0) rotate(540deg);opacity:0}}',
+        '.fr-in{position:relative;z-index:1;max-width:1150px;margin:0 auto}',
+        '.fr-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:1rem 1.5rem;margin-bottom:1.4rem}',
+        '.fr-kicker{display:inline-block;font-size:.72rem;letter-spacing:2.5px;text-transform:uppercase;font-weight:700;',
+        'background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);padding:.3rem .8rem;border-radius:50px}',
+        '.fr-title{font-family:"Playfair Display",Georgia,serif;font-size:3rem;font-weight:700;line-height:1;margin:.55rem 0 .45rem;',
+        'background:linear-gradient(90deg,#fff 0%,#FFD6E7 30%,#fff 50%,#FFC2DA 70%,#fff 100%);background-size:200% auto;',
+        '-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:frShimmer 3.5s linear infinite;',
+        'text-shadow:0 0 30px rgba(255,143,192,.35)}',
+        '@keyframes frShimmer{to{background-position:200% center}}',
+        '.fr-sub{font-size:.95rem;line-height:1.6;max-width:58ch;opacity:.95}',
+        '.fr-side{display:flex;flex-direction:column;align-items:flex-start;gap:.6rem}',
+        '.fr-hint{font-size:.66rem;letter-spacing:1.4px;text-transform:uppercase;opacity:.85}',
         '.pn-clock{display:flex;gap:.4rem}',
-        '.pn-unit{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);border-radius:10px;',
-        'min-width:52px;padding:.35rem .3rem}',
-        '.pn-num{display:block;font-size:1.3rem;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}',
-        '.pn-lbl{display:block;font-size:.6rem;letter-spacing:1px;text-transform:uppercase;opacity:.75;margin-top:.15rem}',
-        '.pn-strip-btn{background:#fff;color:#B3255A;font-weight:700;font-size:.85rem;border:0;cursor:pointer;',
-        'padding:.6rem 1.1rem;border-radius:50px;font-family:inherit;transition:transform .18s ease,box-shadow .18s ease;',
-        'box-shadow:0 4px 14px rgba(0,0,0,.25)}',
-        '.pn-strip-btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.32)}',
+        '.pn-unit{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);border-radius:10px;min-width:54px;padding:.38rem .3rem;text-align:center}',
+        '.pn-num{display:block;font-size:1.35rem;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}',
+        '.pn-lbl{display:block;font-size:.58rem;letter-spacing:1px;text-transform:uppercase;opacity:.8;margin-top:.15rem}',
+        '.fr-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.1rem}',
+        '.fr-card{position:relative;background:#fff;color:#2c2c2c;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;',
+        'box-shadow:0 14px 34px rgba(42,7,22,.35);transition:transform .25s ease,box-shadow .25s ease;animation:frIn .7s both}',
+        '.fr-card:hover{transform:translateY(-6px) rotate(-.4deg);box-shadow:0 20px 40px rgba(42,7,22,.45)}',
+        '@keyframes frIn{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}',
+        '.fr-img{position:relative;aspect-ratio:1/1;overflow:hidden;background:#fde8f0}',
+        '.fr-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease}',
+        '.fr-card:hover .fr-img img{transform:scale(1.07)}',
+        '.fr-img::after{content:"";position:absolute;top:0;left:-75%;width:50%;height:100%;pointer-events:none;',
+        'background:linear-gradient(100deg,transparent,rgba(255,255,255,.6),transparent);transform:skewX(-20deg);animation:pnShine 4.5s ease-in-out infinite}',
+        '.fr-save{position:absolute;top:.7rem;left:.7rem;z-index:2;background:linear-gradient(135deg,#FF4F9A,#C2185B);color:#fff;',
+        'font-weight:700;font-size:.74rem;padding:.35rem .7rem;border-radius:50px;box-shadow:0 4px 12px rgba(0,0,0,.25);animation:pnPulse 2.4s ease-in-out infinite}',
+        '.fr-body{padding:.95rem 1rem 1.1rem;display:flex;flex-direction:column;gap:.35rem;flex:1}',
+        '.fr-name{font-family:"Playfair Display",Georgia,serif;font-size:1.2rem;font-weight:700;color:#2a0716;line-height:1.2}',
+        '.fr-hook{font-size:.8rem;color:#6b4a58;line-height:1.5;flex:1}',
+        '.fr-row{display:flex;align-items:flex-end;justify-content:space-between;gap:.5rem;margin-top:.35rem}',
+        '.fr-price{font-family:"Playfair Display",Georgia,serif;font-size:1.35rem;font-weight:700;color:#C2185B;line-height:1}',
+        '.fr-row .pn-old{display:block;font-size:.8rem;margin:0 0 .15rem}',
+        '.fr-btn{display:inline-flex;align-items:center;gap:.35rem;background:#25D366;color:#fff;text-decoration:none;',
+        'font-weight:600;font-size:.78rem;padding:.55rem .9rem;border-radius:50px;white-space:nowrap;box-shadow:0 4px 12px rgba(37,211,102,.35)}',
+        '.fr-btn svg{width:14px;height:14px;fill:currentColor}',
+        '.fr-foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.8rem;margin-top:1.4rem}',
+        '.fr-all{background:#fff;color:#C2185B;border:0;cursor:pointer;font-family:inherit;font-weight:700;font-size:.88rem;',
+        'padding:.75rem 1.4rem;border-radius:50px;box-shadow:0 6px 18px rgba(0,0,0,.25);transition:transform .18s ease}',
+        '.fr-all:hover{transform:translateY(-2px)}',
+        '.fr-wk{display:inline-flex;align-items:center;gap:.6rem;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.35);',
+        'color:#fff;cursor:pointer;font-family:inherit;font-size:.85rem;font-weight:600;padding:.4rem .9rem .4rem .4rem;border-radius:50px;transition:background .2s ease}',
+        '.fr-wk:hover{background:rgba(255,255,255,.24)}',
+        '.fr-wk img{width:38px;height:38px;border-radius:50%;object-fit:cover;border:2px solid #fff}',
 
-        /* ---------- Vitrina Flores Amarillas ---------- */
-        '.yf-show{position:relative;overflow:hidden;background:linear-gradient(160deg,#FFF8DC 0%,#FFEFB0 55%,#FFE08A 100%);',
-        'padding:2rem 1rem 2.2rem;font-family:Poppins,sans-serif;color:#3b2600}',
-        '.yf-show::before{content:"";position:absolute;width:420px;height:420px;right:-140px;top:-160px;border-radius:50%;',
-        'background:radial-gradient(circle,rgba(255,210,63,.55),transparent 65%);pointer-events:none}',
-        '.yf-in{position:relative;max-width:1100px;margin:0 auto}',
-        '.yf-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:.8rem 1.5rem;margin-bottom:1.2rem}',
-        '.yf-kicker{font-size:.72rem;letter-spacing:2.5px;text-transform:uppercase;color:#B77800;font-weight:700}',
-        '.yf-title{font-family:"Playfair Display",Georgia,serif;font-size:1.9rem;font-weight:700;line-height:1.15;margin:.15rem 0 .35rem;color:#2b1c00}',
-        '.yf-sub{font-size:.88rem;line-height:1.55;max-width:60ch;color:#5a4410}',
-        '.yf-all{background:#2b1c00;color:#FFD23F;border:0;cursor:pointer;font-family:inherit;font-weight:600;font-size:.85rem;',
-        'padding:.65rem 1.2rem;border-radius:50px;white-space:nowrap;transition:transform .18s ease}',
-        '.yf-all:hover{transform:translateY(-2px)}',
-        '.yf-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1rem}',
-        '.yf-card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 8px 24px rgba(183,120,0,.16);',
-        'display:flex;flex-direction:column;transition:transform .2s ease,box-shadow .2s ease}',
-        '.yf-card:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(183,120,0,.24)}',
-        '.yf-img{position:relative;aspect-ratio:1/1;background:#fff6d6;overflow:hidden}',
-        '.yf-img img{width:100%;height:100%;object-fit:cover;display:block}',
-        '.yf-body{padding:.85rem .9rem 1rem;display:flex;flex-direction:column;gap:.35rem;flex:1}',
-        '.yf-name{font-family:"Playfair Display",Georgia,serif;font-size:1.1rem;font-weight:700;color:#2b1c00;line-height:1.2}',
-        '.yf-hook{font-size:.78rem;color:#6b5418;line-height:1.45;flex:1}',
-        '.yf-row{display:flex;align-items:center;justify-content:space-between;gap:.5rem;margin-top:.3rem}',
-        '.yf-price{font-family:"Playfair Display",Georgia,serif;font-size:1.2rem;font-weight:700;color:#B77800}',
-        '.yf-btn{display:inline-flex;align-items:center;gap:.35rem;background:#25D366;color:#fff;text-decoration:none;',
-        'font-weight:600;font-size:.76rem;padding:.5rem .8rem;border-radius:50px;white-space:nowrap}',
-        '.yf-btn svg{width:14px;height:14px;fill:currentColor}',
+        /* ---------- Flyer flotante ARREGLO DE LA SEMANA ---------- */
+        '.wk-modal{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;padding:16px;',
+        'background:rgba(30,4,16,.74);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);opacity:0;visibility:hidden;',
+        'transition:opacity .3s ease,visibility .3s ease;font-family:Poppins,sans-serif}',
+        '.wk-modal.on{opacity:1;visibility:visible}',
+        '.wk-box{position:relative;width:100%;max-width:880px;max-height:92vh;border-radius:22px;padding:3px;',
+        'background:linear-gradient(120deg,#FF4F9A,#FFE3A3,#C9A86A,#FF8FC0,#FF4F9A);background-size:300% 300%;animation:frBg 6s linear infinite;',
+        'box-shadow:0 30px 80px rgba(0,0,0,.5);transform:translate3d(0,30px,0) scale(.95);transition:transform .45s cubic-bezier(.2,.9,.3,1.2)}',
+        '.wk-modal.on .wk-box{transform:none}',
+        '.wk-in{display:flex;background:#fff;border-radius:19px;overflow:hidden;max-height:calc(92vh - 6px)}',
+        '.wk-fig{position:relative;flex:0 0 46%;background:#fde8f0;overflow:hidden}',
+        '.wk-fig img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.04);transition:opacity .45s ease,transform .8s ease}',
+        '.wk-fig img.on{opacity:1;transform:scale(1)}',
+        '.wk-fig::after{content:"";position:absolute;top:0;left:-75%;width:50%;height:100%;z-index:2;pointer-events:none;',
+        'background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-20deg);animation:pnShine 4s ease-in-out infinite}',
+        '.wk-off{position:absolute;top:.9rem;left:.9rem;z-index:3;width:74px;height:74px;border-radius:50%;display:flex;flex-direction:column;',
+        'align-items:center;justify-content:center;background:radial-gradient(circle at 30% 30%,#FF7FB4,#C2185B);color:#fff;font-weight:800;',
+        'font-size:1.25rem;line-height:1;box-shadow:0 6px 18px rgba(194,24,91,.5);animation:wkSpin 3s ease-in-out infinite}',
+        '.wk-off small{font-size:.55rem;font-weight:600;letter-spacing:1px;margin-top:.15rem}',
+        '@keyframes wkSpin{0%,100%{transform:rotate(-8deg) scale(1)}50%{transform:rotate(8deg) scale(1.08)}}',
+        '.wk-txt{flex:1;min-width:0;padding:1.4rem 1.5rem 1.3rem;display:flex;flex-direction:column;gap:.55rem;overflow-y:auto}',
+        '.wk-kicker{align-self:flex-start;font-size:.68rem;letter-spacing:2.2px;text-transform:uppercase;font-weight:700;color:#fff;',
+        'background:linear-gradient(90deg,#8E1450,#E0457B,#C9A86A,#8E1450);background-size:300% 100%;animation:frBg 5s linear infinite;',
+        'padding:.35rem .85rem;border-radius:50px}',
+        '.wk-name{font-family:"Playfair Display",Georgia,serif;font-size:2rem;font-weight:700;color:#2a0716;line-height:1.05}',
+        '.wk-hook{font-size:.88rem;color:#6b4a58;line-height:1.5}',
+        '.wk-opts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.5rem;margin-top:.2rem}',
+        '.wk-opt{position:relative;cursor:pointer;font-family:inherit;text-align:center;background:#fff7fa;border:2px solid #f6c9db;',
+        'border-radius:14px;padding:.65rem .35rem .55rem;transition:all .2s ease;color:#2a0716}',
+        '.wk-opt:hover{border-color:#E0457B;transform:translateY(-2px)}',
+        '.wk-opt.on{border-color:#C2185B;background:linear-gradient(160deg,#fff,#ffe3ee);box-shadow:0 6px 16px rgba(194,24,91,.22)}',
+        '.wk-opt b{display:block;font-size:.95rem}',
+        '.wk-opt span{display:block;font-family:"Playfair Display",Georgia,serif;font-weight:700;color:#C2185B;font-size:1.05rem;margin-top:.15rem}',
+        '.wk-opt i{display:block;font-style:normal;font-size:.68rem;color:#9b9b9b;text-decoration:line-through}',
+        '.wk-opt em{position:absolute;top:-.6rem;left:50%;transform:translateX(-50%);white-space:nowrap;font-style:normal;font-size:.56rem;',
+        'font-weight:700;letter-spacing:.4px;text-transform:uppercase;background:#C9A86A;color:#fff;padding:.15rem .45rem;border-radius:50px}',
+        '.wk-note{font-size:.82rem;color:#8E1450;font-weight:600;min-height:1.2em}',
+        '.wk-prices{display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap}',
+        '.wk-new{font-family:"Playfair Display",Georgia,serif;font-size:2.1rem;font-weight:700;color:#C2185B;line-height:1}',
+        '.wk-old{color:#9b9b9b;text-decoration:line-through;font-weight:600;font-size:1rem}',
+        '.wk-save{background:#2a0716;color:#FFD6E7;font-weight:700;font-size:.74rem;padding:.25rem .6rem;border-radius:50px}',
+        '.wk-cta{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;background:#25D366;color:#fff;text-decoration:none;',
+        'font-weight:700;font-size:.95rem;padding:.8rem 1.2rem;border-radius:50px;margin-top:.15rem;animation:wkCta 2.2s ease-in-out infinite;',
+        'box-shadow:0 6px 18px rgba(37,211,102,.4)}',
+        '.wk-cta svg{width:18px;height:18px;fill:currentColor;flex-shrink:0}',
+        '@keyframes wkCta{0%,100%{box-shadow:0 0 0 0 rgba(37,211,102,.55)}50%{box-shadow:0 0 0 12px rgba(37,211,102,0)}}',
+        '.wk-clock{display:flex;align-items:center;gap:.35rem;flex-wrap:wrap;margin-top:.2rem}',
+        '.wk-clock .fr-hint{color:#8E1450;opacity:1;font-weight:600;margin-right:.2rem}',
+        '.wk-clock .pn-unit{background:#fff0f6;border-color:#f6c9db;color:#2a0716;min-width:48px}',
+        '.wk-more{background:none;border:0;padding:0;cursor:pointer;font-family:inherit;color:#C2185B;font-size:.8rem;font-weight:600;text-decoration:underline;align-self:flex-start}',
+        '.wk-x{position:absolute;top:-12px;right:-12px;z-index:6;width:38px;height:38px;border-radius:50%;border:0;cursor:pointer;',
+        'background:#2a0716;color:#fff;font-size:1.4rem;line-height:1;display:flex;align-items:center;justify-content:center;',
+        'box-shadow:0 4px 12px rgba(0,0,0,.35);transition:transform .2s ease}',
+        '.wk-x:hover{transform:rotate(90deg)}',
 
-        /* ---------- Flyer flotante ---------- */
-        '.pn-modal{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;',
-        'padding:16px;background:rgba(20,4,12,.72);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);',
-        'opacity:0;visibility:hidden;transition:opacity .3s ease,visibility .3s ease;font-family:Poppins,sans-serif}',
-        '.pn-modal.on{opacity:1;visibility:visible}',
-        '.pn-box{position:relative;width:100%;max-width:860px;max-height:92vh;overflow:hidden;border-radius:20px;',
-        'background:#fff;box-shadow:0 30px 80px rgba(0,0,0,.5);transform:translate3d(0,26px,0) scale(.97);',
-        'transition:transform .35s cubic-bezier(.2,.8,.3,1);display:flex;flex-direction:column}',
-        '.pn-modal.on .pn-box{transform:translate3d(0,0,0) scale(1)}',
-        '.pn-head{background:linear-gradient(115deg,#2a0716,#6d1338 55%,#B3255A);color:#fff;padding:1rem 3rem 1rem 1.3rem;flex-shrink:0;transition:background .3s ease}',
-        '.pn-box.y .pn-head{background:linear-gradient(115deg,#6b4200,#B77800 50%,#F5B700);}',
-        '.pn-head-kicker{font-size:.66rem;letter-spacing:2.5px;text-transform:uppercase;color:#FFC9DD;font-weight:600}',
-        '.pn-box.y .pn-head-kicker{color:#FFF1B8}',
-        '.pn-head-title{font-family:"Playfair Display",Georgia,serif;font-size:1.55rem;font-weight:700;line-height:1.15;margin:.1rem 0 .25rem}',
-        '.pn-head-desc{font-size:.8rem;line-height:1.45;opacity:.92;max-width:60ch}',
-        '.pn-head-clock{display:flex;gap:.35rem;margin-top:.7rem;align-items:center;flex-wrap:wrap}',
-        '.pn-head-clock .pn-hint{font-size:.68rem;letter-spacing:1.2px;text-transform:uppercase;opacity:.8;margin-right:.25rem}',
-        '.pn-tabs{display:flex;gap:.4rem;margin-top:.8rem;flex-wrap:wrap}',
-        '.pn-tabbtn{border:1px solid rgba(255,255,255,.4);background:rgba(255,255,255,.1);color:#fff;cursor:pointer;',
-        'font-family:inherit;font-weight:600;font-size:.78rem;padding:.4rem .85rem;border-radius:50px;transition:background .2s ease}',
-        '.pn-tabbtn.on{background:#fff;color:#B3255A}',
-        '.pn-box.y .pn-tabbtn.on{color:#8a5a00}',
-        '.pn-x{position:absolute;top:.6rem;right:.7rem;z-index:6;width:34px;height:34px;border-radius:50%;border:0;',
-        'cursor:pointer;background:rgba(255,255,255,.18);color:#fff;font-size:1.35rem;line-height:1;',
-        'display:flex;align-items:center;justify-content:center;transition:background .2s ease,transform .2s ease}',
-        '.pn-x:hover{background:rgba(255,255,255,.34);transform:rotate(90deg)}',
-        '.pn-body{position:relative;overflow:hidden;flex:1;min-height:0}',
-        '.pn-track{display:flex;height:100%;transition:transform .45s cubic-bezier(.25,.8,.3,1);will-change:transform}',
-        '.pn-slide{flex:0 0 100%;display:flex;gap:0;min-width:0}',
-        '.pn-figure{flex:0 0 46%;position:relative;background:#faf6f2;overflow:hidden}',
-        '.pn-figure img{width:100%;height:100%;object-fit:cover;display:block}',
-        '.pn-off{position:absolute;top:0;left:0;background:linear-gradient(135deg,#E0457B,#B3255A);color:#fff;',
-        'font-weight:700;font-size:.8rem;padding:.45rem .8rem;border-bottom-right-radius:14px;box-shadow:0 4px 12px rgba(0,0,0,.25)}',
-        '.pn-box.y .pn-off{background:linear-gradient(135deg,#FFD23F,#E89B00);color:#3b2600}',
-        '.pn-txt{flex:1 1 auto;padding:1.2rem 1.3rem;display:flex;flex-direction:column;justify-content:center;gap:.5rem;min-width:0}',
-        '.pn-name{font-family:"Playfair Display",Georgia,serif;font-size:1.5rem;color:#1a1a1a;line-height:1.15;font-weight:700}',
-        '.pn-hook{font-size:.92rem;color:#B3255A;font-weight:600;line-height:1.4}',
-        '.pn-box.y .pn-hook{color:#9a6400}',
-        '.pn-desc{font-size:.82rem;color:#5c5c5c;line-height:1.55}',
-        '.pn-prices{display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap;margin-top:.15rem}',
-        '.pn-new{font-size:1.65rem;font-weight:700;color:#B3255A;font-family:"Playfair Display",Georgia,serif}',
-        '.pn-old{color:#9b9b9b;text-decoration:line-through;font-weight:600;font-size:.95rem;margin-right:.35rem}',
-        '.pn-save{background:#E0457B;color:#fff;font-weight:700;font-size:.75rem;padding:.2rem .55rem;border-radius:50px;letter-spacing:.3px}',
-        '.pn-box.y .pn-new{color:#B77800}',
-        '.pn-cta{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;background:#25D366;color:#fff;',
-        'font-weight:600;font-size:.9rem;padding:.7rem 1.1rem;border-radius:50px;margin-top:.3rem;align-self:flex-start;',
-        'transition:transform .18s ease,box-shadow .18s ease;box-shadow:0 4px 14px rgba(37,211,102,.35);text-decoration:none}',
-        '.pn-cta:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(37,211,102,.45)}',
-        '.pn-cta svg{width:17px;height:17px;fill:currentColor;flex-shrink:0}',
-        '.pn-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:5;width:38px;height:38px;border-radius:50%;',
-        'border:0;cursor:pointer;background:rgba(255,255,255,.92);color:#B3255A;font-size:1.3rem;line-height:1;',
-        'display:flex;align-items:center;justify-content:center;box-shadow:0 3px 12px rgba(0,0,0,.22);transition:transform .2s ease}',
-        '.pn-arrow:hover{transform:translateY(-50%) scale(1.1)}',
-        '.pn-prev{left:10px}.pn-next{right:10px}',
-        '.pn-foot{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;gap:.8rem;',
-        'padding:.7rem 1.1rem;background:#faf6f2;border-top:1px solid rgba(0,0,0,.06)}',
-        '.pn-dots{display:flex;gap:.38rem;flex-wrap:wrap}',
-        '.pn-dot{width:8px;height:8px;border-radius:50%;border:0;padding:0;cursor:pointer;background:#e0cdd6;',
-        'transition:transform .2s ease,background .2s ease}',
-        '.pn-dot.on{background:#B3255A;transform:scale(1.45)}',
-        '.pn-box.y .pn-dot{background:#f1dfa6}.pn-box.y .pn-dot.on{background:#E89B00}',
-        '.pn-all{background:linear-gradient(135deg,#E0457B,#B3255A);color:#fff;border:0;cursor:pointer;font-family:inherit;',
-        'font-weight:600;font-size:.8rem;padding:.55rem 1rem;border-radius:50px;transition:transform .18s ease}',
-        '.pn-box.y .pn-all{background:linear-gradient(135deg,#FFD23F,#E89B00);color:#3b2600}',
-        '.pn-all:hover{transform:translateY(-2px)}',
+        /* ---------- Botón flotante (reabre el flyer) ---------- */
+        '.wk-pill{position:fixed;left:18px;bottom:22px;z-index:9990;display:flex;align-items:center;gap:.55rem;cursor:pointer;',
+        'font-family:Poppins,sans-serif;background:linear-gradient(135deg,#FF4F9A,#C2185B);color:#fff;border:0;border-radius:50px;',
+        'padding:.35rem .95rem .35rem .35rem;box-shadow:0 8px 24px rgba(194,24,91,.45);transform:translateY(120px);',
+        'transition:transform .45s cubic-bezier(.2,.9,.3,1.2);text-align:left}',
+        '.wk-pill.on{transform:none;animation:wkFloat 3s ease-in-out infinite .5s}',
+        '@keyframes wkFloat{0%,100%{translate:0 0}50%{translate:0 -5px}}',
+        '.wk-pill img{width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid #fff;flex-shrink:0}',
+        '.wk-pill small{display:block;font-size:.6rem;letter-spacing:1.4px;text-transform:uppercase;opacity:.9;font-weight:600}',
+        '.wk-pill b{display:block;font-size:.85rem;line-height:1.2}',
+        '.wk-pill-x{position:absolute;top:-7px;right:-7px;width:20px;height:20px;border-radius:50%;background:#2a0716;color:#fff;',
+        'font-size:.8rem;line-height:20px;text-align:center}',
 
         /* ---------- Responsive ---------- */
-        '@media(max-width:900px){.yf-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}',
+        '@media(max-width:900px){.fr-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.fr-title{font-size:2.4rem}}',
         '@media(max-width:720px){',
-        '.pn-slide{flex-direction:column}',
-        '.pn-figure{flex:0 0 auto;height:190px}',
-        '.pn-body{overflow-y:auto;-webkit-overflow-scrolling:touch}',
-        '.pn-head{padding:.85rem 2.8rem .85rem 1rem}',
-        '.pn-head-title{font-size:1.25rem}.pn-head-desc{font-size:.74rem}',
-        '.pn-name{font-size:1.25rem}.pn-new{font-size:1.4rem}',
-        '.pn-txt{padding:1rem}',
-        '.pn-arrow{width:32px;height:32px;top:95px}',
-        '.pn-strip-in{flex-direction:column;gap:.55rem}',
-        '.pn-strip-txt{text-align:center}',
-        '.pn-strip-title{font-size:1.15rem}',
+        '.fr-show{padding:1.8rem 0 2rem}',
+        '.fr-head,.fr-foot{padding:0 1rem}',
+        '.fr-title{font-size:2.1rem}',
+        '.fr-sub{font-size:.86rem}',
+        '.fr-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:.8rem;padding:.3rem 1rem .6rem;-webkit-overflow-scrolling:touch}',
+        '.fr-card{flex:0 0 74%;scroll-snap-align:start}',
         '.pn-unit{min-width:46px}.pn-num{font-size:1.1rem}',
-        '.pn-ribbon{font-size:.75rem;padding:.35rem .6rem}',
-        '.pn-tag{font-size:.65rem}',
-        '.yf-show{padding:1.5rem 0 1.7rem}',
-        '.yf-head{padding:0 1rem}',
-        '.yf-title{font-size:1.45rem}',
-        '.yf-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:.8rem;padding:0 1rem .4rem;-webkit-overflow-scrolling:touch}',
-        '.yf-card{flex:0 0 72%;scroll-snap-align:start}',
+        '.wk-box{max-height:94vh}',
+        '.wk-in{flex-direction:column;overflow-y:auto;max-height:calc(94vh - 6px)}',
+        '.wk-fig{flex:0 0 auto;height:230px}',
+        '.wk-txt{overflow:visible;padding:1rem 1rem 1.1rem}',
+        '.wk-name{font-size:1.6rem}.wk-new{font-size:1.8rem}',
+        '.wk-off{width:62px;height:62px;font-size:1.05rem}',
+        '.wk-x{top:6px;right:6px}',
+        '.wk-pill{left:12px;bottom:16px}',
+        '.pn-ribbon{font-size:.7rem;padding:.35rem .6rem}',
+        '.pn-tag{font-size:.64rem}',
         '}',
         '@media(prefers-reduced-motion:reduce){',
-        '.pn-strip::before{animation:none}',
-        '.pn-track,.pn-box,.yf-card{transition:none}',
+        '.pn-card,.pn-ribbon,.fr-show,.fr-title,.fr-card,.fr-save,.fr-petal,.wk-box,.wk-off,.wk-cta,.wk-kicker,.wk-pill.on,',
+        '.filter-btn[data-filter="frenesirosa"],.fr-img::after,.wk-fig::after,.pn-card .product-image-container::after,.pn-card .product-image::after{animation:none!important}',
+        '.fr-petals{display:none}',
         '}'
     ].join('');
 
@@ -370,127 +371,103 @@
     // ---------------------------------------------------------------
     // 4. CONTADOR
     // ---------------------------------------------------------------
-    function remaining(end) {
-        var ms = end - Date.now();
-        if (ms < 0) ms = 0;
-        var s = Math.floor(ms / 1000);
-        return { ms: ms, d: Math.floor(s / 86400), h: Math.floor((s % 86400) / 3600), m: Math.floor((s % 3600) / 60), s: s % 60 };
-    }
     function pad(n) { return n < 10 ? '0' + n : String(n); }
-
     function clockHTML(prefix) {
-        return ['d', 'h', 'm', 's'].map(function (u, i) {
-            var lbl = ['Días', 'Horas', 'Min', 'Seg'][i];
-            return '<div class="pn-unit"><span class="pn-num" id="' + prefix + '-' + u + '">--</span>'
-                + '<span class="pn-lbl">' + lbl + '</span></div>';
-        }).join('');
+        return '<div class="pn-clock">' + ['d', 'h', 'm', 's'].map(function (u, i) {
+            return '<div class="pn-unit"><span class="pn-num" data-c="' + prefix + '-' + u + '">--</span>'
+                + '<span class="pn-lbl">' + ['Días', 'Horas', 'Min', 'Seg'][i] + '</span></div>';
+        }).join('') + '</div>';
     }
-
-    var clockTargets = [];
     var clockTimer = null;
-
     function tick() {
-        clockTargets.forEach(function (t) {
-            var r = remaining(t.end());
-            if (t.d) t.d.textContent = pad(r.d);
-            if (t.h) t.h.textContent = pad(r.h);
-            if (t.m) t.m.textContent = pad(r.m);
-            if (t.s) t.s.textContent = pad(r.s);
+        var ms = Math.max(0, PROMO_END - Date.now());
+        var s = Math.floor(ms / 1000);
+        var v = { d: Math.floor(s / 86400), h: Math.floor((s % 86400) / 3600), m: Math.floor((s % 3600) / 60), s: s % 60 };
+        document.querySelectorAll('[data-c]').forEach(function (el) {
+            el.textContent = pad(v[el.getAttribute('data-c').split('-')[1]]);
         });
-        // Al llegar a cero, la campaña se apaga sola
-        var strip = document.getElementById('pn-strip');
-        if (strip && !isLive(CAMPAIGNS.amor)) { strip.remove(); hideFilter('amoramistad'); }
-        var show = document.getElementById('yf-show');
-        if (show && !isLive(CAMPAIGNS.yellow)) { show.remove(); hideFilter('amarillas'); }
+        if (!isLive()) shutdown();
+    }
+    function startClock() { if (!clockTimer) { tick(); clockTimer = setInterval(tick, 1000); } }
+    function shutdown() {
+        ['fr-show', 'wk-modal', 'wk-pill'].forEach(function (id) { var el = document.getElementById(id); if (el) el.remove(); });
+        hideFilter();
+        document.body.style.overflow = '';
+        if (clockTimer) { clearInterval(clockTimer); clockTimer = null; }
+    }
+    function hideFilter() {
+        document.querySelectorAll('.filter-btn[data-filter="frenesirosa"]').forEach(function (b) { b.style.display = 'none'; });
     }
 
-    function startClock() {
-        if (clockTimer) return;
-        tick();
-        clockTimer = setInterval(tick, 1000);
-    }
-
-    function registerClock(prefix, endFn) {
-        clockTargets.push({
-            end: endFn,
-            d: document.getElementById(prefix + '-d'),
-            h: document.getElementById(prefix + '-h'),
-            m: document.getElementById(prefix + '-m'),
-            s: document.getElementById(prefix + '-s')
-        });
-    }
-
-    function hideFilter(tag) {
-        document.querySelectorAll('.filter-btn[data-filter="' + tag + '"]').forEach(function (b) { b.style.display = 'none'; });
-    }
-
-    // ---------------------------------------------------------------
-    // 5. BANNER AMOR Y AMISTAD + VITRINA FLORES AMARILLAS
-    // ---------------------------------------------------------------
     var WA_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.46-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.91-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.06 2.87 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.18-1.41-.08-.13-.28-.2-.58-.35M12.05 21.79h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.89 9.89-9.89 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.43 9.89-9.88 9.89m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.69 1.45h.01c6.55 0 11.89-5.34 11.89-11.89 0-3.18-1.24-6.17-3.48-8.42"/></svg>';
 
-    function anchorNode() {
-        return document.querySelector('.catalog-hero') || document.querySelector('.hero');
-    }
-    function insertAfterHero(el, afterEl) {
-        var a = afterEl || anchorNode();
+    // ---------------------------------------------------------------
+    // 5. VITRINA FRENESÍ ROSA
+    // ---------------------------------------------------------------
+    function anchorNode() { return document.querySelector('.catalog-hero') || document.querySelector('.hero'); }
+    function insertAfterHero(el) {
+        var a = anchorNode();
         if (a && a.parentNode) { a.parentNode.insertBefore(el, a.nextSibling); return; }
         var grid = document.getElementById('products-grid') || document.querySelector('.products-container');
-        var host = grid ? (grid.closest('section') || grid.parentNode) : document.body;
-        host.parentNode.insertBefore(el, host);
+        var host = grid ? (grid.closest('section') || grid.parentNode) : null;
+        if (host && host.parentNode) host.parentNode.insertBefore(el, host); else document.body.insertBefore(el, document.body.firstChild);
     }
 
-    function buildStrip() {
-        if (!isLive(CAMPAIGNS.amor) || document.getElementById('pn-strip')) return null;
-        var strip = document.createElement('section');
-        strip.id = 'pn-strip';
-        strip.className = 'pn-strip';
-        strip.innerHTML =
-            '<div class="pn-strip-in">'
-            + '<div class="pn-strip-txt">'
-            + '<div class="pn-strip-kicker">Hasta el sábado 19 de septiembre</div>'
-            + '<div class="pn-strip-title">💝 Oferta de Amor y Amistad</div>'
-            + '<div class="pn-strip-sub">9 arreglos escogidos para celebrar el amor y la amistad — la oferta se cierra el 19 a medianoche</div>'
-            + '</div>'
-            + '<div class="pn-clock">' + clockHTML('pns') + '</div>'
-            + '<button type="button" class="pn-strip-btn" id="pn-strip-btn">Ver los 9 arreglos</button>'
-            + '</div>';
-        insertAfterHero(strip);
-        registerClock('pns', function () { return AMOR_END; });
-        document.getElementById('pn-strip-btn').addEventListener('click', function () { goToFilter('amoramistad'); });
-        return strip;
+    function petalsHTML() {
+        var out = '';
+        for (var i = 0; i < 16; i++) {
+            var left = (i * 6.3 + (i % 3) * 2) % 100;
+            var dur = 7 + (i % 5) * 1.6;
+            var delay = -(i * 1.1);
+            var size = 10 + (i % 4) * 3;
+            out += '<span class="fr-petal" style="left:' + left + '%;width:' + size + 'px;height:' + Math.round(size * 1.3) + 'px;'
+                + 'animation-duration:' + dur + 's;animation-delay:' + delay + 's"></span>';
+        }
+        return '<div class="fr-petals" aria-hidden="true">' + out + '</div>';
     }
 
-    function buildYellowShow(after) {
-        if (!isLive(CAMPAIGNS.yellow) || document.getElementById('yf-show')) return;
-        var cards = YELLOW_ITEMS.map(function (it) {
-            return '<article class="yf-card">'
-                + '<div class="yf-img"><img src="' + it.img + '" alt="' + it.name + ' — flores amarillas a domicilio en Bogotá" loading="lazy" decoding="async"></div>'
-                + '<div class="yf-body">'
-                + '<div class="yf-name">' + it.name + '</div>'
-                + '<div class="yf-hook">' + it.hook + '</div>'
-                + '<div class="yf-row"><span class="yf-price">' + fmt(it.price) + '</span>'
-                + '<a class="yf-btn" href="' + waLink(it) + '" target="_blank" rel="noopener">' + WA_SVG + 'Pedir</a></div>'
+    function buildRosaShow() {
+        if (document.getElementById('fr-show')) return;
+        var cards = ROSA_ITEMS.map(function (it, i) {
+            return '<article class="fr-card" style="animation-delay:' + (i * 0.08) + 's">'
+                + '<div class="fr-img"><span class="fr-save">Ahorras ' + fmt(it.before - it.price) + '</span>'
+                + '<img src="' + it.img + '" alt="' + it.name + ' — rosas rosadas en promoción, flores a domicilio en Bogotá" loading="lazy" decoding="async"></div>'
+                + '<div class="fr-body">'
+                + '<div class="fr-name">' + it.name + '</div>'
+                + '<div class="fr-hook">' + it.hook + '</div>'
+                + '<div class="fr-row"><div><span class="pn-old">Antes ' + fmt(it.before) + '</span>'
+                + '<span class="fr-price">' + fmt(it.price) + '</span></div>'
+                + '<a class="fr-btn" href="' + waRosa(it) + '" target="_blank" rel="noopener">' + WA_SVG + 'Lo quiero</a></div>'
                 + '</div></article>';
         }).join('');
         var sec = document.createElement('section');
-        sec.id = 'yf-show';
-        sec.className = 'yf-show';
-        sec.innerHTML =
-            '<div class="yf-in">'
-            + '<div class="yf-head"><div>'
-            + '<div class="yf-kicker">🌻 Amor y Amistad · 21 de septiembre</div>'
-            + '<h2 class="yf-title">Los mejores arreglos de flores amarillas</h2>'
-            + '<p class="yf-sub">Rosas, girasoles y margaritas para decir “me alegras la vida”. Nuestra selección amarilla para Amor y Amistad '
-            + 'y para el 21 de septiembre, el día de regalar flores amarillas. Te recomendamos pedir con anticipación.</p>'
-            + '</div><button type="button" class="yf-all" id="yf-all">Ver todas las flores amarillas</button></div>'
-            + '<div class="yf-grid">' + cards + '</div>'
+        sec.id = 'fr-show';
+        sec.className = 'fr-show';
+        sec.innerHTML = petalsHTML()
+            + '<div class="fr-in">'
+            + '<div class="fr-head"><div>'
+            + '<span class="fr-kicker">🌸 Precios rebajados · solo hasta el ' + END_TXT + '</span>'
+            + '<h2 class="fr-title">Frenesí Rosa</h2>'
+            + '<p class="fr-sub">Las rosas rosadas dicen “me encantas” sin que tengas que decir nada. '
+            + 'Esta semana 6 de nuestros arreglos de rosas rosadas bajan de precio: antes costaban un 20&nbsp;% más. '
+            + 'Cuando el contador llegue a cero, se acaba.</p>'
+            + '</div>'
+            + '<div class="fr-side"><span class="fr-hint">La promoción termina en</span>' + clockHTML('fr') + '</div>'
+            + '</div>'
+            + '<div class="fr-grid">' + cards + '</div>'
+            + '<div class="fr-foot">'
+            + '<button type="button" class="fr-wk" id="fr-wk"><img src="' + WEEK_MIN.src + '" alt="">'
+            + '<span>⭐ Además: <strong>Arreglo de la semana</strong> desde ' + fmt(WEEK_MIN.price) + ' →</span></button>'
+            + (document.querySelector('.filter-btn[data-filter="frenesirosa"]')
+                ? '<button type="button" class="fr-all" id="fr-all">Ver Frenesí Rosa en el catálogo</button>' : '')
+            + '</div>'
             + '</div>';
-        insertAfterHero(sec, after);
-        document.getElementById('yf-all').addEventListener('click', function () { goToFilter('amarillas'); });
+        insertAfterHero(sec);
+        document.getElementById('fr-wk').addEventListener('click', function () { openFlyer(true); });
+        var all = document.getElementById('fr-all');
+        if (all) all.addEventListener('click', function () { goToFilter('frenesirosa'); });
     }
 
-    // Activa el filtro correspondiente del catálogo y baja hasta los productos
     function goToFilter(tag) {
         var btn = document.querySelector('.filter-btn[data-filter="' + tag + '"]');
         if (btn) btn.click();
@@ -504,188 +481,141 @@
     }
 
     // ---------------------------------------------------------------
-    // 6. FLYER FLOTANTE CON PESTAÑAS Y CARRUSEL
+    // 6. FLYER FLOTANTE — ARREGLO DE LA SEMANA (solo Ternura Rosada)
     // ---------------------------------------------------------------
-    var car = { i: 0, timer: null, n: 0, camp: null };
+    var SEEN_KEY = 'gg-arreglo-semana-visto';
+    var flyer = null;
 
     function buildFlyer() {
-        var live = liveCampaigns();
-        if (!live.length) return;
-        try {
-            if (sessionStorage.getItem('aa-flyer-seen') === '1') return;
-        } catch (e) { /* sessionStorage bloqueado: se muestra igual */ }
-
-        var tabs = live.length > 1
-            ? '<div class="pn-tabs" role="tablist">' + live.map(function (c, i) {
-                return '<button type="button" class="pn-tabbtn' + (i === 0 ? ' on' : '') + '" data-c="' + c.id + '" role="tab">' + c.tab + '</button>';
-            }).join('') + '</div>'
-            : '';
-
+        if (document.getElementById('wk-modal')) return;
         var modal = document.createElement('div');
-        modal.id = 'pn-modal';
-        modal.className = 'pn-modal';
+        modal.id = 'wk-modal';
+        modal.className = 'wk-modal';
         modal.setAttribute('role', 'dialog');
         modal.setAttribute('aria-modal', 'true');
-        modal.setAttribute('aria-label', 'Amor y Amistad y Flores Amarillas');
+        modal.setAttribute('aria-label', 'Arreglo de la semana: Ternura Rosada');
         modal.innerHTML =
-            '<div class="pn-box" id="pn-box">'
-            + '<button type="button" class="pn-x" id="pn-x" aria-label="Cerrar">&times;</button>'
-            + '<div class="pn-head">'
-            + '<div class="pn-head-kicker" id="pn-kicker"></div>'
-            + '<div class="pn-head-title" id="pn-title"></div>'
-            + '<div class="pn-head-desc" id="pn-desc"></div>'
-            + '<div class="pn-head-clock"><span class="pn-hint">Termina en</span>' + clockHTML('pnm') + '</div>'
-            + tabs
+            '<div class="wk-box">'
+            + '<button type="button" class="wk-x" id="wk-x" aria-label="Cerrar">&times;</button>'
+            + '<div class="wk-in">'
+            + '<div class="wk-fig"><span class="wk-off">-' + WEEK_OFF + '%<small>OFERTA</small></span>'
+            + WEEK.variants.map(function (v, i) {
+                return '<img data-i="' + i + '" ' + (i === 0 ? 'class="on" src' : 'data-src') + '="' + v.src + '" alt="Ternura Rosada con ' + v.label + ' — arreglo de la semana, Bogotá" decoding="async">';
+            }).join('')
             + '</div>'
-            + '<div class="pn-body">'
-            + '<div class="pn-track" id="pn-track"></div>'
-            + '<button type="button" class="pn-arrow pn-prev" id="pn-prev" aria-label="Anterior">&#10094;</button>'
-            + '<button type="button" class="pn-arrow pn-next" id="pn-next" aria-label="Siguiente">&#10095;</button>'
-            + '</div>'
-            + '<div class="pn-foot">'
-            + '<div class="pn-dots" id="pn-dots"></div>'
-            + '<button type="button" class="pn-all" id="pn-all"></button>'
-            + '</div>'
-            + '</div>';
-
+            + '<div class="wk-txt">'
+            + '<span class="wk-kicker">⭐ Arreglo de la semana</span>'
+            + '<div class="wk-name">' + WEEK.name + '</div>'
+            + '<div class="wk-hook">' + WEEK.hook + '</div>'
+            + '<div class="wk-opts">' + WEEK.variants.map(function (v, i) {
+                return '<button type="button" class="wk-opt' + (i === 0 ? ' on' : '') + '" data-i="' + i + '">'
+                    + (v.badge ? '<em>' + v.badge + '</em>' : '')
+                    + '<b>' + v.label + '</b><span>' + fmt(v.price) + '</span><i>' + fmt(v.before) + '</i></button>';
+            }).join('') + '</div>'
+            + '<div class="wk-note" id="wk-note"></div>'
+            + '<div class="wk-prices"><span class="wk-old" id="wk-old"></span><span class="wk-new" id="wk-new"></span>'
+            + '<span class="wk-save" id="wk-save"></span></div>'
+            + '<a class="wk-cta" id="wk-cta" href="#" target="_blank" rel="noopener">' + WA_SVG + '<span>Lo quiero — pedir por WhatsApp</span></a>'
+            + '<div class="wk-clock"><span class="fr-hint">El precio especial termina en</span>' + clockHTML('wk') + '</div>'
+            + (document.getElementById('fr-show') ? '<button type="button" class="wk-more" id="wk-more">Ver también el Frenesí Rosa 🌸</button>' : '')
+            + '</div></div></div>';
         document.body.appendChild(modal);
-        registerClock('pnm', function () { return car.camp ? car.camp.end : AMOR_END; });
 
-        var box = document.getElementById('pn-box');
-        var track = document.getElementById('pn-track');
-        var dotsWrap = document.getElementById('pn-dots');
-        var imgs = [], dotEls = [];
-
-        function setCampaign(c) {
-            car.camp = c; car.i = 0; car.n = c.items.length;
-            box.classList.toggle('y', c.id === 'yellow');
-            document.getElementById('pn-kicker').textContent = c.kicker;
-            document.getElementById('pn-title').textContent = c.title;
-            document.getElementById('pn-desc').innerHTML = c.desc;
-            document.getElementById('pn-all').textContent = c.id === 'yellow' ? 'Ver flores amarillas' : 'Ver los 9 en el catálogo';
-            track.style.transition = 'none';
-            track.style.transform = 'translate3d(0,0,0)';
-            track.innerHTML = c.items.map(function (it, i) {
-                return '<div class="pn-slide">'
-                    + '<div class="pn-figure"><span class="pn-off">' + c.tag + '</span>'
-                    + '<img alt="' + it.name + ' — ' + c.title + ', flores a domicilio en Bogotá" data-src="' + it.img + '"'
-                    + (i === 0 ? ' src="' + it.img + '"' : '') + ' decoding="async"></div>'
-                    + '<div class="pn-txt">'
-                    + '<div class="pn-name">' + it.name + '</div>'
-                    + '<div class="pn-hook">' + it.hook + '</div>'
-                    + '<div class="pn-desc">' + it.desc + '</div>'
-                    + '<div class="pn-prices">'
-                    + (it.before ? '<span class="pn-old">' + fmt(it.before) + '</span>' : '')
-                    + '<span class="pn-new">' + fmt(it.price) + '</span>'
-                    + (offPct(it) ? '<span class="pn-save">-' + offPct(it) + '%</span>' : '')
-                    + '</div>'
-                    + '<a class="pn-cta" href="' + waLink(it) + '" target="_blank" rel="noopener">' + WA_SVG + c.cta + '</a>'
-                    + '</div></div>';
-            }).join('');
-            dotsWrap.innerHTML = c.items.map(function (it, i) {
-                return '<button type="button" class="pn-dot' + (i === 0 ? ' on' : '') + '" data-i="' + i + '" aria-label="Ver ' + it.name + '"></button>';
-            }).join('');
-            imgs = Array.prototype.slice.call(track.querySelectorAll('img'));
-            dotEls = Array.prototype.slice.call(dotsWrap.querySelectorAll('.pn-dot'));
-            dotEls.forEach(function (d) {
-                d.addEventListener('click', function () { go(parseInt(d.dataset.i, 10), true); });
+        var imgs = modal.querySelectorAll('.wk-fig img');
+        var opts = modal.querySelectorAll('.wk-opt');
+        function pick(i) {
+            var v = WEEK.variants[i];
+            imgs.forEach(function (im) {
+                var on = +im.getAttribute('data-i') === i;
+                if (on && !im.getAttribute('src')) im.setAttribute('src', im.getAttribute('data-src'));
+                im.classList.toggle('on', on);
             });
-            modal.querySelectorAll('.pn-tabbtn').forEach(function (b) { b.classList.toggle('on', b.dataset.c === c.id); });
-            void track.offsetWidth;
-            track.style.transition = '';
-            loadNear(0);
-            tick();
+            opts.forEach(function (o) { o.classList.toggle('on', +o.getAttribute('data-i') === i); });
+            document.getElementById('wk-note').textContent = v.label + ' · ' + v.note;
+            document.getElementById('wk-old').textContent = fmt(v.before);
+            document.getElementById('wk-new').textContent = fmt(v.price);
+            document.getElementById('wk-save').textContent = 'Ahorras ' + fmt(v.before - v.price);
+            document.getElementById('wk-cta').href = waWeek(v);
         }
-
-        function loadNear(i) {
-            [i, i + 1, i - 1].forEach(function (k) {
-                var img = imgs[(k + car.n) % car.n];
-                if (img && !img.getAttribute('src')) img.setAttribute('src', img.getAttribute('data-src'));
-            });
-        }
-
-        function go(i, user) {
-            car.i = (i + car.n) % car.n;
-            track.style.transform = 'translate3d(-' + (car.i * 100) + '%,0,0)';
-            dotEls.forEach(function (d, k) { d.classList.toggle('on', k === car.i); });
-            loadNear(car.i);
-            if (user) restart();
-        }
-
-        function auto() { go(car.i + 1); }
-        function stop() { if (car.timer) { clearInterval(car.timer); car.timer = null; } }
-        function restart() { stop(); car.timer = setInterval(auto, 4200); }
-
-        modal.querySelectorAll('.pn-tabbtn').forEach(function (b) {
-            b.addEventListener('click', function () { setCampaign(CAMPAIGNS[b.dataset.c]); restart(); });
-        });
-        document.getElementById('pn-next').addEventListener('click', function () { go(car.i + 1, true); });
-        document.getElementById('pn-prev').addEventListener('click', function () { go(car.i - 1, true); });
-
-        var x0 = null;
-        track.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; stop(); }, { passive: true });
-        track.addEventListener('touchend', function (e) {
-            if (x0 === null) return;
-            var dx = e.changedTouches[0].clientX - x0;
-            if (Math.abs(dx) > 45) go(car.i + (dx < 0 ? 1 : -1), true); else restart();
-            x0 = null;
-        }, { passive: true });
-
-        box.addEventListener('mouseenter', stop);
-        box.addEventListener('mouseleave', function () { if (modal.classList.contains('on')) restart(); });
-        document.addEventListener('visibilitychange', function () {
-            if (document.hidden) stop();
-            else if (modal.classList.contains('on')) restart();
-        });
+        opts.forEach(function (o) { o.addEventListener('click', function () { pick(+o.getAttribute('data-i')); }); });
+        pick(0);
+        // Precarga las otras dos fotos sin bloquear
+        setTimeout(function () {
+            imgs.forEach(function (im) { if (!im.getAttribute('src')) im.setAttribute('src', im.getAttribute('data-src')); });
+        }, 2500);
 
         function close() {
             modal.classList.remove('on');
-            stop();
             document.body.style.overflow = '';
-            try { sessionStorage.setItem('aa-flyer-seen', '1'); } catch (e) { }
-            setTimeout(function () { if (modal.parentNode) modal.remove(); }, 350);
+            try { sessionStorage.setItem(SEEN_KEY, '1'); } catch (e) { }
             document.removeEventListener('keydown', onKey);
+            showPill();
         }
-        function onKey(e) {
-            if (e.key === 'Escape') close();
-            else if (e.key === 'ArrowRight') go(car.i + 1, true);
-            else if (e.key === 'ArrowLeft') go(car.i - 1, true);
-        }
-
-        document.getElementById('pn-x').addEventListener('click', close);
+        function onKey(e) { if (e.key === 'Escape') close(); }
+        document.getElementById('wk-x').addEventListener('click', close);
         modal.addEventListener('click', function (e) { if (e.target === modal) close(); });
-        document.getElementById('pn-all').addEventListener('click', function () {
-            var tag = car.camp.id === 'yellow' ? 'amarillas' : 'amoramistad';
+        var more = document.getElementById('wk-more');
+        if (more) more.addEventListener('click', function () {
             close();
-            setTimeout(function () { goToFilter(tag); }, 260);
+            var sec = document.getElementById('fr-show');
+            if (sec) setTimeout(function () { sec.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 250);
         });
 
-        setCampaign(live[0]);
-
-        function open() {
-            modal.classList.add('on');
-            document.body.style.overflow = 'hidden';
-            restart();
-            document.addEventListener('keydown', onKey);
-        }
-        setTimeout(open, 1800);
+        flyer = {
+            open: function () {
+                hidePill();
+                modal.classList.add('on');
+                document.body.style.overflow = 'hidden';
+                document.addEventListener('keydown', onKey);
+            }
+        };
     }
+
+    function openFlyer() { if (!flyer) buildFlyer(); if (flyer) flyer.open(); }
+
+    function buildPill() {
+        if (document.getElementById('wk-pill')) return;
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.id = 'wk-pill';
+        b.className = 'wk-pill';
+        b.setAttribute('aria-label', 'Ver el arreglo de la semana');
+        b.innerHTML = '<img src="' + WEEK_MIN.src + '" alt=""><span><small>⭐ Arreglo de la semana</small>'
+            + '<b>Ternura Rosada desde ' + fmt(WEEK_MIN.price) + '</b></span>'
+            + '<span class="wk-pill-x" id="wk-pill-x" aria-label="Ocultar">&times;</span>';
+        document.body.appendChild(b);
+        b.addEventListener('click', function (e) {
+            if (e.target && e.target.id === 'wk-pill-x') {
+                e.stopPropagation();
+                hidePill();
+                try { sessionStorage.setItem('gg-pill-oculto', '1'); } catch (er) { }
+                return;
+            }
+            openFlyer();
+        });
+    }
+    function showPill() {
+        try { if (sessionStorage.getItem('gg-pill-oculto') === '1') return; } catch (e) { }
+        buildPill();
+        var p = document.getElementById('wk-pill');
+        if (p) setTimeout(function () { p.classList.add('on'); }, 300);
+    }
+    function hidePill() { var p = document.getElementById('wk-pill'); if (p) p.classList.remove('on'); }
 
     // ---------------------------------------------------------------
     // 7. ARRANQUE
     // ---------------------------------------------------------------
     function boot() {
-        if (!isLive(CAMPAIGNS.amor)) hideFilter('amoramistad');
-        if (!isLive(CAMPAIGNS.yellow)) hideFilter('amarillas');
-        var strip = buildStrip();
-        buildYellowShow(strip);
+        if (!isLive()) { hideFilter(); return; }
+        buildRosaShow();
         buildFlyer();
+        var seen = false;
+        try { seen = sessionStorage.getItem(SEEN_KEY) === '1'; } catch (e) { }
+        if (seen) showPill();
+        else setTimeout(function () { if (isLive()) openFlyer(); }, 1800);
         startClock();
     }
 
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', boot);
-    } else {
-        boot();
-    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+    else boot();
 })();

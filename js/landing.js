@@ -5,14 +5,14 @@
 
 // --- DATOS DEL CATÁLOGO COMPLETO ---
 const products = [
-    { id: 1, name: "Ternura Rosada", price: 112500, image: "../assets/foto38.webp", description: "Encantador ramo de rosas rosadas con gypsophila y envoltura delicada. Detalle tierno y accesible para cualquier momento.", categories: ["rosas", "bouquets", "amoramistad", "precio-medio"] },
-    { id: 2, name: "Suspiro Rosado", price: 131250, image: "../assets/foto30.webp", description: "Tierno ramo de rosas rosadas rematado con una mariposa decorativa. Delicadeza encantadora a un precio accesible.", categories: ["rosas", "bouquets", "amoramistad", "precio-medio"] },
+    { id: 1, name: "Ternura Rosada", price: 85000, image: "../assets/foto38.webp", description: "Arreglo de la semana. Rosas rosadas con mariposa brillante, nube de gypsophila y envoltura delicada. Escoge el tamaño: 12, 18 o 24 rosas.", categories: ["rosas", "bouquets", "frenesirosa", "precio-bajo"], variants: [{ label: "12 rosas", price: 85000, image: "../assets/foto38.webp" }, { label: "18 rosas", price: 110000, image: "../assets/foto38_1.webp" }, { label: "24 rosas", price: 135000, image: "../assets/foto38_2.webp" }] },
+    { id: 2, name: "Suspiro Rosado", price: 131250, image: "../assets/foto30.webp", description: "Tierno ramo de rosas rosadas rematado con una mariposa decorativa. Delicadeza encantadora a un precio accesible.", categories: ["frenesirosa", "rosas", "bouquets", "amoramistad", "precio-medio"] },
     { id: 3, name: "Girasol Imperial", price: 162500, image: "../assets/foto50.webp", description: "Imponente girasol único enmarcado en envoltura negra y dorada. Minimalismo elegante a precio accesible.", categories: ["girasoles", "bouquets", "amoramistad", "precio-medio"] },
     { id: 4, name: "Encanto de Hortensias", price: 137500, image: "../assets/foto36.webp", description: "Romántico ramo de hortensias blancas y siempreviva en tonos suaves. Elegancia natural para ocasiones especiales.", categories: ["bouquets", "precio-medio"] },
     { id: 5, name: "Orgullo del Graduado", price: 143750, image: "../assets/foto21.webp", description: "Ramo de rosas en tonos suaves acompañado de un birrete de graduación. Va con rosa grande y rosa pequeña. El reconocimiento perfecto para celebrar un logro.", categories: ["rosas", "bouquets", "precio-medio"] },
-    { id: 6, name: "Caja Rubor", price: 156250, image: "../assets/foto24.webp", description: "Caja compacta rebosante de rosas rosadas en tono rubor. Detalle dulce y delicado para enamorar.", categories: ["cajas", "rosas", "precio-medio"] },
+    { id: 6, name: "Caja Rubor", price: 156250, image: "../assets/foto24.webp", description: "Caja compacta rebosante de rosas rosadas en tono rubor. Detalle dulce y delicado para enamorar.", categories: ["frenesirosa", "cajas", "rosas", "precio-medio"] },
     { id: 7, name: "Caja Pasión Roja", price: 156250, image: "../assets/foto4.webp", description: "Elegante caja negra colmada de rosas rojas con gypsophila, lazo a juego y espacio para tu tarjeta. Un clásico atemporal del amor.", categories: ["rosas", "cajas", "precio-medio"] },
-    { id: 8, name: "Abrazo Floral", price: 262500, image: "../assets/foto34.webp", description: "Ramo generoso de rosas rosadas y moradas con gypsophila. Un abrazo de color para expresar cariño.", categories: ["rosas", "bouquets", "precio-alto"] },
+    { id: 8, name: "Abrazo Floral", price: 262500, image: "../assets/foto34.webp", description: "Ramo generoso de rosas rosadas y moradas con gypsophila. Un abrazo de color para expresar cariño.", categories: ["frenesirosa", "rosas", "bouquets", "precio-alto"] },
     { id: 9, name: "Claveles del Corazón", price: 156250, image: "../assets/foto40.webp", description: "Cálido ramo de claveles rojos y rosados con follaje fino. Clásico lleno de afecto y color.", categories: ["bouquets", "precio-medio"] },
     { id: 10, name: "Rosas de Primavera", price: 175000, image: "../assets/foto41.webp", description: "Fresco ramo de rosas rosadas y blancas que evoca la primavera. Delicadeza y elegancia en cada tallo.", categories: ["rosas", "bouquets", "amoramistad", "precio-medio"] },
     { id: 11, name: "Girasoles de Gala", price: 193750, image: "../assets/foto56.webp", description: "Elegante ramo cuadrado de girasoles; el color de la envoltura se personaliza a tu gusto. Diseño contemporáneo lleno de carácter.", categories: ["girasoles", "bouquets", "amarillas", "precio-medio"] },
@@ -35,13 +35,13 @@ const products = [
     { id: 28, name: "Caja Romántica con Chocolates", price: 218750, image: "../assets/foto45.webp", description: "Caja alargada con rosas rojas y finos chocolates. La combinación perfecta de amor y dulzura.", categories: ["cajas", "rosas", "chocolates", "amoramistad", "precio-alto"] },
     { id: 29, name: "Cascada Fucsia", price: 218750, image: "../assets/foto2.webp", description: "Espectacular torre escalonada de rosas fucsia coronada con una hortensia central y verdor exuberante. Diseño de gran formato que impone presencia y romanticismo.", categories: ["rosas", "premium", "precio-alto"], lowPriority: true },
     { id: 30, name: "Caja Sorpresa Roja", price: 218750, image: "../assets/foto25.webp", description: "Caja con rosas rojas coronada por un globo decorativo. Sorpresa vibrante que celebra el amor con estilo.", categories: ["cajas", "rosas", "precio-alto"] },
-    { id: 31, name: "Atardecer en Jarrón", price: 218750, image: "../assets/foto31.webp", description: "Cálido arreglo de rosas naranja dispuesto en elegante jarrón de vidrio. Listo para iluminar cualquier rincón.", categories: ["rosas", "jarrones", "precio-alto"] },
+    { id: 31, name: "Atardecer en Jarrón", price: 218750, image: "../assets/foto31.webp", description: "Cálido arreglo de rosas naranja dispuesto en elegante jarrón de vidrio. Listo para iluminar cualquier rincón.", categories: ["frenesirosa", "rosas", "jarrones", "precio-alto"] },
     { id: 32, name: "Elegancia Marfil", price: 218750, image: "../assets/foto37.webp", description: "Sobrio arreglo de rosas blancas en jarrón de vidrio con follaje verde. La distinción de lo clásico.", categories: ["rosas", "jarrones", "precio-alto"] },
     { id: 33, name: "Elegancia de Calas", price: 225000, image: "../assets/foto46.webp", description: "Sofisticado ramo de calas blancas y rosas rojas con envoltura negra. Distinción y drama en un mismo diseño.", categories: ["bouquets", "rosas", "precio-alto"] },
     { id: 34, name: "Llama Eterna", price: 231250, image: "../assets/foto7.webp", description: "Arreglo vertical de rosas rojas y gladiolos encendidos sobre follaje frondoso. Una declaración de pasión imposible de ignorar.", categories: ["rosas", "bouquets", "precio-alto"] },
     { id: 35, name: "Torre Frutal Durazno", price: 231250, image: "../assets/foto15.webp", description: "Elegante torre de rosas en tono durazno combinada con frutas frescas en canasta. Lujo y sabor en una misma creación.", categories: ["rosas", "premium", "precio-alto"] },
     { id: 36, name: "Lirios Silvestres", price: 231250, image: "../assets/foto23.webp", description: "Elegante ramo compuesto únicamente de lirios y follaje fresco. Naturalidad y distinción para alegrar cualquier espacio.", categories: ["bouquets", "precio-alto"], lowPriority: true },
-    { id: 37, name: "Tulipanes Encantados", price: 231250, image: "../assets/foto44.webp", description: "Elegante ramo de tulipanes rosados realzado con gypsophila. Suavidad y encanto en perfecta armonía.", categories: ["bouquets", "amoramistad", "precio-alto"] },
+    { id: 37, name: "Tulipanes Encantados", price: 247000, image: "../assets/foto44.webp", description: "Elegante ramo de tulipanes rosados realzado con gypsophila. Suavidad y encanto en perfecta armonía.", categories: ["bouquets", "amoramistad", "precio-alto"] },
     { id: 38, name: "Brindis Dorado", price: 231250, image: "../assets/foto51.webp", description: "Festivo arreglo con globo dorado, frutas y flores de temporada. Celebra con estilo y abundancia.", categories: ["bouquets", "premium", "precio-alto"] },
     { id: 39, name: "Canasta Solar Frutal", price: 243750, image: "../assets/foto5.webp", description: "Generosa canasta que reúne girasoles, frutas frescas y un globo decorativo. Detalle completo que combina dulzura, color y abundancia.", categories: ["girasoles", "premium", "precio-alto"] },
     { id: 40, name: "Torre Solar", price: 243750, image: "../assets/foto8.webp", description: "Llamativa torre de girasoles culminada con lirios en su cúspide. Estructura escultural que irradia optimismo y frescura.", categories: ["girasoles", "premium", "precio-alto"] },
@@ -52,7 +52,7 @@ const products = [
     { id: 45, name: "Tropical Gourmet", price: 268750, image: "../assets/foto27.webp", description: "Arreglo exótico con aves del paraíso, rosas naranja y frutas frescas. Lujo tropical que combina belleza y sabor.", categories: ["bouquets", "premium", "precio-alto"], lowPriority: true },
     { id: 46, name: "Festín Solar", price: 268750, image: "../assets/foto35.webp", description: "Arreglo abundante de girasoles, rosas rojas y frutas frescas. Combinación festiva llena de vida y sabor.", categories: ["girasoles", "premium", "precio-alto"] },
     { id: 47, name: "Corona Homenaje Dorado", price: 275000, image: "../assets/foto17.webp", description: "Solemne corona fúnebre en tonos dorados y blancos con acabado clásico. Un homenaje digno y respetuoso de despedida.", categories: ["premium", "precio-alto"], lowPriority: true, hidden: true },
-    { id: 48, name: "Elegancia Tropical", price: 281250, image: "../assets/foto32.webp", description: "Refinado arreglo de rosas rosadas realzado con aves del paraíso. Elegancia exótica de gran presencia.", categories: ["rosas", "premium", "precio-alto"] },
+    { id: 48, name: "Elegancia Tropical", price: 281250, image: "../assets/foto32.webp", description: "Refinado arreglo de rosas rosadas realzado con aves del paraíso. Elegancia exótica de gran presencia.", categories: ["frenesirosa", "rosas", "premium", "precio-alto"] },
     { id: 49, name: "Caja Solar Sorpresa", price: 281250, image: "../assets/foto48.webp", description: "Completa caja sorpresa con girasoles, peluche y chocolates. Regalo integral que combina alegría y dulzura.", categories: ["cajas", "girasoles", "chocolates", "precio-alto"] },
     { id: 50, name: "Abrazo de Peluche", price: 293750, image: "../assets/foto43.webp", description: "Ramo de rosas en tonos suaves acompañado de un peluche y envoltura morada. Ternura completa para regalar.", categories: ["rosas", "bouquets", "precio-alto"] },
     { id: 51, name: "Nube Multicolor", price: 231250, image: "../assets/foto12.webp", description: "Esfera espectacular de gypsophila teñida en todos los colores del arcoíris; una flor muy duradera que se conserva por bastante tiempo. Diseño moderno y festivo que enamora a primera vista.", categories: ["bouquets", "premium", "precio-alto"] },
@@ -66,7 +66,7 @@ const products = [
     { id: 59, name: "Sol de tu Sonrisa", price: 143750, image: "../assets/foto59.webp", description: "Girasoles radiantes abrazados por rosas rosadas, mini claveles y pompones blancos sobre envoltura rosa palo. Alegría y amor en el mismo ramo, sin tener que elegir.", categories: ["girasoles", "rosas", "bouquets", "amoramistad", "precio-medio"] },
     { id: 60, name: "Latido Fucsia", price: 143750, image: "../assets/foto60.webp", description: "Rosas fucsia encendidas con gypsophila, eucalipto, hilo de perlas y un corazón que corona el ramo. Romántico, directo e imposible de malinterpretar.", categories: ["rosas", "bouquets", "amoramistad", "precio-medio"] },
     { id: 61, name: "Susurro de Lirios", price: 193750, image: "../assets/foto61.webp", description: "Lirios rosados de pétalos abiertos con delphinium azul y eucalipto fresco. Perfuma la casa entera y sigue abriendo flores durante días.", categories: ["bouquets", "amoramistad", "premium", "precio-medio"] },
-    { id: 62, name: "Alas de Amor", price: 228750, image: "../assets/foto62.webp", description: "Ramo XL de rosas rosadas en varios tonos, nube de gypsophila, mariposas doradas y tarjeta dedicada. La declaración más grande que puedes enviar sin decir una palabra.", categories: ["rosas", "bouquets", "premium", "precio-alto"] },
+    { id: 62, name: "Alas de Amor", price: 228750, image: "../assets/foto62.webp", description: "Ramo XL de rosas rosadas en varios tonos, nube de gypsophila, mariposas doradas y tarjeta dedicada. La declaración más grande que puedes enviar sin decir una palabra.", categories: ["frenesirosa", "rosas", "bouquets", "premium", "precio-alto"] },
     { id: 63, name: "Rosas con tu Inicial", price: 230000, image: "../assets/foto63.webp", description: "Ramo de rosas rojas con la inicial de esa persona especial tejida en flores blancas, follaje fresco y tarjeta dedicada. Un detalle personalizado que nadie más va a tener.", categories: ["rosas", "bouquets", "premium", "precio-alto"] },
     { id: 64, name: "Canasta Jardín Pastel", price: 368750, image: "../assets/foto64.webp", description: "Canasta desbordante de rosas, crisantemos, hortensias, astromelias y margaritas azules en degradado pastel con eucalipto fresco. Gran formato para sorprender de verdad.", categories: ["bouquets", "premium", "precio-alto"] },
     { id: 65, name: "Osito y Rosas Blancas", price: 256250, image: "../assets/foto65.webp", description: "Rosas blancas con gypsophila en caja rosa con lazo de perlas, acompañadas de un tierno osito de peluche. Dulzura y elegancia en un mismo detalle.", categories: ["cajas", "rosas", "premium", "precio-alto"] },
@@ -158,7 +158,7 @@ function renderProducts(filters = [], limit = null) {
     // Orden estricto de menor a mayor precio: TODOS los productos, sin omitir ninguno
     productsToDisplay.sort((a, b) => (a.lowPriority ? 1 : 0) - (b.lowPriority ? 1 : 0) || a.price - b.price);
 
-    // AMOR Y AMISTAD + FLORES AMARILLAS: los destacados suben al tope conservando el orden por precio
+    // FRENESÍ ROSA + ARREGLO DE LA SEMANA: los destacados suben al tope (orden en js/promo-semana.js)
     if (window.PROMO_SEMANA && window.PROMO_SEMANA.active()) {
         window.PROMO_SEMANA.sortToTop(productsToDisplay);
     }
@@ -185,12 +185,18 @@ function renderProducts(filters = [], limit = null) {
         const promo = PN ? PN.find(product.image) : null;
         const promoClass = promo ? PN.cardClass(promo) : '';
         const promoRibbon = promo ? PN.ribbon(promo) : '';
-        const promoBefore = promo ? PN.priceBefore(promo) : '';
+        const promoBefore = promo ? PN.priceBefore(promo, product.image) : '';
         let anchor = '';
         if (promo && !firstPromoMarked) { anchor = ' id="promo-semana-primero"'; firstPromoMarked = true; }
+        const hasVariants = Array.isArray(product.variants) && product.variants.length > 0;
+        const variantsHtml = hasVariants ? `
+                    <div class="variant-chips" role="group" aria-label="Tamaños">
+                        ${product.variants.map((v, i) => `<button type="button" class="variant-chip${i === 0 ? ' on' : ''}" data-img="${v.image}" data-price="${v.price}" data-label="${v.label}">${v.label}<strong>${formatCOP(v.price)}</strong></button>`).join('')}
+                    </div>` : '';
+        const orderName = hasVariants ? `${code} - ${escapedName} (${product.variants[0].label})` : `${code} - ${escapedName}`;
 
         return `
-            <div class="product-item${promoClass}"${anchor}>
+            <div class="product-item${promoClass}"${anchor} data-code="${code}" data-name="${product.name}">
                 <div class="product-image" style="position:relative;">
                     ${promoRibbon}
                     <span class="product-code-badge" style="position:absolute;top:0.7rem;left:0.7rem;background:rgba(0,0,0,0.65);color:#fff;padding:0.3rem 0.7rem;border-radius:6px;font-size:0.75rem;font-weight:700;letter-spacing:0.5px;z-index:2;font-family:'Poppins',sans-serif;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);">${code}</span>
@@ -199,9 +205,10 @@ function renderProducts(filters = [], limit = null) {
                 <div class="product-info">
                     <h3>${product.name}</h3>
                     <p>${product.description}</p>
+                    ${variantsHtml}
                     <div class="product-footer">
-                        <span class="price">${promoBefore}${formatCOP(product.price)}</span>
-                        <button class="btn-order" onclick="orderWA('${code} - ${escapedName}', '${product.price}', '${product.image.replace(/'/g, "\\'")}')">
+                        <span class="price">${promoBefore}<span class="pn-now">${formatCOP(product.price)}</span></span>
+                        <button class="btn-order" onclick="orderWA('${orderName}', '${product.price}', '${product.image.replace(/'/g, "\\'")}')">
                             Pedir por WhatsApp
                         </button>
                     </div>
@@ -210,6 +217,29 @@ function renderProducts(filters = [], limit = null) {
         `;
     }).join('');
 }
+
+// --- TAMAÑOS DE UN ARREGLO (ej. Ternura Rosada 12 / 18 / 24 rosas) ---
+window.pickVariant = function (chip) {
+    const card = chip.closest('.product-item');
+    if (!card) return;
+    const img = chip.dataset.img, price = Number(chip.dataset.price), label = chip.dataset.label;
+    const name = card.dataset.name, code = card.dataset.code;
+    card.querySelectorAll('.variant-chip').forEach(c => c.classList.toggle('on', c === chip));
+    const im = card.querySelector('.product-image img');
+    if (im) im.src = img;
+    const now = card.querySelector('.pn-now');
+    if (now) now.textContent = formatCOP(price);
+    const PN = window.PROMO_SEMANA;
+    const before = PN && PN.beforeOf ? PN.beforeOf(img) : 0;
+    const old = card.querySelector('.pn-old');
+    if (old) { old.textContent = before ? formatCOP(before) : ''; old.style.display = before ? '' : 'none'; }
+    const btn = card.querySelector('.btn-order');
+    if (btn) btn.onclick = function () { orderWA(`${code} - ${name} (${label})`, String(price), img); };
+};
+document.addEventListener('click', function (e) {
+    const chip = e.target.closest && e.target.closest('.variant-chip');
+    if (chip) window.pickVariant(chip);
+});
 
 // --- FUNCIONES DE WHATSAPP ---
 function contactWA() {

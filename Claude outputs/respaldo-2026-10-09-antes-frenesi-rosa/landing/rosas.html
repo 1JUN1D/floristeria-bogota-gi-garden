@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Descubre hermosos ramos y arreglos de rosas a domicilio en Bogotá. Rosas frescas, ramos buchones, cajas de rosas para cumpleaños y ocasiones especiales. Envío mismo día.">
+    <meta name="keywords" content="ramo de rosas, bouquet de rosas, rosas a domicilio, caja de rosas, arreglos de rosas, ramo de rosas rojas, ramos de rosas para cumpleaños, colores de rosas, rosa negra flor, rosas negras naturales, ramos de rosas con girasoles, ramo buchon de rosas, bouquet de rosas bogota, rosas a domicilio bogotá">
+    <meta property="og:title" content="Ramos y Bouquets de Rosas Frescas a Domicilio en Bogotá | Gi Garden">
+    <meta property="og:description" content="Rosas frescas y arreglos de rosas para cumpleaños, aniversarios y ocasiones especiales. Entrega mismo día en Bogotá, Cundinamarca.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1490750967868-88aa4f44baee?w=1200&q=80">
+    <meta property="og:url" content="https://bogotafloristeria.dondeseria.com/landing/rosas">
+    <meta property="og:type" content="website">
+    <meta name="language" content="es-CO">
+    <meta name="geo.placename" content="Bogotá, Cundinamarca">
+    <meta name="geo.region" content="CO-TO">
+    <link rel="canonical" href="https://bogotafloristeria.dondeseria.com/landing/rosas">
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VDPKGDQKXZ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-VDPKGDQKXZ');
+        gtag('config', 'AW-18191445167');
+    </script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/landing.css">
+
+    <title>Ramos de Rosas Frescas a Domicilio en Bogotá | Gi Garden</title>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <img src="../assets/logo.webp" alt="Gi Garden - Floristería Bogotá">
+            </div>
+            <h1 class="header-title">Gi Garden</h1>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" style="background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1487530811176-3780de880c2d?w=1920&q=80');">
+        <div class="hero-content">
+            <h2 class="hero-title">Ramos de Rosas Frescas a Domicilio en Bogotá</h2>
+            <p class="hero-subtitle">Bouquets y arreglos de rosas para cumpleaños, aniversarios y momentos inolvidables</p>
+            <button class="cta-button" onclick="contactWA(); return false;">
+                <span class="whatsapp-icon">📱</span> Pedir Ahora por WhatsApp
+            </button>
+        </div>
+    </section>
+
+
+    <!-- Catálogo Completo -->
+    <section class="catalog-filters" id="productos">
+        <div class="container">
+            <!-- Barra de búsqueda -->
+            <div class="search-container">
+                <input type="text" class="search-input" id="search-input" placeholder="Buscar ramos, rosas, girasoles, gerberas...">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"/>
+                    <path d="m21 21-4.35-4.35"/>
+                </svg>
+                <button class="search-clear" id="search-clear">&times;</button>
+            </div>
+            <!-- Filtros -->
+            <div class="filters-container">
+                <span class="filter-label">Filtrar:</span>
+                <button class="filter-btn active" data-filter="todos">Todos</button>
+                <button class="filter-btn filter-btn-madres" data-filter="dia-madres">Día de las Madres</button>
+                <button class="filter-btn" data-filter="girasoles">Girasoles</button>
+                <button class="filter-btn" data-filter="gerberas">Gerberas</button>
+                <button class="filter-btn" data-filter="bouquets">Bouquets</button>
+                <button class="filter-btn" data-filter="canastas">Canastas</button>
+                <button class="filter-btn" data-filter="cajas">Cajas</button>
+                <button class="filter-btn" data-filter="chocolates">Con Chocolates</button>
+                <button class="filter-btn filter-btn-amor" data-filter="amoramistad">💝 Amor y Amistad</button>
+                <button class="filter-btn filter-btn-amarillas" data-filter="amarillas">🌻 Flores Amarillas</button>
+                <button class="filter-btn" data-filter="pompones">Pompones</button>
+                <button class="filter-btn" data-filter="rosas-eternas">Rosas Eternas</button>
+                <button class="filter-btn" data-filter="coreano">Estilo Coreano</button>
+                <button class="filter-btn" data-filter="premium">Premium</button>
+                <button class="filter-btn" data-filter="precio-bajo">Menos de $150.000</button>
+                <button class="filter-btn" data-filter="precio-medio">$150.000 - $250.000</button>
+                <button class="filter-btn" data-filter="precio-alto">Más de $250.000</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contador de resultados -->
+    <div class="results-counter">
+        <div class="container">
+            Mostrando <strong id="results-count">0</strong> creaciones
+        </div>
+    </div>
+
+    <!-- Nota: los arreglos se arman según disponibilidad / se pueden hacer en otros colores -->
+    <div class="color-note" style="max-width:1200px;margin:0 auto 1.5rem;padding:0 1.5rem;">
+        <div style="display:flex;gap:.9rem;align-items:flex-start;background:#fdf8f2;border:1px solid #e6d5bd;border-left:4px solid #C9A86A;border-radius:12px;padding:1rem 1.2rem;font-family:'Poppins',sans-serif;">
+            <span style="font-size:1.4rem;line-height:1.2;flex-shrink:0;">🎨</span>
+            <p style="margin:0;font-size:.92rem;line-height:1.6;color:#5c5241;">
+                <strong style="color:#8C6F3A;">Las fotos son de referencia.</strong>
+                Cada arreglo se arma según la disponibilidad de flores y colores del día, y el mismo diseño lo podemos hacer en el color que tú prefieras.
+                Por ejemplo, un ramo que ves en fucsia también va en rojo, blanco, amarillo o tonos pastel.
+                Escríbenos por WhatsApp y lo armamos con los colores que quieras.
+            </p>
+        </div>
+    </div>
+
+
+    <!-- Grid de Productos -->
+    <section class="products-section">
+        <div class="container">
+            <div class="products-container"></div>
+            <div class="empty-state" id="empty-state">
+                <h3>No se encontraron creaciones</h3>
+                <p>Prueba ajustando el filtro o cambiando tu palabra de búsqueda</p>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- CTA Final -->
+    <section class="final-cta">
+        <div class="container">
+            <h2>Sorprende Hoy, Sonríen Mañana</h2>
+            <p>Solicita ya mismo tus flores con entrega a domicilio. Despachamos en Bogotá todos los días del año.</p>
+            <button class="cta-button-large" onclick="orderWA(); return false;">
+                📞 WhatsApp: +57 314 595 7395
+            </button>
+            <p class="cta-subtitle">Atención las 24 horas - Te contestamos al instante</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-info">
+                <p><strong>Gi Garden</strong> - Tu florería en Bogotá, Cundinamarca, Colombia</p>
+                <p>Escríbenos por WhatsApp: <a href="https://wa.me/573145957395">+57 314 595 7395</a></p>
+                <p>Llevamos tus flores a domicilio en toda la ciudad</p>
+            </div>
+            <p class="footer-copyright">&copy; 2024 Gi Garden. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Structured Data - LocalBusiness -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "Gi Garden",
+        "image": "https://bogotafloristeria.dondeseria.com/assets/logo.webp",
+        "description": "Florería especializada en ramos y arreglos de rosas a domicilio en Bogotá, Cundinamarca.",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Bogotá",
+            "addressRegion": "Cundinamarca",
+            "addressCountry": "CO"
+        },
+        "telephone": "+573145957395",
+        "url": "https://bogotafloristeria.dondeseria.com",
+        "priceRange": "$$",
+        "sameAs": "https://wa.me/573145957395"
+    }
+    </script>
+
+    <!-- JS -->
+    <script src="../js/promo-semana.js"></script>
+    <script src="../js/landing.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function(){
+        LANDING_PRIORITY_TAG = 'bouquets';
+        initCatalog();
+    
