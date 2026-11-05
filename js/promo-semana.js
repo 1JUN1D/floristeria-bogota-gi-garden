@@ -42,19 +42,19 @@
     // 2. ARREGLOS PARA GRADO (en este orden salen en la vitrina y el flyer)
     // ---------------------------------------------------------------
     var GRADO_ITEMS = [
-        { key: 'foto38', name: 'Ternura Rosada', price: 78000,
+        { key: 'foto38', name: 'Ternura Rosada', price: 98000,
           hook: 'Rosas rosadas en nube de gypsophila: el abrazo que le entregas apenas baje de la tarima.' },
-        { key: 'foto69', name: 'Perlas de Sol', price: 78000,
+        { key: 'foto69', name: 'Perlas de Sol', price: 98000,
           hook: 'Rosas amarillas con encaje de perlas: luz para el día en que empieza todo lo que viene.' },
-        { key: 'foto30', name: 'Suspiro Rosado', price: 95000,
+        { key: 'foto30', name: 'Suspiro Rosado', price: 119000,
           hook: 'Rosas rosadas con mariposa: hoy despega, y quieres que lo sepa.' },
-        { key: 'foto59', name: 'Sol de tu Sonrisa', price: 105000,
+        { key: 'foto59', name: 'Sol de tu Sonrisa', price: 131000,
           hook: 'Girasoles y rosas que se ven increíbles en la foto del grado. Orgullo con color.' },
-        { key: 'foto60', name: 'Latido Fucsia', price: 110000,
+        { key: 'foto60', name: 'Latido Fucsia', price: 138000,
           hook: 'Rosas fucsia, perlas y un corazón arriba: para esa persona que te llena de orgullo.' },
-        { key: 'foto50', name: 'Girasol Imperial', price: 125000,
+        { key: 'foto50', name: 'Girasol Imperial', price: 156000,
           hook: 'Un girasol en negro y dorado, elegante como la toga. El regalo con más carácter del grado.' },
-        { key: 'foto45', name: 'Caja Romántica con Chocolates', price: 165000,
+        { key: 'foto45', name: 'Caja Romántica con Chocolates', price: 206000,
           hook: 'Rosas y chocolates finos para celebrar en grande después de la ceremonia.' }
     ];
 
