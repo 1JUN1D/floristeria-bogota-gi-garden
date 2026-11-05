@@ -1,25 +1,22 @@
 /* =====================================================================
-   TEMPORADA DE SEPTIEMBRE — Gi Garden Bogotá
+   TEMPORADA DE GRADOS — Gi Garden Bogotá
    ---------------------------------------------------------------------
    (El archivo conserva el nombre promo-semana.js para no tener que tocar
    las etiquetas <script> de las páginas.)
 
-   Dos campañas con fecha de cierre automática (hora de Bogotá):
-     1. 💝 OFERTA DE AMOR Y AMISTAD  → hasta el sábado 19 de septiembre, 11:59 p.m.
-     2. 🌻 FLORES AMARILLAS          → hasta el lunes 21 de septiembre, 11:59 p.m.
-        (Amor y Amistad + el 21 de septiembre, día de regalar flores amarillas)
-
    Incluye:
-     · Flyer flotante con carrusel y pestañas (Amor y Amistad / Flores Amarillas)
-     · Banner con contador regresivo hasta el 19 de septiembre
-     · Vitrina "Flores Amarillas" con los arreglos amarillos destacados
-     · Cintas y bordes de destaque en las tarjetas del catálogo
-   Cuando pasa cada fecha, esa campaña se apaga sola (cintas, banner,
-   flyer y botón de filtro) y los productos quedan como normales.
+     · Vitrina animada "Arreglos para Grado" (confeti dorado) debajo del encabezado
+     · Flyer flotante con carrusel de los 7 arreglos y el mensaje de que se
+       personalizan (aparece una vez por visita)
+     · Botón flotante "Arreglos para grado" abajo a la izquierda para reabrirlo
+     · Cinta "🎓 Para grado" y borde dorado animado en las tarjetas del
+       catálogo y de las landings; estos arreglos se muestran de primeros
+   Cuando pasa GRADO_END, todo esto se apaga solo y los productos quedan
+   como normales (con los precios nuevos).
    ---------------------------------------------------------------------
-   CÓMO CAMBIAR LOS ARREGLOS: editar AMOR_ITEMS o YELLOW_ITEMS (sección 2).
-   CÓMO CAMBIAR LAS FECHAS:  editar AMOR_END / YELLOW_END (sección 1).
-   Los PRECIOS se toman del catálogo (catalogo.html y js/landing.js).
+   CÓMO CAMBIAR LOS ARREGLOS: editar GRADO_ITEMS (sección 2).
+   CÓMO CAMBIAR LA FECHA:     editar GRADO_END (sección 1).
+   Si cambias un precio aquí, cámbialo también en catalogo.html y js/landing.js.
    ===================================================================== */
 (function () {
     'use strict';
@@ -30,11 +27,9 @@
     var WA_PHONE = '573145957395';
     var SITE = 'https://bogotafloristeria.dondeseria.com/';
 
-    // Bogotá es UTC-5 todo el año. Fechas en UTC equivalentes a 11:59:59 p.m. Bogotá.
-    var AMOR_END   = Date.UTC(2026, 8, 20, 4, 59, 59);  // sáb 19 sep 2026, 11:59 p.m. Bogotá
-    var YELLOW_END = Date.UTC(2026, 8, 22, 4, 59, 59);  // lun 21 sep 2026, 11:59 p.m. Bogotá
+    // Bogotá es UTC-5 todo el año. Fecha en UTC equivalente a 11:59:59 p.m. Bogotá.
+    var GRADO_END = Date.UTC(2027, 0, 1, 4, 59, 59);   // jueves 31 de diciembre 2026, 11:59 p.m. Bogotá
 
-    // Base de rutas (funciona igual en la raíz y dentro de /landing/)
     var thisScript = document.currentScript;
     var BASE = (function () {
         if (thisScript && thisScript.src) {
@@ -44,319 +39,254 @@
     })();
 
     // ---------------------------------------------------------------
-    // 2. ARREGLOS DE CADA CAMPAÑA
+    // 2. ARREGLOS PARA GRADO (en este orden salen en la vitrina y el flyer)
     // ---------------------------------------------------------------
-    var AMOR_ITEMS = [
-        { key: 'foto38', name: 'Ternura Rosada', price: 112500,
-          hook: 'El detalle perfecto para esa amistad que siempre está.',
-          desc: 'Rosas rosadas con nube de gypsophila y envoltura delicada. Pequeño en tamaño, enorme en intención.' },
-        { key: 'foto30', name: 'Suspiro Rosado', price: 131250,
-          hook: 'Rosas que llegan con mariposa incluida. El mensaje se entiende solo.',
-          desc: 'Ramo de rosas rosadas rematado con una mariposa decorativa. Delicadeza que se roba la mirada apenas abre la puerta.' },
-        { key: 'foto59', name: 'Sol de tu Sonrisa', price: 143750,
-          hook: 'Girasoles y rosas en el mismo ramo: amor y amistad sin tener que elegir.',
-          desc: 'Girasoles radiantes abrazados por rosas rosadas, mini claveles y pompones blancos sobre envoltura rosa palo.' },
-        { key: 'foto60', name: 'Latido Fucsia', price: 143750,
-          hook: 'Rosas fucsia, perlas y un corazón arriba. Imposible de malinterpretar.',
-          desc: 'Rosas fucsia encendidas con gypsophila, eucalipto, hilo de perlas y un corazón que corona el ramo.' },
-        { key: 'foto50', name: 'Girasol Imperial', price: 162500,
-          hook: 'Un solo girasol, todo el protagonismo. Elegante y diferente.',
-          desc: 'Imponente girasol enmarcado en envoltura negra y dorada. Minimalismo con carácter para sorprender.' },
-        { key: 'foto41', name: 'Rosas de Primavera', price: 175000,
-          hook: 'Rosas rosadas y blancas: el clásico que nunca falla en septiembre.',
-          desc: 'Fresco ramo de rosas rosadas y blancas que evoca la primavera. Delicadeza y elegancia en cada tallo.' },
-        { key: 'foto61', name: 'Susurro de Lirios', price: 193750,
-          hook: 'Perfuma la casa entera y sigue abriendo flores durante días.',
-          desc: 'Lirios rosados de pétalos abiertos con delphinium azul y eucalipto fresco. Elegancia en gran formato.' },
-        { key: 'foto45', name: 'Caja Romántica de Chocolates', price: 218750,
-          hook: 'Rosas rojas y chocolates: el combo más pedido en Amor y Amistad.',
-          desc: 'Caja alargada con rosas rojas y finos chocolates. La combinación perfecta de amor y dulzura.' },
-        { key: 'foto44', name: 'Tulipanes Encantados', price: 247000, before: 300000,
-          hook: 'Tulipanes con descuento real: antes $300.000, ahora $247.000.',
-          desc: 'Elegante ramo de tulipanes rosados realzado con gypsophila. Flor de importación, temporada corta: solo mientras dure la oferta.' }
+    var GRADO_ITEMS = [
+        { key: 'foto38', name: 'Ternura Rosada', price: 78000,
+          hook: 'Rosas rosadas en nube de gypsophila: el abrazo que le entregas apenas baje de la tarima.' },
+        { key: 'foto69', name: 'Perlas de Sol', price: 78000,
+          hook: 'Rosas amarillas con encaje de perlas: luz para el día en que empieza todo lo que viene.' },
+        { key: 'foto30', name: 'Suspiro Rosado', price: 95000,
+          hook: 'Rosas rosadas con mariposa: hoy despega, y quieres que lo sepa.' },
+        { key: 'foto59', name: 'Sol de tu Sonrisa', price: 105000,
+          hook: 'Girasoles y rosas que se ven increíbles en la foto del grado. Orgullo con color.' },
+        { key: 'foto60', name: 'Latido Fucsia', price: 110000,
+          hook: 'Rosas fucsia, perlas y un corazón arriba: para esa persona que te llena de orgullo.' },
+        { key: 'foto50', name: 'Girasol Imperial', price: 125000,
+          hook: 'Un girasol en negro y dorado, elegante como la toga. El regalo con más carácter del grado.' },
+        { key: 'foto45', name: 'Caja Romántica con Chocolates', price: 165000,
+          hook: 'Rosas y chocolates finos para celebrar en grande después de la ceremonia.' }
     ];
 
-    var YELLOW_ITEMS = [
-        { key: 'foto69', name: 'Perlas de Sol', price: 125000,
-          hook: 'Rosas amarillas con encaje de perlas: luz pura en un ramo.',
-          desc: 'Rosas amarillas con nube de gypsophila, encaje de perlas y envoltura con borde amarillo.' },
-        { key: 'foto70', name: 'Abrazo de Sol', price: 137500,
-          hook: 'Un girasol al centro y un día soleado alrededor.',
-          desc: 'Girasol rodeado de rosas amarillas, crisantemos amarillos y margaritas blancas con follaje fresco.' },
-        { key: 'foto71', name: 'Jardín Dorado', price: 168750,
-          hook: 'Más volumen, más color y un toque silvestre que enamora.',
-          desc: 'Girasol central con rosas amarillas, margaritas blancas, solidago y eucalipto sobre envoltura amarilla.' },
-        { key: 'foto56', name: 'Girasoles de Gala', price: 193750,
-          hook: 'El ramo de girasoles más elegante. Tú eliges el color de la envoltura.',
-          desc: 'Ramo cuadrado de girasoles con envoltura personalizable. Diseño contemporáneo, lleno de carácter y de luz.' }
-    ];
+    GRADO_ITEMS.forEach(function (it, i) {
+        it.rank = i + 1;
+        it.img = BASE + 'assets/' + it.key + '.webp';
+        it.label = 'Precio de grado';
+    });
+    var MIN_PRICE = Math.min.apply(null, GRADO_ITEMS.map(function (it) { return it.price; }));
 
     function fmt(n) { return '$' + Number(n).toLocaleString('es-CO'); }
-    function offPct(it) {
-        if (!it || !it.before || it.before <= it.price) return 0;
-        return Math.round((1 - it.price / it.before) * 100);
-    }
-
-    var CAMPAIGNS = {
-        amor: {
-            id: 'amor', end: AMOR_END, items: AMOR_ITEMS,
-            tab: '💝 Amor y Amistad',
-            kicker: 'Hasta el sábado 19 de septiembre',
-            title: 'Oferta de Amor y Amistad',
-            desc: 'Nueve arreglos escogidos para celebrar con tu pareja, tus amigos o esa persona que te alegra los días. '
-                + 'La oferta termina el <strong>19 de septiembre a medianoche</strong>.',
-            cta: 'Lo quiero para Amor y Amistad',
-            tag: '💝 Amor y Amistad', ribbon: 'Oferta', label: 'Amor y Amistad',
-            waIntro: 'Hola Gi Garden, quiero aprovechar la Oferta de Amor y Amistad:'
-        },
-        yellow: {
-            id: 'yellow', end: YELLOW_END, items: YELLOW_ITEMS,
-            tab: '🌻 Flores Amarillas',
-            kicker: 'Amor y Amistad · 21 de septiembre',
-            title: 'Flores Amarillas',
-            desc: 'Los mejores arreglos amarillos para esta temporada: rosas, girasoles y margaritas que dicen '
-                + '“me alegras la vida”. Ideales para Amor y Amistad y para el <strong>21 de septiembre</strong>.',
-            cta: 'Quiero flores amarillas',
-            tag: '🌻 Flores Amarillas', ribbon: '🌻', label: 'Flores Amarillas',
-            waIntro: 'Hola Gi Garden, quiero estas flores amarillas:'
-        }
-    };
-
-    Object.keys(CAMPAIGNS).forEach(function (k) {
-        CAMPAIGNS[k].items.forEach(function (it) {
-            it.camp = CAMPAIGNS[k];
-            it.img = BASE + 'assets/' + it.key + '.webp';
-            it.label = CAMPAIGNS[k].label;
-        });
-    });
-
-    function isLive(c) { return Date.now() < c.end; }
-    function liveCampaigns() {
-        return ['amor', 'yellow'].map(function (k) { return CAMPAIGNS[k]; }).filter(isLive);
-    }
-
-    // Índice por foto (Amor y Amistad tiene prioridad si una foto está en ambas)
-    function lookup(key) {
-        if (isLive(CAMPAIGNS.amor)) {
-            for (var i = 0; i < AMOR_ITEMS.length; i++) if (AMOR_ITEMS[i].key === key) return AMOR_ITEMS[i];
-        }
-        if (isLive(CAMPAIGNS.yellow)) {
-            for (var j = 0; j < YELLOW_ITEMS.length; j++) if (YELLOW_ITEMS[j].key === key) return YELLOW_ITEMS[j];
-        }
-        return null;
-    }
+    function isLive() { return Date.now() < GRADO_END; }
 
     function find(imagePath) {
-        if (!imagePath) return null;
+        if (!isLive() || !imagePath) return null;
         var m = String(imagePath).match(/(foto\d+)\.webp/);
-        return m ? lookup(m[1]) : null;
+        if (!m) return null;
+        for (var i = 0; i < GRADO_ITEMS.length; i++) if (GRADO_ITEMS[i].key === m[1]) return GRADO_ITEMS[i];
+        return null;
     }
-
     function rankOf(product) {
         var it = find(product && product.image);
-        if (!it) return 0;
-        return it.camp.id === 'amor' ? 2 : 1;
+        return it ? it.rank : 0;
     }
 
     function waLink(it) {
-        var msg = it.camp.waIntro + '\n' + it.name + ' — ' + fmt(it.price)
-            + (it.before ? ' (antes ' + fmt(it.before) + ')' : '')
-            + '\nFoto: ' + SITE + 'assets/' + it.key + '.webp';
+        var msg = 'Hola Gi Garden 🎓 quiero este arreglo para un grado:\n'
+            + it.name + ' — ' + fmt(it.price)
+            + '\nFoto: ' + SITE + 'assets/' + it.key + '.webp'
+            + '\n\nLo quiero personalizar así:\n- Colores: \n- Nombre del graduado(a): \n- Mensaje de la tarjeta: ';
+        return 'https://wa.me/' + WA_PHONE + '?text=' + encodeURIComponent(msg);
+    }
+    function waGeneral() {
+        var msg = 'Hola Gi Garden 🎓 quiero un arreglo personalizado para un grado.\n'
+            + '- Colores del colegio o universidad: \n- Nombre del graduado(a): \n- Presupuesto: ';
         return 'https://wa.me/' + WA_PHONE + '?text=' + encodeURIComponent(msg);
     }
 
-    // API pública usada por catalogo.html y landing.js
+    // API pública usada por catalogo.html y js/landing.js
     window.PROMO_SEMANA = {
-        campaigns: CAMPAIGNS,
+        items: GRADO_ITEMS,
         find: find,
         format: fmt,
-        active: function () { return liveCampaigns().length > 0; },
+        active: isLive,
         rank: rankOf,
-        // Sube al tope: primero Amor y Amistad, luego Flores Amarillas (conserva el orden por precio)
+        // Sube al tope los arreglos de grado en el orden de GRADO_ITEMS; el resto conserva su orden
         sortToTop: function (list) {
-            if (!liveCampaigns().length) return list;
-            return list.sort(function (a, b) { return rankOf(b) - rankOf(a); });
+            if (!isLive()) return list;
+            var tagged = list.map(function (p, i) { return { p: p, i: i, r: rankOf(p) }; });
+            tagged.sort(function (a, b) {
+                if (a.r && b.r) return a.r - b.r;
+                if (a.r) return -1;
+                if (b.r) return 1;
+                return a.i - b.i;
+            });
+            for (var i = 0; i < list.length; i++) list[i] = tagged[i].p;
+            return list;
         },
         ribbon: function (it) {
             if (!it) return '';
-            var y = it.camp.id === 'yellow' ? ' pn-y' : '';
-            return '<span class="pn-ribbon' + y + '">' + it.camp.ribbon + '</span>'
-                + '<span class="pn-tag' + y + '">' + it.camp.tag + '</span>';
+            return '<span class="pn-ribbon">🎓 Para grado</span><span class="pn-tag">✏️ Personalizable</span>';
         },
-        priceBefore: function (it) {
-            return (it && it.before) ? '<span class="pn-old">' + fmt(it.before) + '</span> ' : '';
-        },
-        cardClass: function (it) { return it ? (it.camp.id === 'yellow' ? ' pn-card pn-card-y' : ' pn-card') : ''; }
+        priceBefore: function () { return ''; },
+        cardClass: function (it) { return it ? ' pn-card' : ''; },
+        open: function () { openFlyer(); }
     };
 
-
     // ---------------------------------------------------------------
-    // 3. ESTILOS
+    // 3. ESTILOS (negro y dorado de Gi Garden)
     // ---------------------------------------------------------------
     var CSS = [
-        /* ---------- Destaque de tarjetas ---------- */
-        '.pn-card{position:relative;border:2px solid transparent!important;',
-        'background-image:linear-gradient(#fff,#fff),linear-gradient(120deg,#E0457B,#C9A86A,#FF8FB8,#E0457B);',
-        'background-origin:border-box;background-clip:padding-box,border-box;',
-        'box-shadow:0 10px 30px rgba(224,69,123,.18);border-radius:16px;overflow:hidden}',
-        '.pn-card-y{background-image:linear-gradient(#fff,#fff),linear-gradient(120deg,#F5B700,#FFE27A,#E89B00,#F5B700);',
-        'box-shadow:0 10px 30px rgba(232,155,0,.2)}',
-        '.pn-ribbon{position:absolute;top:0;right:0;z-index:4;background:linear-gradient(135deg,#E0457B,#B3255A);',
-        'color:#fff;font-family:Poppins,sans-serif;font-weight:700;font-size:.85rem;letter-spacing:.5px;',
-        'padding:.45rem .8rem;border-bottom-left-radius:14px;box-shadow:0 4px 12px rgba(0,0,0,.22)}',
-        '.pn-ribbon.pn-y{background:linear-gradient(135deg,#FFD23F,#E89B00);font-size:1rem;padding:.35rem .7rem}',
-        '.pn-tag{position:absolute;bottom:.7rem;left:.7rem;z-index:4;background:rgba(255,255,255,.94);',
-        'color:#B3255A;font-family:Poppins,sans-serif;font-weight:600;font-size:.72rem;letter-spacing:.3px;',
-        'padding:.3rem .65rem;border-radius:50px;box-shadow:0 2px 8px rgba(0,0,0,.15);white-space:nowrap}',
-        '.pn-tag.pn-y{color:#8a5a00}',
-        '.filter-btn-amor,.filter-btn[data-filter="amoramistad"]{background:linear-gradient(135deg,#E0457B,#B3255A)!important;',
-        'color:#fff!important;border-color:#B3255A!important;font-weight:600}',
-        '.filter-btn-amarillas,.filter-btn[data-filter="amarillas"]{background:linear-gradient(135deg,#FFD23F,#E89B00)!important;',
-        'color:#3b2600!important;border-color:#E89B00!important;font-weight:600}',
-        '.filter-btn-amor:hover,.filter-btn-amarillas:hover{filter:brightness(1.06)}',
+        /* ---------- Tarjetas destacadas ---------- */
+        '.pn-card{position:relative;border:2px solid transparent!important;border-radius:16px;overflow:hidden;',
+        'background-image:linear-gradient(#fff,#fff),linear-gradient(120deg,#C9A86A,#F6E3B4,#8C6F3A,#E8CF8E,#C9A86A);',
+        'background-size:100% 100%,300% 300%;background-origin:border-box;background-clip:padding-box,border-box;',
+        'animation:gdBorder 5s linear infinite;box-shadow:0 10px 30px rgba(140,111,58,.25)}',
+        '@keyframes gdBorder{0%{background-position:0 0,0% 50%}100%{background-position:0 0,300% 50%}}',
+        '.pn-card .product-image-container::after,.pn-card .product-image::after{content:"";position:absolute;top:0;left:-75%;width:50%;height:100%;z-index:3;pointer-events:none;',
+        'background:linear-gradient(100deg,transparent,rgba(255,255,255,.5),transparent);transform:skewX(-20deg);animation:gdShine 4.5s ease-in-out infinite}',
+        '@keyframes gdShine{0%,62%{left:-75%}100%{left:130%}}',
+        '.pn-ribbon{position:absolute;top:0;right:0;z-index:4;background:linear-gradient(135deg,#111,#2b2416);color:#F6E3B4;',
+        'font-family:Poppins,sans-serif;font-weight:700;font-size:.8rem;letter-spacing:.4px;padding:.45rem .8rem;',
+        'border-bottom-left-radius:14px;border-left:2px solid #C9A86A;border-bottom:2px solid #C9A86A;',
+        'box-shadow:0 4px 12px rgba(0,0,0,.25);animation:gdPulse 2.6s ease-in-out infinite}',
+        '@keyframes gdPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}',
+        '.pn-tag{position:absolute;bottom:.7rem;left:.7rem;z-index:4;background:rgba(255,255,255,.95);color:#6b5223;',
+        'font-family:Poppins,sans-serif;font-weight:700;font-size:.72rem;padding:.3rem .65rem;border-radius:50px;',
+        'box-shadow:0 2px 8px rgba(0,0,0,.15);white-space:nowrap}',
+        '.filter-btn[data-filter="grados"]{background:linear-gradient(135deg,#111,#3a2f1a,#111)!important;background-size:200% 200%!important;',
+        'color:#F6E3B4!important;border-color:#C9A86A!important;font-weight:600;animation:gdBtn 3s ease infinite}',
+        '@keyframes gdBtn{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}',
 
-        /* ---------- Banner Amor y Amistad con contador ---------- */
-        '.pn-strip{position:relative;overflow:hidden;background:linear-gradient(115deg,#2a0716 0%,#6d1338 45%,#B3255A 100%);',
-        'color:#fff;padding:1.1rem 1rem;text-align:center;font-family:Poppins,sans-serif}',
-        '.pn-strip::before{content:"";position:absolute;inset:-40%;background:radial-gradient(circle at 20% 30%,rgba(255,143,184,.35),transparent 45%),radial-gradient(circle at 80% 70%,rgba(201,168,106,.28),transparent 45%);',
-        'animation:pnFloat 9s ease-in-out infinite alternate;pointer-events:none}',
-        '@keyframes pnFloat{from{transform:translate3d(-2%,0,0)}to{transform:translate3d(2%,0,0)}}',
-        '.pn-strip-in{position:relative;z-index:1;max-width:1100px;margin:0 auto;display:flex;flex-wrap:wrap;',
-        'align-items:center;justify-content:center;gap:.65rem 1.4rem}',
-        '.pn-strip-txt{text-align:left}',
-        '.pn-strip-kicker{font-size:.72rem;letter-spacing:2.5px;text-transform:uppercase;color:#FFC9DD;font-weight:600}',
-        '.pn-strip-title{font-family:"Playfair Display",Georgia,serif;font-size:1.45rem;font-weight:700;line-height:1.2}',
-        '.pn-strip-sub{font-size:.82rem;opacity:.88}',
-        '.pn-clock{display:flex;gap:.4rem}',
-        '.pn-unit{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);border-radius:10px;',
-        'min-width:52px;padding:.35rem .3rem}',
-        '.pn-num{display:block;font-size:1.3rem;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}',
-        '.pn-lbl{display:block;font-size:.6rem;letter-spacing:1px;text-transform:uppercase;opacity:.75;margin-top:.15rem}',
-        '.pn-strip-btn{background:#fff;color:#B3255A;font-weight:700;font-size:.85rem;border:0;cursor:pointer;',
-        'padding:.6rem 1.1rem;border-radius:50px;font-family:inherit;transition:transform .18s ease,box-shadow .18s ease;',
-        'box-shadow:0 4px 14px rgba(0,0,0,.25)}',
-        '.pn-strip-btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.32)}',
-
-        /* ---------- Vitrina Flores Amarillas ---------- */
-        '.yf-show{position:relative;overflow:hidden;background:linear-gradient(160deg,#FFF8DC 0%,#FFEFB0 55%,#FFE08A 100%);',
-        'padding:2rem 1rem 2.2rem;font-family:Poppins,sans-serif;color:#3b2600}',
-        '.yf-show::before{content:"";position:absolute;width:420px;height:420px;right:-140px;top:-160px;border-radius:50%;',
-        'background:radial-gradient(circle,rgba(255,210,63,.55),transparent 65%);pointer-events:none}',
-        '.yf-in{position:relative;max-width:1100px;margin:0 auto}',
-        '.yf-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:.8rem 1.5rem;margin-bottom:1.2rem}',
-        '.yf-kicker{font-size:.72rem;letter-spacing:2.5px;text-transform:uppercase;color:#B77800;font-weight:700}',
-        '.yf-title{font-family:"Playfair Display",Georgia,serif;font-size:1.9rem;font-weight:700;line-height:1.15;margin:.15rem 0 .35rem;color:#2b1c00}',
-        '.yf-sub{font-size:.88rem;line-height:1.55;max-width:60ch;color:#5a4410}',
-        '.yf-all{background:#2b1c00;color:#FFD23F;border:0;cursor:pointer;font-family:inherit;font-weight:600;font-size:.85rem;',
-        'padding:.65rem 1.2rem;border-radius:50px;white-space:nowrap;transition:transform .18s ease}',
-        '.yf-all:hover{transform:translateY(-2px)}',
-        '.yf-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1rem}',
-        '.yf-card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 8px 24px rgba(183,120,0,.16);',
-        'display:flex;flex-direction:column;transition:transform .2s ease,box-shadow .2s ease}',
-        '.yf-card:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(183,120,0,.24)}',
-        '.yf-img{position:relative;aspect-ratio:1/1;background:#fff6d6;overflow:hidden}',
-        '.yf-img img{width:100%;height:100%;object-fit:cover;display:block}',
-        '.yf-body{padding:.85rem .9rem 1rem;display:flex;flex-direction:column;gap:.35rem;flex:1}',
-        '.yf-name{font-family:"Playfair Display",Georgia,serif;font-size:1.1rem;font-weight:700;color:#2b1c00;line-height:1.2}',
-        '.yf-hook{font-size:.78rem;color:#6b5418;line-height:1.45;flex:1}',
-        '.yf-row{display:flex;align-items:center;justify-content:space-between;gap:.5rem;margin-top:.3rem}',
-        '.yf-price{font-family:"Playfair Display",Georgia,serif;font-size:1.2rem;font-weight:700;color:#B77800}',
-        '.yf-btn{display:inline-flex;align-items:center;gap:.35rem;background:#25D366;color:#fff;text-decoration:none;',
-        'font-weight:600;font-size:.76rem;padding:.5rem .8rem;border-radius:50px;white-space:nowrap}',
-        '.yf-btn svg{width:14px;height:14px;fill:currentColor}',
+        /* ---------- Vitrina ---------- */
+        '.gd-show{position:relative;overflow:hidden;color:#fff;font-family:Poppins,sans-serif;padding:2.4rem 1rem 2.6rem;',
+        'background:radial-gradient(ellipse at 15% 0%,rgba(201,168,106,.28),transparent 55%),radial-gradient(ellipse at 90% 100%,rgba(201,168,106,.22),transparent 55%),#0d0b08}',
+        '.gd-conf{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0}',
+        '.gd-bit{position:absolute;top:-24px;width:8px;height:14px;border-radius:2px;opacity:.9;animation:gdFall linear infinite}',
+        '@keyframes gdFall{0%{transform:translate3d(0,-24px,0) rotate(0) rotateY(0)}100%{transform:translate3d(40px,680px,0) rotate(600deg) rotateY(720deg);opacity:0}}',
+        '.gd-in{position:relative;z-index:1;max-width:1150px;margin:0 auto}',
+        '.gd-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:1rem 1.5rem;margin-bottom:1.4rem}',
+        '.gd-kicker{display:inline-block;font-size:.72rem;letter-spacing:2.5px;text-transform:uppercase;font-weight:700;color:#F6E3B4;',
+        'border:1px solid rgba(201,168,106,.6);padding:.3rem .8rem;border-radius:50px;background:rgba(201,168,106,.1)}',
+        '.gd-title{font-family:"Playfair Display",Georgia,serif;font-size:2.9rem;font-weight:700;line-height:1.05;margin:.6rem 0 .5rem;',
+        'background:linear-gradient(90deg,#C9A86A 0%,#F6E3B4 25%,#fff 50%,#F6E3B4 75%,#C9A86A 100%);background-size:200% auto;',
+        '-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:gdShimmer 4s linear infinite}',
+        '@keyframes gdShimmer{to{background-position:200% center}}',
+        '.gd-cap{display:inline-block;-webkit-text-fill-color:initial;animation:gdCap 3.2s ease-in-out infinite;transform-origin:50% 80%}',
+        '@keyframes gdCap{0%,100%{transform:translateY(0) rotate(-6deg)}50%{transform:translateY(-8px) rotate(8deg)}}',
+        '.gd-sub{font-size:.95rem;line-height:1.6;max-width:60ch;color:#e9e1cf}',
+        '.gd-perso{display:flex;flex-direction:column;gap:.45rem;max-width:330px;background:rgba(201,168,106,.1);',
+        'border:1px solid rgba(201,168,106,.45);border-radius:16px;padding:1rem 1.1rem}',
+        '.gd-perso b{color:#F6E3B4;font-size:.9rem}',
+        '.gd-perso span{font-size:.8rem;color:#e9e1cf;line-height:1.45}',
+        '.gd-perso a{align-self:flex-start;margin-top:.2rem;color:#111;background:linear-gradient(135deg,#F6E3B4,#C9A86A);text-decoration:none;',
+        'font-weight:700;font-size:.8rem;padding:.5rem .95rem;border-radius:50px}',
+        '.gd-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1rem}',
+        '.gd-card{position:relative;background:#fff;color:#2c2c2c;border-radius:16px;overflow:hidden;display:flex;flex-direction:column;',
+        'box-shadow:0 14px 30px rgba(0,0,0,.45);transition:transform .25s ease,box-shadow .25s ease;animation:gdIn .7s both}',
+        '.gd-card:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(0,0,0,.55),0 0 0 2px #C9A86A}',
+        '@keyframes gdIn{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}',
+        '.gd-img{position:relative;aspect-ratio:1/1;overflow:hidden;background:#f4efe4}',
+        '.gd-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease}',
+        '.gd-card:hover .gd-img img{transform:scale(1.07)}',
+        '.gd-img::after{content:"";position:absolute;top:0;left:-75%;width:50%;height:100%;pointer-events:none;',
+        'background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-20deg);animation:gdShine 4.5s ease-in-out infinite}',
+        '.gd-badge{position:absolute;top:.6rem;left:.6rem;z-index:2;background:#111;color:#F6E3B4;border:1px solid #C9A86A;',
+        'font-weight:700;font-size:.68rem;padding:.3rem .6rem;border-radius:50px}',
+        '.gd-body{padding:.9rem .95rem 1rem;display:flex;flex-direction:column;gap:.35rem;flex:1}',
+        '.gd-name{font-family:"Playfair Display",Georgia,serif;font-size:1.1rem;font-weight:700;color:#111;line-height:1.2}',
+        '.gd-hook{font-size:.78rem;color:#6b6252;line-height:1.5;flex:1}',
+        '.gd-row{display:flex;align-items:center;justify-content:space-between;gap:.5rem;margin-top:.3rem}',
+        '.gd-price{font-family:"Playfair Display",Georgia,serif;font-size:1.3rem;font-weight:700;color:#8C6F3A;line-height:1}',
+        '.gd-btn{display:inline-flex;align-items:center;gap:.35rem;background:#25D366;color:#fff;text-decoration:none;',
+        'font-weight:600;font-size:.76rem;padding:.5rem .85rem;border-radius:50px;white-space:nowrap}',
+        '.gd-btn svg{width:14px;height:14px;fill:currentColor}',
+        '.gd-foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.8rem;margin-top:1.3rem}',
+        '.gd-note{font-size:.8rem;color:#cfc4ad}',
+        '.gd-all{background:linear-gradient(135deg,#F6E3B4,#C9A86A);color:#111;border:0;cursor:pointer;font-family:inherit;font-weight:700;',
+        'font-size:.88rem;padding:.75rem 1.4rem;border-radius:50px;box-shadow:0 6px 18px rgba(0,0,0,.35);transition:transform .18s ease}',
+        '.gd-all:hover{transform:translateY(-2px)}',
 
         /* ---------- Flyer flotante ---------- */
-        '.pn-modal{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;',
-        'padding:16px;background:rgba(20,4,12,.72);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);',
-        'opacity:0;visibility:hidden;transition:opacity .3s ease,visibility .3s ease;font-family:Poppins,sans-serif}',
-        '.pn-modal.on{opacity:1;visibility:visible}',
-        '.pn-box{position:relative;width:100%;max-width:860px;max-height:92vh;overflow:hidden;border-radius:20px;',
-        'background:#fff;box-shadow:0 30px 80px rgba(0,0,0,.5);transform:translate3d(0,26px,0) scale(.97);',
-        'transition:transform .35s cubic-bezier(.2,.8,.3,1);display:flex;flex-direction:column}',
-        '.pn-modal.on .pn-box{transform:translate3d(0,0,0) scale(1)}',
-        '.pn-head{background:linear-gradient(115deg,#2a0716,#6d1338 55%,#B3255A);color:#fff;padding:1rem 3rem 1rem 1.3rem;flex-shrink:0;transition:background .3s ease}',
-        '.pn-box.y .pn-head{background:linear-gradient(115deg,#6b4200,#B77800 50%,#F5B700);}',
-        '.pn-head-kicker{font-size:.66rem;letter-spacing:2.5px;text-transform:uppercase;color:#FFC9DD;font-weight:600}',
-        '.pn-box.y .pn-head-kicker{color:#FFF1B8}',
-        '.pn-head-title{font-family:"Playfair Display",Georgia,serif;font-size:1.55rem;font-weight:700;line-height:1.15;margin:.1rem 0 .25rem}',
-        '.pn-head-desc{font-size:.8rem;line-height:1.45;opacity:.92;max-width:60ch}',
-        '.pn-head-clock{display:flex;gap:.35rem;margin-top:.7rem;align-items:center;flex-wrap:wrap}',
-        '.pn-head-clock .pn-hint{font-size:.68rem;letter-spacing:1.2px;text-transform:uppercase;opacity:.8;margin-right:.25rem}',
-        '.pn-tabs{display:flex;gap:.4rem;margin-top:.8rem;flex-wrap:wrap}',
-        '.pn-tabbtn{border:1px solid rgba(255,255,255,.4);background:rgba(255,255,255,.1);color:#fff;cursor:pointer;',
-        'font-family:inherit;font-weight:600;font-size:.78rem;padding:.4rem .85rem;border-radius:50px;transition:background .2s ease}',
-        '.pn-tabbtn.on{background:#fff;color:#B3255A}',
-        '.pn-box.y .pn-tabbtn.on{color:#8a5a00}',
-        '.pn-x{position:absolute;top:.6rem;right:.7rem;z-index:6;width:34px;height:34px;border-radius:50%;border:0;',
-        'cursor:pointer;background:rgba(255,255,255,.18);color:#fff;font-size:1.35rem;line-height:1;',
-        'display:flex;align-items:center;justify-content:center;transition:background .2s ease,transform .2s ease}',
-        '.pn-x:hover{background:rgba(255,255,255,.34);transform:rotate(90deg)}',
-        '.pn-body{position:relative;overflow:hidden;flex:1;min-height:0}',
-        '.pn-track{display:flex;height:100%;transition:transform .45s cubic-bezier(.25,.8,.3,1);will-change:transform}',
-        '.pn-slide{flex:0 0 100%;display:flex;gap:0;min-width:0}',
-        '.pn-figure{flex:0 0 46%;position:relative;background:#faf6f2;overflow:hidden}',
-        '.pn-figure img{width:100%;height:100%;object-fit:cover;display:block}',
-        '.pn-off{position:absolute;top:0;left:0;background:linear-gradient(135deg,#E0457B,#B3255A);color:#fff;',
-        'font-weight:700;font-size:.8rem;padding:.45rem .8rem;border-bottom-right-radius:14px;box-shadow:0 4px 12px rgba(0,0,0,.25)}',
-        '.pn-box.y .pn-off{background:linear-gradient(135deg,#FFD23F,#E89B00);color:#3b2600}',
-        '.pn-txt{flex:1 1 auto;padding:1.2rem 1.3rem;display:flex;flex-direction:column;justify-content:center;gap:.5rem;min-width:0}',
-        '.pn-name{font-family:"Playfair Display",Georgia,serif;font-size:1.5rem;color:#1a1a1a;line-height:1.15;font-weight:700}',
-        '.pn-hook{font-size:.92rem;color:#B3255A;font-weight:600;line-height:1.4}',
-        '.pn-box.y .pn-hook{color:#9a6400}',
-        '.pn-desc{font-size:.82rem;color:#5c5c5c;line-height:1.55}',
-        '.pn-prices{display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap;margin-top:.15rem}',
-        '.pn-new{font-size:1.65rem;font-weight:700;color:#B3255A;font-family:"Playfair Display",Georgia,serif}',
-        '.pn-old{color:#9b9b9b;text-decoration:line-through;font-weight:600;font-size:.95rem;margin-right:.35rem}',
-        '.pn-save{background:#E0457B;color:#fff;font-weight:700;font-size:.75rem;padding:.2rem .55rem;border-radius:50px;letter-spacing:.3px}',
-        '.pn-box.y .pn-new{color:#B77800}',
-        '.pn-cta{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;background:#25D366;color:#fff;',
-        'font-weight:600;font-size:.9rem;padding:.7rem 1.1rem;border-radius:50px;margin-top:.3rem;align-self:flex-start;',
-        'transition:transform .18s ease,box-shadow .18s ease;box-shadow:0 4px 14px rgba(37,211,102,.35);text-decoration:none}',
-        '.pn-cta:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(37,211,102,.45)}',
-        '.pn-cta svg{width:17px;height:17px;fill:currentColor;flex-shrink:0}',
-        '.pn-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:5;width:38px;height:38px;border-radius:50%;',
-        'border:0;cursor:pointer;background:rgba(255,255,255,.92);color:#B3255A;font-size:1.3rem;line-height:1;',
-        'display:flex;align-items:center;justify-content:center;box-shadow:0 3px 12px rgba(0,0,0,.22);transition:transform .2s ease}',
-        '.pn-arrow:hover{transform:translateY(-50%) scale(1.1)}',
-        '.pn-prev{left:10px}.pn-next{right:10px}',
-        '.pn-foot{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;gap:.8rem;',
-        'padding:.7rem 1.1rem;background:#faf6f2;border-top:1px solid rgba(0,0,0,.06)}',
-        '.pn-dots{display:flex;gap:.38rem;flex-wrap:wrap}',
-        '.pn-dot{width:8px;height:8px;border-radius:50%;border:0;padding:0;cursor:pointer;background:#e0cdd6;',
-        'transition:transform .2s ease,background .2s ease}',
-        '.pn-dot.on{background:#B3255A;transform:scale(1.45)}',
-        '.pn-box.y .pn-dot{background:#f1dfa6}.pn-box.y .pn-dot.on{background:#E89B00}',
-        '.pn-all{background:linear-gradient(135deg,#E0457B,#B3255A);color:#fff;border:0;cursor:pointer;font-family:inherit;',
-        'font-weight:600;font-size:.8rem;padding:.55rem 1rem;border-radius:50px;transition:transform .18s ease}',
-        '.pn-box.y .pn-all{background:linear-gradient(135deg,#FFD23F,#E89B00);color:#3b2600}',
-        '.pn-all:hover{transform:translateY(-2px)}',
+        '.gf-modal{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;padding:16px;',
+        'background:rgba(8,6,3,.78);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);opacity:0;visibility:hidden;',
+        'transition:opacity .3s ease,visibility .3s ease;font-family:Poppins,sans-serif}',
+        '.gf-modal.on{opacity:1;visibility:visible}',
+        '.gf-box{position:relative;width:100%;max-width:880px;max-height:92vh;border-radius:22px;padding:3px;',
+        'background:linear-gradient(120deg,#C9A86A,#F6E3B4,#8C6F3A,#F6E3B4,#C9A86A);background-size:300% 300%;animation:gdBg 6s linear infinite;',
+        'box-shadow:0 30px 80px rgba(0,0,0,.6);transform:translate3d(0,30px,0) scale(.95);transition:transform .45s cubic-bezier(.2,.9,.3,1.2)}',
+        '@keyframes gdBg{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}',
+        '.gf-modal.on .gf-box{transform:none}',
+        '.gf-in{position:relative;display:flex;flex-direction:column;background:#fff;border-radius:19px;overflow:hidden;max-height:calc(92vh - 6px)}',
+        '.gf-head{position:relative;overflow:hidden;background:#0d0b08;color:#fff;padding:1rem 3.2rem 1rem 1.3rem;flex-shrink:0}',
+        '.gf-head .gd-conf{opacity:.8}',
+        '.gf-kicker{position:relative;font-size:.66rem;letter-spacing:2.4px;text-transform:uppercase;color:#F6E3B4;font-weight:700}',
+        '.gf-title{position:relative;font-family:"Playfair Display",Georgia,serif;font-size:1.65rem;font-weight:700;line-height:1.15;margin:.15rem 0 .2rem}',
+        '.gf-title em{font-style:normal;color:#F6E3B4}',
+        '.gf-desc{position:relative;font-size:.8rem;line-height:1.45;color:#e9e1cf;max-width:64ch}',
+        '.gf-body{position:relative;overflow:hidden;flex:1;min-height:0}',
+        '.gf-track{display:flex;height:100%;transition:transform .5s cubic-bezier(.25,.8,.3,1);will-change:transform}',
+        '.gf-slide{flex:0 0 100%;display:flex;min-width:0}',
+        '.gf-fig{flex:0 0 44%;position:relative;background:#f4efe4;overflow:hidden;min-height:300px}',
+        '.gf-fig img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}',
+        '.gf-fig::after{content:"";position:absolute;top:0;left:-75%;width:50%;height:100%;z-index:2;pointer-events:none;',
+        'background:linear-gradient(100deg,transparent,rgba(255,255,255,.5),transparent);transform:skewX(-20deg);animation:gdShine 4s ease-in-out infinite}',
+        '.gf-cap{position:absolute;top:.8rem;left:.8rem;z-index:3;width:64px;height:64px;border-radius:50%;display:flex;align-items:center;',
+        'justify-content:center;font-size:1.9rem;background:radial-gradient(circle at 30% 30%,#2b2416,#0d0b08);border:2px solid #C9A86A;',
+        'box-shadow:0 6px 18px rgba(0,0,0,.4);animation:gdCap 3.2s ease-in-out infinite}',
+        '.gf-txt{flex:1;min-width:0;padding:1.2rem 1.4rem;display:flex;flex-direction:column;justify-content:center;gap:.5rem}',
+        '.gf-name{font-family:"Playfair Display",Georgia,serif;font-size:1.6rem;font-weight:700;color:#111;line-height:1.1}',
+        '.gf-hook{font-size:.9rem;color:#6b6252;line-height:1.5}',
+        '.gf-price{font-family:"Playfair Display",Georgia,serif;font-size:2rem;font-weight:700;color:#8C6F3A;line-height:1}',
+        '.gf-plabel{font-size:.62rem;letter-spacing:1.6px;text-transform:uppercase;color:#9b8a66;font-weight:700}',
+        '.gf-perso{font-size:.78rem;line-height:1.5;color:#4a4232;background:#faf6ec;border:1px dashed #C9A86A;border-radius:12px;padding:.6rem .75rem}',
+        '.gf-perso b{color:#8C6F3A}',
+        '.gf-cta{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;background:#25D366;color:#fff;text-decoration:none;',
+        'font-weight:700;font-size:.92rem;padding:.75rem 1.15rem;border-radius:50px;align-self:flex-start;animation:gdCta 2.2s ease-in-out infinite}',
+        '.gf-cta svg{width:18px;height:18px;fill:currentColor;flex-shrink:0}',
+        '@keyframes gdCta{0%,100%{box-shadow:0 0 0 0 rgba(37,211,102,.55)}50%{box-shadow:0 0 0 12px rgba(37,211,102,0)}}',
+        '.gf-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:5;width:38px;height:38px;border-radius:50%;border:0;cursor:pointer;',
+        'background:rgba(255,255,255,.94);color:#111;font-size:1.25rem;line-height:1;display:flex;align-items:center;justify-content:center;',
+        'box-shadow:0 3px 12px rgba(0,0,0,.25);transition:transform .2s ease}',
+        '.gf-arrow:hover{transform:translateY(-50%) scale(1.1)}',
+        '.gf-prev{left:10px}.gf-next{right:10px}',
+        '.gf-foot{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;gap:.8rem;padding:.7rem 1.1rem;background:#faf6ec;border-top:1px solid rgba(0,0,0,.06)}',
+        '.gf-dots{display:flex;gap:.4rem;flex-wrap:wrap}',
+        '.gf-dot{width:8px;height:8px;border-radius:50%;border:0;padding:0;cursor:pointer;background:#e3d6b6;transition:transform .2s ease,background .2s ease}',
+        '.gf-dot.on{background:#8C6F3A;transform:scale(1.45)}',
+        '.gf-all{background:#111;color:#F6E3B4;border:0;cursor:pointer;font-family:inherit;font-weight:600;font-size:.8rem;padding:.55rem 1rem;border-radius:50px}',
+        '.gf-x{position:absolute;top:.65rem;right:.7rem;z-index:6;width:34px;height:34px;border-radius:50%;border:0;cursor:pointer;',
+        'background:rgba(255,255,255,.16);color:#fff;font-size:1.35rem;line-height:1;display:flex;align-items:center;justify-content:center;transition:transform .2s ease}',
+        '.gf-x:hover{transform:rotate(90deg);background:rgba(255,255,255,.3)}',
+
+        /* ---------- Botón flotante ---------- */
+        '.gf-pill{position:fixed;left:18px;bottom:22px;z-index:9990;display:flex;align-items:center;gap:.55rem;cursor:pointer;font-family:Poppins,sans-serif;',
+        'background:#111;color:#fff;border:2px solid #C9A86A;border-radius:50px;padding:.3rem .95rem .3rem .3rem;text-align:left;',
+        'box-shadow:0 8px 24px rgba(0,0,0,.4);transform:translateY(130px);transition:transform .45s cubic-bezier(.2,.9,.3,1.2)}',
+        '.gf-pill.on{transform:none;animation:gdFloat 3s ease-in-out infinite .5s}',
+        '@keyframes gdFloat{0%,100%{translate:0 0}50%{translate:0 -5px}}',
+        '.gf-pill i{width:42px;height:42px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.35rem;',
+        'font-style:normal;background:radial-gradient(circle at 30% 30%,#3a2f1a,#0d0b08);border:1px solid #C9A86A}',
+        '.gf-pill small{display:block;font-size:.6rem;letter-spacing:1.4px;text-transform:uppercase;color:#F6E3B4;font-weight:600}',
+        '.gf-pill b{display:block;font-size:.84rem;line-height:1.2}',
+        '.gf-pill-x{position:absolute;top:-8px;right:-8px;width:20px;height:20px;border-radius:50%;background:#C9A86A;color:#111;font-size:.8rem;line-height:20px;text-align:center}',
 
         /* ---------- Responsive ---------- */
-        '@media(max-width:900px){.yf-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}',
+        '@media(max-width:980px){.gd-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}',
         '@media(max-width:720px){',
-        '.pn-slide{flex-direction:column}',
-        '.pn-figure{flex:0 0 auto;height:190px}',
-        '.pn-body{overflow-y:auto;-webkit-overflow-scrolling:touch}',
-        '.pn-head{padding:.85rem 2.8rem .85rem 1rem}',
-        '.pn-head-title{font-size:1.25rem}.pn-head-desc{font-size:.74rem}',
-        '.pn-name{font-size:1.25rem}.pn-new{font-size:1.4rem}',
-        '.pn-txt{padding:1rem}',
-        '.pn-arrow{width:32px;height:32px;top:95px}',
-        '.pn-strip-in{flex-direction:column;gap:.55rem}',
-        '.pn-strip-txt{text-align:center}',
-        '.pn-strip-title{font-size:1.15rem}',
-        '.pn-unit{min-width:46px}.pn-num{font-size:1.1rem}',
-        '.pn-ribbon{font-size:.75rem;padding:.35rem .6rem}',
-        '.pn-tag{font-size:.65rem}',
-        '.yf-show{padding:1.5rem 0 1.7rem}',
-        '.yf-head{padding:0 1rem}',
-        '.yf-title{font-size:1.45rem}',
-        '.yf-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:.8rem;padding:0 1rem .4rem;-webkit-overflow-scrolling:touch}',
-        '.yf-card{flex:0 0 72%;scroll-snap-align:start}',
+        '.gd-show{padding:1.8rem 0 2rem}',
+        '.gd-head,.gd-foot{padding:0 1rem}',
+        '.gd-title{font-size:2rem}',
+        '.gd-sub{font-size:.86rem}',
+        '.gd-perso{max-width:none}',
+        '.gd-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:.8rem;padding:.3rem 1rem .6rem;-webkit-overflow-scrolling:touch}',
+        '.gd-card{flex:0 0 70%;scroll-snap-align:start}',
+        '.gf-head{padding:.85rem 2.9rem .85rem 1rem}',
+        '.gf-title{font-size:1.3rem}.gf-desc{font-size:.74rem}',
+        '.gf-body{overflow-y:auto;-webkit-overflow-scrolling:touch}',
+        '.gf-slide{flex-direction:column}',
+        '.gf-fig{flex:0 0 auto;height:210px;min-height:0}',
+        '.gf-txt{padding:.95rem 1rem 1.1rem}',
+        '.gf-name{font-size:1.3rem}.gf-price{font-size:1.6rem}',
+        '.gf-arrow{width:32px;height:32px;top:105px}',
+        '.gf-cap{width:52px;height:52px;font-size:1.5rem}',
+        '.gf-pill{left:12px;bottom:16px}',
+        '.pn-ribbon{font-size:.7rem;padding:.35rem .6rem}',
+        '.pn-tag{font-size:.64rem}',
         '}',
         '@media(prefers-reduced-motion:reduce){',
-        '.pn-strip::before{animation:none}',
-        '.pn-track,.pn-box,.yf-card{transition:none}',
+        '.pn-card,.pn-ribbon,.gd-title,.gd-cap,.gd-card,.gd-bit,.gf-box,.gf-cap,.gf-cta,.gf-pill.on,.filter-btn[data-filter="grados"],',
+        '.gd-img::after,.gf-fig::after,.pn-card .product-image-container::after,.pn-card .product-image::after{animation:none!important}',
+        '.gd-conf{display:none}.gf-track{transition:none}',
         '}'
     ].join('');
 
@@ -367,130 +297,76 @@
         (document.head || document.documentElement).appendChild(s);
     })();
 
-    // ---------------------------------------------------------------
-    // 4. CONTADOR
-    // ---------------------------------------------------------------
-    function remaining(end) {
-        var ms = end - Date.now();
-        if (ms < 0) ms = 0;
-        var s = Math.floor(ms / 1000);
-        return { ms: ms, d: Math.floor(s / 86400), h: Math.floor((s % 86400) / 3600), m: Math.floor((s % 3600) / 60), s: s % 60 };
-    }
-    function pad(n) { return n < 10 ? '0' + n : String(n); }
-
-    function clockHTML(prefix) {
-        return ['d', 'h', 'm', 's'].map(function (u, i) {
-            var lbl = ['Días', 'Horas', 'Min', 'Seg'][i];
-            return '<div class="pn-unit"><span class="pn-num" id="' + prefix + '-' + u + '">--</span>'
-                + '<span class="pn-lbl">' + lbl + '</span></div>';
-        }).join('');
-    }
-
-    var clockTargets = [];
-    var clockTimer = null;
-
-    function tick() {
-        clockTargets.forEach(function (t) {
-            var r = remaining(t.end());
-            if (t.d) t.d.textContent = pad(r.d);
-            if (t.h) t.h.textContent = pad(r.h);
-            if (t.m) t.m.textContent = pad(r.m);
-            if (t.s) t.s.textContent = pad(r.s);
-        });
-        // Al llegar a cero, la campaña se apaga sola
-        var strip = document.getElementById('pn-strip');
-        if (strip && !isLive(CAMPAIGNS.amor)) { strip.remove(); hideFilter('amoramistad'); }
-        var show = document.getElementById('yf-show');
-        if (show && !isLive(CAMPAIGNS.yellow)) { show.remove(); hideFilter('amarillas'); }
-    }
-
-    function startClock() {
-        if (clockTimer) return;
-        tick();
-        clockTimer = setInterval(tick, 1000);
-    }
-
-    function registerClock(prefix, endFn) {
-        clockTargets.push({
-            end: endFn,
-            d: document.getElementById(prefix + '-d'),
-            h: document.getElementById(prefix + '-h'),
-            m: document.getElementById(prefix + '-m'),
-            s: document.getElementById(prefix + '-s')
-        });
-    }
-
-    function hideFilter(tag) {
-        document.querySelectorAll('.filter-btn[data-filter="' + tag + '"]').forEach(function (b) { b.style.display = 'none'; });
-    }
-
-    // ---------------------------------------------------------------
-    // 5. BANNER AMOR Y AMISTAD + VITRINA FLORES AMARILLAS
-    // ---------------------------------------------------------------
     var WA_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.46-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.91-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.06 2.87 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.18-1.41-.08-.13-.28-.2-.58-.35M12.05 21.79h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.89 9.89-9.89 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.43 9.89-9.88 9.89m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.69 1.45h.01c6.55 0 11.89-5.34 11.89-11.89 0-3.18-1.24-6.17-3.48-8.42"/></svg>';
 
-    function anchorNode() {
-        return document.querySelector('.catalog-hero') || document.querySelector('.hero');
+    function confettiHTML(n) {
+        var colors = ['#C9A86A', '#F6E3B4', '#8C6F3A', '#ffffff', '#E8CF8E'];
+        var out = '';
+        for (var i = 0; i < n; i++) {
+            var left = (i * 7.7 + (i % 4) * 3) % 100;
+            var dur = 6 + (i % 5) * 1.5;
+            var delay = -(i * 0.9);
+            var w = 6 + (i % 3) * 2;
+            out += '<span class="gd-bit" style="left:' + left + '%;width:' + w + 'px;height:' + (w * 1.7) + 'px;'
+                + 'background:' + colors[i % colors.length] + ';animation-duration:' + dur + 's;animation-delay:' + delay + 's"></span>';
+        }
+        return '<div class="gd-conf" aria-hidden="true">' + out + '</div>';
     }
-    function insertAfterHero(el, afterEl) {
-        var a = afterEl || anchorNode();
+
+    var PERSO_TXT = 'Lo armamos con <b>los colores de su colegio o universidad</b>, con <b>tarjeta con su nombre</b> y el mensaje que tú quieras.';
+
+    // ---------------------------------------------------------------
+    // 4. VITRINA "ARREGLOS PARA GRADO"
+    // ---------------------------------------------------------------
+    function anchorNode() { return document.querySelector('.catalog-hero') || document.querySelector('.hero'); }
+    function insertAfterHero(el) {
+        var a = anchorNode();
         if (a && a.parentNode) { a.parentNode.insertBefore(el, a.nextSibling); return; }
         var grid = document.getElementById('products-grid') || document.querySelector('.products-container');
-        var host = grid ? (grid.closest('section') || grid.parentNode) : document.body;
-        host.parentNode.insertBefore(el, host);
+        var host = grid ? (grid.closest('section') || grid.parentNode) : null;
+        if (host && host.parentNode) host.parentNode.insertBefore(el, host);
+        else document.body.insertBefore(el, document.body.firstChild);
     }
 
-    function buildStrip() {
-        if (!isLive(CAMPAIGNS.amor) || document.getElementById('pn-strip')) return null;
-        var strip = document.createElement('section');
-        strip.id = 'pn-strip';
-        strip.className = 'pn-strip';
-        strip.innerHTML =
-            '<div class="pn-strip-in">'
-            + '<div class="pn-strip-txt">'
-            + '<div class="pn-strip-kicker">Hasta el sábado 19 de septiembre</div>'
-            + '<div class="pn-strip-title">💝 Oferta de Amor y Amistad</div>'
-            + '<div class="pn-strip-sub">9 arreglos escogidos para celebrar el amor y la amistad — la oferta se cierra el 19 a medianoche</div>'
-            + '</div>'
-            + '<div class="pn-clock">' + clockHTML('pns') + '</div>'
-            + '<button type="button" class="pn-strip-btn" id="pn-strip-btn">Ver los 9 arreglos</button>'
-            + '</div>';
-        insertAfterHero(strip);
-        registerClock('pns', function () { return AMOR_END; });
-        document.getElementById('pn-strip-btn').addEventListener('click', function () { goToFilter('amoramistad'); });
-        return strip;
-    }
-
-    function buildYellowShow(after) {
-        if (!isLive(CAMPAIGNS.yellow) || document.getElementById('yf-show')) return;
-        var cards = YELLOW_ITEMS.map(function (it) {
-            return '<article class="yf-card">'
-                + '<div class="yf-img"><img src="' + it.img + '" alt="' + it.name + ' — flores amarillas a domicilio en Bogotá" loading="lazy" decoding="async"></div>'
-                + '<div class="yf-body">'
-                + '<div class="yf-name">' + it.name + '</div>'
-                + '<div class="yf-hook">' + it.hook + '</div>'
-                + '<div class="yf-row"><span class="yf-price">' + fmt(it.price) + '</span>'
-                + '<a class="yf-btn" href="' + waLink(it) + '" target="_blank" rel="noopener">' + WA_SVG + 'Pedir</a></div>'
+    function buildShow() {
+        if (document.getElementById('gd-show')) return;
+        var cards = GRADO_ITEMS.map(function (it, i) {
+            return '<article class="gd-card" style="animation-delay:' + (i * 0.07) + 's">'
+                + '<div class="gd-img"><span class="gd-badge">✏️ Personalizable</span>'
+                + '<img src="' + it.img + '" alt="' + it.name + ' — arreglo floral para grado a domicilio en Bogotá" loading="lazy" decoding="async"></div>'
+                + '<div class="gd-body">'
+                + '<div class="gd-name">' + it.name + '</div>'
+                + '<div class="gd-hook">' + it.hook + '</div>'
+                + '<div class="gd-row"><span class="gd-price">' + fmt(it.price) + '</span>'
+                + '<a class="gd-btn" href="' + waLink(it) + '" target="_blank" rel="noopener">' + WA_SVG + 'Pedir</a></div>'
                 + '</div></article>';
         }).join('');
+        var hasFilter = !!document.querySelector('.filter-btn[data-filter="grados"]');
         var sec = document.createElement('section');
-        sec.id = 'yf-show';
-        sec.className = 'yf-show';
-        sec.innerHTML =
-            '<div class="yf-in">'
-            + '<div class="yf-head"><div>'
-            + '<div class="yf-kicker">🌻 Amor y Amistad · 21 de septiembre</div>'
-            + '<h2 class="yf-title">Los mejores arreglos de flores amarillas</h2>'
-            + '<p class="yf-sub">Rosas, girasoles y margaritas para decir “me alegras la vida”. Nuestra selección amarilla para Amor y Amistad '
-            + 'y para el 21 de septiembre, el día de regalar flores amarillas. Te recomendamos pedir con anticipación.</p>'
-            + '</div><button type="button" class="yf-all" id="yf-all">Ver todas las flores amarillas</button></div>'
-            + '<div class="yf-grid">' + cards + '</div>'
+        sec.id = 'gd-show';
+        sec.className = 'gd-show';
+        sec.innerHTML = confettiHTML(22)
+            + '<div class="gd-in">'
+            + '<div class="gd-head"><div>'
+            + '<span class="gd-kicker">🎓 Temporada de grados · desde ' + fmt(MIN_PRICE) + '</span>'
+            + '<h2 class="gd-title">Se lo ganó. <span class="gd-cap">🎓</span><br>Que lo sienta con flores.</h2>'
+            + '<p class="gd-sub">Años de esfuerzo merecen más que un “felicitaciones”. Escogimos 7 arreglos para celebrar el grado de tu hijo, '
+            + 'tu pareja o tu mejor amigo, con precio especial de temporada. Te recomendamos pedirlo con anticipación para tenerlo listo antes de la ceremonia.</p>'
+            + '</div>'
+            + '<div class="gd-perso"><b>✏️ Todos se pueden personalizar</b>'
+            + '<span>' + PERSO_TXT + ' Cuéntanos tu idea y lo hacemos a su medida.</span>'
+            + '<a href="' + waGeneral() + '" target="_blank" rel="noopener">Personalizar por WhatsApp</a></div>'
+            + '</div>'
+            + '<div class="gd-grid">' + cards + '</div>'
+            + '<div class="gd-foot"><span class="gd-note">Fotos de referencia: cada arreglo se arma en los colores que tú elijas.</span>'
+            + (hasFilter ? '<button type="button" class="gd-all" id="gd-all">Ver los arreglos para grado en el catálogo</button>' : '')
+            + '</div>'
             + '</div>';
-        insertAfterHero(sec, after);
-        document.getElementById('yf-all').addEventListener('click', function () { goToFilter('amarillas'); });
+        insertAfterHero(sec);
+        var all = document.getElementById('gd-all');
+        if (all) all.addEventListener('click', function () { goToFilter('grados'); });
     }
 
-    // Activa el filtro correspondiente del catálogo y baja hasta los productos
     function goToFilter(tag) {
         var btn = document.querySelector('.filter-btn[data-filter="' + tag + '"]');
         if (btn) btn.click();
@@ -504,188 +380,166 @@
     }
 
     // ---------------------------------------------------------------
-    // 6. FLYER FLOTANTE CON PESTAÑAS Y CARRUSEL
+    // 5. FLYER FLOTANTE CON CARRUSEL
     // ---------------------------------------------------------------
-    var car = { i: 0, timer: null, n: 0, camp: null };
+    var SEEN_KEY = 'gg-grados-flyer-visto';
+    var flyer = null;
 
     function buildFlyer() {
-        var live = liveCampaigns();
-        if (!live.length) return;
-        try {
-            if (sessionStorage.getItem('aa-flyer-seen') === '1') return;
-        } catch (e) { /* sessionStorage bloqueado: se muestra igual */ }
-
-        var tabs = live.length > 1
-            ? '<div class="pn-tabs" role="tablist">' + live.map(function (c, i) {
-                return '<button type="button" class="pn-tabbtn' + (i === 0 ? ' on' : '') + '" data-c="' + c.id + '" role="tab">' + c.tab + '</button>';
-            }).join('') + '</div>'
-            : '';
-
+        if (document.getElementById('gf-modal')) return;
         var modal = document.createElement('div');
-        modal.id = 'pn-modal';
-        modal.className = 'pn-modal';
+        modal.id = 'gf-modal';
+        modal.className = 'gf-modal';
         modal.setAttribute('role', 'dialog');
         modal.setAttribute('aria-modal', 'true');
-        modal.setAttribute('aria-label', 'Amor y Amistad y Flores Amarillas');
+        modal.setAttribute('aria-label', 'Arreglos para grado personalizables');
+        var slides = GRADO_ITEMS.map(function (it, i) {
+            return '<div class="gf-slide">'
+                + '<div class="gf-fig"><span class="gf-cap">🎓</span>'
+                + '<img alt="' + it.name + ' — arreglo para grado, flores a domicilio en Bogotá" '
+                + (i === 0 ? 'src' : 'data-src') + '="' + it.img + '" decoding="async"></div>'
+                + '<div class="gf-txt">'
+                + '<div class="gf-name">' + it.name + '</div>'
+                + '<div class="gf-hook">' + it.hook + '</div>'
+                + '<div><div class="gf-plabel">Precio de grado</div><div class="gf-price">' + fmt(it.price) + '</div></div>'
+                + '<div class="gf-perso">✏️ <b>Personalízalo:</b> ' + PERSO_TXT + '</div>'
+                + '<a class="gf-cta" href="' + waLink(it) + '" target="_blank" rel="noopener">' + WA_SVG + 'Lo quiero para su grado</a>'
+                + '</div></div>';
+        }).join('');
         modal.innerHTML =
-            '<div class="pn-box" id="pn-box">'
-            + '<button type="button" class="pn-x" id="pn-x" aria-label="Cerrar">&times;</button>'
-            + '<div class="pn-head">'
-            + '<div class="pn-head-kicker" id="pn-kicker"></div>'
-            + '<div class="pn-head-title" id="pn-title"></div>'
-            + '<div class="pn-head-desc" id="pn-desc"></div>'
-            + '<div class="pn-head-clock"><span class="pn-hint">Termina en</span>' + clockHTML('pnm') + '</div>'
-            + tabs
+            '<div class="gf-box"><div class="gf-in">'
+            + '<button type="button" class="gf-x" id="gf-x" aria-label="Cerrar">&times;</button>'
+            + '<div class="gf-head">' + confettiHTML(14)
+            + '<div class="gf-kicker">🎓 Temporada de grados</div>'
+            + '<div class="gf-title">Arreglos para grado, <em>hechos a su medida</em></div>'
+            + '<div class="gf-desc">Desde ' + fmt(MIN_PRICE) + '. Todos se personalizan con los colores de su colegio o universidad y una tarjeta con su nombre.</div>'
             + '</div>'
-            + '<div class="pn-body">'
-            + '<div class="pn-track" id="pn-track"></div>'
-            + '<button type="button" class="pn-arrow pn-prev" id="pn-prev" aria-label="Anterior">&#10094;</button>'
-            + '<button type="button" class="pn-arrow pn-next" id="pn-next" aria-label="Siguiente">&#10095;</button>'
-            + '</div>'
-            + '<div class="pn-foot">'
-            + '<div class="pn-dots" id="pn-dots"></div>'
-            + '<button type="button" class="pn-all" id="pn-all"></button>'
-            + '</div>'
-            + '</div>';
-
+            + '<div class="gf-body"><div class="gf-track" id="gf-track">' + slides + '</div>'
+            + '<button type="button" class="gf-arrow gf-prev" id="gf-prev" aria-label="Anterior">&#10094;</button>'
+            + '<button type="button" class="gf-arrow gf-next" id="gf-next" aria-label="Siguiente">&#10095;</button></div>'
+            + '<div class="gf-foot"><div class="gf-dots" id="gf-dots">'
+            + GRADO_ITEMS.map(function (it, i) {
+                return '<button type="button" class="gf-dot' + (i === 0 ? ' on' : '') + '" data-i="' + i + '" aria-label="Ver ' + it.name + '"></button>';
+            }).join('')
+            + '</div><button type="button" class="gf-all" id="gf-all">Ver los 7 arreglos</button></div>'
+            + '</div></div>';
         document.body.appendChild(modal);
-        registerClock('pnm', function () { return car.camp ? car.camp.end : AMOR_END; });
 
-        var box = document.getElementById('pn-box');
-        var track = document.getElementById('pn-track');
-        var dotsWrap = document.getElementById('pn-dots');
-        var imgs = [], dotEls = [];
+        var track = document.getElementById('gf-track');
+        var imgs = Array.prototype.slice.call(track.querySelectorAll('img'));
+        var dots = Array.prototype.slice.call(modal.querySelectorAll('.gf-dot'));
+        var n = GRADO_ITEMS.length, cur = 0, timer = null;
 
-        function setCampaign(c) {
-            car.camp = c; car.i = 0; car.n = c.items.length;
-            box.classList.toggle('y', c.id === 'yellow');
-            document.getElementById('pn-kicker').textContent = c.kicker;
-            document.getElementById('pn-title').textContent = c.title;
-            document.getElementById('pn-desc').innerHTML = c.desc;
-            document.getElementById('pn-all').textContent = c.id === 'yellow' ? 'Ver flores amarillas' : 'Ver los 9 en el catálogo';
-            track.style.transition = 'none';
-            track.style.transform = 'translate3d(0,0,0)';
-            track.innerHTML = c.items.map(function (it, i) {
-                return '<div class="pn-slide">'
-                    + '<div class="pn-figure"><span class="pn-off">' + c.tag + '</span>'
-                    + '<img alt="' + it.name + ' — ' + c.title + ', flores a domicilio en Bogotá" data-src="' + it.img + '"'
-                    + (i === 0 ? ' src="' + it.img + '"' : '') + ' decoding="async"></div>'
-                    + '<div class="pn-txt">'
-                    + '<div class="pn-name">' + it.name + '</div>'
-                    + '<div class="pn-hook">' + it.hook + '</div>'
-                    + '<div class="pn-desc">' + it.desc + '</div>'
-                    + '<div class="pn-prices">'
-                    + (it.before ? '<span class="pn-old">' + fmt(it.before) + '</span>' : '')
-                    + '<span class="pn-new">' + fmt(it.price) + '</span>'
-                    + (offPct(it) ? '<span class="pn-save">-' + offPct(it) + '%</span>' : '')
-                    + '</div>'
-                    + '<a class="pn-cta" href="' + waLink(it) + '" target="_blank" rel="noopener">' + WA_SVG + c.cta + '</a>'
-                    + '</div></div>';
-            }).join('');
-            dotsWrap.innerHTML = c.items.map(function (it, i) {
-                return '<button type="button" class="pn-dot' + (i === 0 ? ' on' : '') + '" data-i="' + i + '" aria-label="Ver ' + it.name + '"></button>';
-            }).join('');
-            imgs = Array.prototype.slice.call(track.querySelectorAll('img'));
-            dotEls = Array.prototype.slice.call(dotsWrap.querySelectorAll('.pn-dot'));
-            dotEls.forEach(function (d) {
-                d.addEventListener('click', function () { go(parseInt(d.dataset.i, 10), true); });
-            });
-            modal.querySelectorAll('.pn-tabbtn').forEach(function (b) { b.classList.toggle('on', b.dataset.c === c.id); });
-            void track.offsetWidth;
-            track.style.transition = '';
-            loadNear(0);
-            tick();
-        }
-
-        function loadNear(i) {
-            [i, i + 1, i - 1].forEach(function (k) {
-                var img = imgs[(k + car.n) % car.n];
-                if (img && !img.getAttribute('src')) img.setAttribute('src', img.getAttribute('data-src'));
+        function load(i) {
+            [i, i + 1].forEach(function (k) {
+                var im = imgs[(k + n) % n];
+                if (im && !im.getAttribute('src')) im.setAttribute('src', im.getAttribute('data-src'));
             });
         }
-
         function go(i, user) {
-            car.i = (i + car.n) % car.n;
-            track.style.transform = 'translate3d(-' + (car.i * 100) + '%,0,0)';
-            dotEls.forEach(function (d, k) { d.classList.toggle('on', k === car.i); });
-            loadNear(car.i);
+            cur = (i + n) % n;
+            track.style.transform = 'translate3d(-' + (cur * 100) + '%,0,0)';
+            dots.forEach(function (d, k) { d.classList.toggle('on', k === cur); });
+            load(cur);
             if (user) restart();
         }
+        function stop() { if (timer) { clearInterval(timer); timer = null; } }
+        function restart() { stop(); timer = setInterval(function () { go(cur + 1); }, 4200); }
 
-        function auto() { go(car.i + 1); }
-        function stop() { if (car.timer) { clearInterval(car.timer); car.timer = null; } }
-        function restart() { stop(); car.timer = setInterval(auto, 4200); }
-
-        modal.querySelectorAll('.pn-tabbtn').forEach(function (b) {
-            b.addEventListener('click', function () { setCampaign(CAMPAIGNS[b.dataset.c]); restart(); });
-        });
-        document.getElementById('pn-next').addEventListener('click', function () { go(car.i + 1, true); });
-        document.getElementById('pn-prev').addEventListener('click', function () { go(car.i - 1, true); });
-
+        dots.forEach(function (d) { d.addEventListener('click', function () { go(+d.getAttribute('data-i'), true); }); });
+        document.getElementById('gf-next').addEventListener('click', function () { go(cur + 1, true); });
+        document.getElementById('gf-prev').addEventListener('click', function () { go(cur - 1, true); });
         var x0 = null;
         track.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; stop(); }, { passive: true });
         track.addEventListener('touchend', function (e) {
             if (x0 === null) return;
             var dx = e.changedTouches[0].clientX - x0;
-            if (Math.abs(dx) > 45) go(car.i + (dx < 0 ? 1 : -1), true); else restart();
+            if (Math.abs(dx) > 45) go(cur + (dx < 0 ? 1 : -1), true); else restart();
             x0 = null;
         }, { passive: true });
-
+        var box = modal.querySelector('.gf-box');
         box.addEventListener('mouseenter', stop);
         box.addEventListener('mouseleave', function () { if (modal.classList.contains('on')) restart(); });
-        document.addEventListener('visibilitychange', function () {
-            if (document.hidden) stop();
-            else if (modal.classList.contains('on')) restart();
-        });
 
         function close() {
             modal.classList.remove('on');
             stop();
             document.body.style.overflow = '';
-            try { sessionStorage.setItem('aa-flyer-seen', '1'); } catch (e) { }
-            setTimeout(function () { if (modal.parentNode) modal.remove(); }, 350);
+            try { sessionStorage.setItem(SEEN_KEY, '1'); } catch (e) { }
             document.removeEventListener('keydown', onKey);
+            showPill();
         }
         function onKey(e) {
             if (e.key === 'Escape') close();
-            else if (e.key === 'ArrowRight') go(car.i + 1, true);
-            else if (e.key === 'ArrowLeft') go(car.i - 1, true);
+            else if (e.key === 'ArrowRight') go(cur + 1, true);
+            else if (e.key === 'ArrowLeft') go(cur - 1, true);
         }
-
-        document.getElementById('pn-x').addEventListener('click', close);
+        document.getElementById('gf-x').addEventListener('click', close);
         modal.addEventListener('click', function (e) { if (e.target === modal) close(); });
-        document.getElementById('pn-all').addEventListener('click', function () {
-            var tag = car.camp.id === 'yellow' ? 'amarillas' : 'amoramistad';
+        document.getElementById('gf-all').addEventListener('click', function () {
             close();
-            setTimeout(function () { goToFilter(tag); }, 260);
+            var sec = document.getElementById('gd-show');
+            if (sec) setTimeout(function () { sec.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 250);
         });
 
-        setCampaign(live[0]);
+        flyer = {
+            open: function () {
+                hidePill();
+                modal.classList.add('on');
+                document.body.style.overflow = 'hidden';
+                document.addEventListener('keydown', onKey);
+                restart();
+            }
+        };
+    }
 
-        function open() {
-            modal.classList.add('on');
-            document.body.style.overflow = 'hidden';
-            restart();
-            document.addEventListener('keydown', onKey);
-        }
-        setTimeout(open, 1800);
+    function openFlyer() { if (!flyer) buildFlyer(); if (flyer) flyer.open(); }
+
+    function buildPill() {
+        if (document.getElementById('gf-pill')) return;
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.id = 'gf-pill';
+        b.className = 'gf-pill';
+        b.setAttribute('aria-label', 'Ver arreglos para grado');
+        b.innerHTML = '<i>🎓</i><span><small>Arreglos para grado</small><b>Personalizables · desde ' + fmt(MIN_PRICE) + '</b></span>'
+            + '<span class="gf-pill-x" data-x="1" aria-label="Ocultar">&times;</span>';
+        document.body.appendChild(b);
+        b.addEventListener('click', function (e) {
+            if (e.target && e.target.getAttribute && e.target.getAttribute('data-x')) {
+                e.stopPropagation();
+                hidePill();
+                try { sessionStorage.setItem('gg-grados-pill-oculto', '1'); } catch (er) { }
+                return;
+            }
+            openFlyer();
+        });
+    }
+    function showPill() {
+        try { if (sessionStorage.getItem('gg-grados-pill-oculto') === '1') return; } catch (e) { }
+        buildPill();
+        var p = document.getElementById('gf-pill');
+        if (p) setTimeout(function () { p.classList.add('on'); }, 300);
+    }
+    function hidePill() { var p = document.getElementById('gf-pill'); if (p) p.classList.remove('on'); }
+
+    function hideFilter() {
+        document.querySelectorAll('.filter-btn[data-filter="grados"]').forEach(function (b) { b.style.display = 'none'; });
     }
 
     // ---------------------------------------------------------------
-    // 7. ARRANQUE
+    // 6. ARRANQUE
     // ---------------------------------------------------------------
     function boot() {
-        if (!isLive(CAMPAIGNS.amor)) hideFilter('amoramistad');
-        if (!isLive(CAMPAIGNS.yellow)) hideFilter('amarillas');
-        var strip = buildStrip();
-        buildYellowShow(strip);
+        if (!isLive()) { hideFilter(); return; }
+        buildShow();
         buildFlyer();
-        startClock();
+        var seen = false;
+        try { seen = sessionStorage.getItem(SEEN_KEY) === '1'; } catch (e) { }
+        if (seen) showPill();
+        else setTimeout(function () { if (isLive()) openFlyer(); }, 1800);
     }
 
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', boot);
-    } else {
-        boot();
-    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+    else boot();
 })();

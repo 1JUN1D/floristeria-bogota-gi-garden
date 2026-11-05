@@ -83,8 +83,7 @@
             <div class="filters-container">
                 <span class="filter-label">Filtrar por:</span>
                 <button class="filter-btn active" data-filter="todos">Todos los Productos</button>
-                <button class="filter-btn filter-btn-amor" data-filter="amoramistad">💝 Amor y Amistad</button>
-                <button class="filter-btn filter-btn-amarillas" data-filter="amarillas">🌻 Flores Amarillas</button>
+                <button class="filter-btn filter-btn-grados" data-filter="grados">🎓 Para Grado</button>
                 <button class="filter-btn" data-filter="rosas">Rosas</button>
                 <button class="filter-btn" data-filter="girasoles">Girasoles</button>
                 <button class="filter-btn" data-filter="gerberas">Gerberas</button>
@@ -171,26 +170,26 @@
             {
                 id: 1,
                 name: "Ternura Rosada",
-                price: 112500,
+                price: 78000,
                 image: "assets/foto38.webp",
                 description: "Encantador ramo de rosas rosadas con gypsophila y envoltura delicada. Detalle tierno y accesible para cualquier momento.",
-                categories: ["rosas", "bouquets", "amoramistad", "precio-medio"]
+                categories: ["grados", "rosas", "bouquets", "amoramistad", "precio-bajo"]
             },
             {
                 id: 2,
                 name: "Suspiro Rosado",
-                price: 131250,
+                price: 95000,
                 image: "assets/foto30.webp",
                 description: "Tierno ramo de rosas rosadas rematado con una mariposa decorativa. Delicadeza encantadora a un precio accesible.",
-                categories: ["rosas", "bouquets", "amoramistad", "precio-medio"]
+                categories: ["grados", "rosas", "bouquets", "amoramistad", "precio-bajo"]
             },
             {
                 id: 3,
                 name: "Girasol Imperial",
-                price: 162500,
+                price: 125000,
                 image: "assets/foto50.webp",
                 description: "Imponente girasol único enmarcado en envoltura negra y dorada. Minimalismo elegante a precio accesible.",
-                categories: ["girasoles", "bouquets", "amoramistad", "precio-medio"]
+                categories: ["grados", "girasoles", "bouquets", "amoramistad", "precio-medio"]
             },
             {
                 id: 4,
@@ -390,10 +389,10 @@
             {
                 id: 28,
                 name: "Caja Romántica con Chocolates",
-                price: 218750,
+                price: 165000,
                 image: "assets/foto45.webp",
                 description: "Caja alargada con rosas rojas y finos chocolates. La combinación perfecta de amor y dulzura.",
-                categories: ["cajas", "rosas", "chocolates", "amoramistad", "precio-alto"]
+                categories: ["grados", "cajas", "rosas", "chocolates", "amoramistad", "precio-medio"]
             },
             {
                 id: 29,
@@ -646,18 +645,18 @@
             {
                 id: 59,
                 name: "Sol de tu Sonrisa",
-                price: 143750,
+                price: 105000,
                 image: "assets/foto59.webp",
                 description: "Girasoles radiantes abrazados por rosas rosadas, mini claveles y pompones blancos sobre envoltura rosa palo. Alegría y amor en el mismo ramo, sin tener que elegir.",
-                categories: ["girasoles", "rosas", "bouquets", "amoramistad", "precio-medio"]
+                categories: ["grados", "girasoles", "rosas", "bouquets", "amoramistad", "precio-medio"]
             },
             {
                 id: 60,
                 name: "Latido Fucsia",
-                price: 143750,
+                price: 110000,
                 image: "assets/foto60.webp",
                 description: "Rosas fucsia encendidas con gypsophila, eucalipto, hilo de perlas y un corazón que corona el ramo. Romántico, directo e imposible de malinterpretar.",
-                categories: ["rosas", "bouquets", "amoramistad", "precio-medio"]
+                categories: ["grados", "rosas", "bouquets", "amoramistad", "precio-medio"]
             },
             {
                 id: 61,
@@ -726,10 +725,10 @@
             {
                 id: 69,
                 name: "Perlas de Sol",
-                price: 125000,
+                price: 78000,
                 image: "assets/foto69.webp",
                 description: "Rosas amarillas con nube de gypsophila, encaje de perlas y envoltura con borde amarillo. Luminoso, elegante y perfecto para decir “me alegras la vida”.",
-                categories: ["rosas", "bouquets", "amarillas", "precio-medio"]
+                categories: ["grados", "rosas", "bouquets", "amarillas", "precio-bajo"]
             },
             {
                 id: 70,
@@ -841,7 +840,7 @@
                             // Orden estricto de menor a mayor precio: todos los productos, sin omitir ninguno
             filteredProducts.sort((a, b) => (a.lowPriority ? 1 : 0) - (b.lowPriority ? 1 : 0) || a.price - b.price);
 
-            // AMOR Y AMISTAD + FLORES AMARILLAS: los destacados suben al tope
+            // ARREGLOS PARA GRADO: los destacados suben al tope (orden en js/promo-semana.js)
             const PN = window.PROMO_SEMANA;
             let promoCount = 0;
             if (PN && PN.active()) {
